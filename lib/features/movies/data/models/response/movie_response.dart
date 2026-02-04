@@ -1,4 +1,4 @@
-import 'movie_model.dart';
+import '../movie_model.dart';
 
 class MovieResponse {
   final int page;

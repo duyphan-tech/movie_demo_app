@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:movie_demo_app/core/router/router_path.dart';
 
 import '../../../auth/presentation/providers/auth_provider.dart';
 import '../providers/movie_providers.dart';
@@ -21,7 +22,7 @@ class HomeScreen extends ConsumerWidget {
             icon: const Icon(Icons.logout),
             onPressed: () {
               ref.read(authStateProvider.notifier).logout();
-              context.go('/login');
+              context.go(RouterPath.login);
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('Đã đăng xuất thành công')),
               );
@@ -46,22 +47,28 @@ class HomeScreen extends ConsumerWidget {
                       .watch(favoritesProvider.notifier)
                       .isFavorite(movie);
 
-                  return ListTile(
-                    leading: Image.network(
-                      'https://image.tmdb.org/t/p/w92${movie.posterPath}',
-                      errorBuilder: (_, __, ___) => const Icon(Icons.movie),
+                  return GestureDetector(
+                    onTap: () => context.push(
+                      RouterPath.details,
+                      extra: {'id': movie.id},
                     ),
-                    title: Text(movie.title),
-                    trailing: IconButton(
-                      icon: Icon(
-                        isFav ? Icons.favorite : Icons.favorite_border,
-                        color: Colors.red,
+                    child: ListTile(
+                      leading: Image.network(
+                        'https://image.tmdb.org/t/p/w92${movie.posterPath}',
+                        errorBuilder: (_, __, ___) => const Icon(Icons.movie),
                       ),
-                      onPressed: () {
-                        ref
-                            .read(favoritesProvider.notifier)
-                            .toggleFavorite(movie);
-                      },
+                      title: Text(movie.title),
+                      trailing: IconButton(
+                        icon: Icon(
+                          isFav ? Icons.favorite : Icons.favorite_border,
+                          color: Colors.red,
+                        ),
+                        onPressed: () {
+                          ref
+                              .read(favoritesProvider.notifier)
+                              .toggleFavorite(movie);
+                        },
+                      ),
                     ),
                   );
                 },

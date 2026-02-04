@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:movie_demo_app/features/movies/domain/entities/movie_detail.dart';
 
 import '../../domain/entities/movie.dart';
 import '../../domain/repositories/movie_repository.dart';
@@ -12,6 +13,11 @@ class MovieRepositoryImpl implements MovieRepository {
   @override
   Future<List<Movie>> getPopularMovies() {
     return dataSource.fetchPopular();
+  }
+
+  @override
+  Future<MovieDetail> getMovieDetail(int id) {
+    return dataSource.fetchMovieDetail(id);
   }
 }
 
