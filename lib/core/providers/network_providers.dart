@@ -5,17 +5,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../constants/app_constants.dart';
 import '../constants/env_config.dart';
 import '../network/api_client.dart';
+import '../network/interceptors/logger_interceptor.dart';
 import '../network/interceptors/retry_interceptor.dart';
 import '../network/network_info.dart';
 
 final networkInfoProvider = Provider<NetworkInfo>((ref) => NetworkInfoImpl());
 
-final logInterceptorProvider = Provider<LogInterceptor>((ref) {
-  return LogInterceptor(
-    requestBody: kDebugMode,
-    responseBody: kDebugMode,
-    logPrint: (obj) => debugPrint(obj.toString()),
-  );
+final loggerInterceptorProvider = Provider<LoggerInterceptor>((ref) {
+  return LoggerInterceptor();
 });
 
 final retryInterceptorProvider = Provider.family<RetryInterceptor, Dio>((
@@ -68,8 +65,7 @@ final tmdbDioProvider = Provider.autoDispose<Dio>((ref) {
     ),
   );
 
-  final logInterceptor = ref.watch(logInterceptorProvider);
-  dio.interceptors.add(logInterceptor);
+  dio.interceptors.add(ref.watch(loggerInterceptorProvider));
 
   final retryInterceptor = ref.read(retryInterceptorProvider(dio));
   dio.interceptors.add(retryInterceptor);
@@ -89,7 +85,7 @@ final basicDioProvider = Provider.autoDispose<Dio>((ref) {
     seconds: AppConstants.receiveTimeout,
   );
 
-  dio.interceptors.add(ref.watch(logInterceptorProvider));
+  dio.interceptors.add(ref.watch(loggerInterceptorProvider));
   dio.interceptors.add(ref.read(retryInterceptorProvider(dio)));
 
   ref.onDispose(() => dio.close());

@@ -8,7 +8,6 @@ class ApiClient {
 
   ApiClient(this._dio);
 
-  // GET request
   Future<Either<Failure, dynamic>> get(
       String path, {
         Map<String, dynamic>? queryParameters,
@@ -21,7 +20,6 @@ class ApiClient {
     }
   }
 
-  // POST request
   Future<Either<Failure, dynamic>> post(String path, {dynamic data}) async {
     try {
       final response = await _dio.post(path, data: data);
@@ -31,7 +29,6 @@ class ApiClient {
     }
   }
 
-  // PUT request
   Future<Either<Failure, dynamic>> put(String path, {dynamic data}) async {
     try {
       final response = await _dio.put(path, data: data);
@@ -41,7 +38,6 @@ class ApiClient {
     }
   }
 
-  // DELETE request
   Future<Either<Failure, dynamic>> delete(String path) async {
     try {
       final response = await _dio.delete(path);
@@ -51,7 +47,6 @@ class ApiClient {
     }
   }
 
-  // Handle Dio errors
   Failure _handleError(DioException e) {
     switch (e.type) {
       case DioExceptionType.connectionTimeout:
@@ -100,12 +95,10 @@ class ApiClient {
     }
   }
 
-  // Add token to headers
   void setToken(String token) {
     _dio.options.headers['Authorization'] = 'Bearer $token';
   }
 
-  // Remove token from headers
   void removeToken() {
     _dio.options.headers.remove('Authorization');
   }
