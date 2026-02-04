@@ -4,7 +4,6 @@ import 'package:fpdart/fpdart.dart';
 
 import '../../../../core/errors/failures.dart';
 import '../../../../core/network/api_client.dart';
-import '../../../../core/network/dio_client.dart';
 import '../../../../core/network/endpoints.dart';
 import '../../../../core/providers/network_providers.dart';
 import '../models/movie_detail_model.dart';

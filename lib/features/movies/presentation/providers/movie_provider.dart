@@ -5,18 +5,13 @@ import 'package:fpdart/fpdart.dart';
 import '../../../../core/errors/failures.dart';
 import '../../data/repositories/movie_repository_impl.dart';
 import '../../domain/entities/movie.dart';
+import '../../domain/entities/movie_detail.dart';
 import '../../providers/movie_providers.dart';
 
-//
-// final popularMoviesProvider = FutureProvider<List<Movie>>((ref) async {
-//   final repository = ref.watch(movieRepositoryProvider);
-//   return repository.getPopularMovies();
-// });
-
-class FavoritesNotifier extends StateNotifier<List<Movie>> {
+class FavoritesNotifier extends StateNotifier<List<MovieDetail>> {
   FavoritesNotifier() : super([]);
 
-  void toggleFavorite(Movie movie) {
+  void toggleFavorite(MovieDetail movie) {
     if (state.contains(movie)) {
       state = state.where((m) => m.id != movie.id).toList();
     } else {
@@ -24,10 +19,10 @@ class FavoritesNotifier extends StateNotifier<List<Movie>> {
     }
   }
 
-  bool isFavorite(Movie movie) => state.contains(movie);
+  bool isFavorite(MovieDetail movie) => state.contains(movie);
 }
 
-final favoritesProvider = StateNotifierProvider<FavoritesNotifier, List<Movie>>(
+final favoritesProvider = StateNotifierProvider<FavoritesNotifier, List<MovieDetail>>(
   (ref) {
     return FavoritesNotifier();
   },

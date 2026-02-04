@@ -6,7 +6,6 @@ import 'package:movie_demo_app/core/network/endpoints.dart';
 import '../../../../../core/constants/env_config.dart';
 import '../../../../../core/errors/failures.dart';
 import '../../../../../core/network/api_client.dart';
-import '../../../../../core/network/dio_client.dart';
 
 abstract class AuthRemoteDataSource {
   Future<Either<Failure, String>> login(String email, String password);

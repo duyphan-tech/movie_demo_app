@@ -47,56 +47,62 @@ class MovieSection extends StatelessWidget {
             error: (err, stack) =>
                 Center(child: Text('Lỗi: ${err.toString()}')),
             data: (movies) {
-              if (movies.isEmpty)
-                return const Center(child: Text("Không có phim"));
-              return ListView.separated(
-                scrollDirection: Axis.horizontal,
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                itemCount: movies.length,
-                separatorBuilder: (_, __) => const SizedBox(width: 12),
-                itemBuilder: (context, index) {
-                  final movie = movies[index];
-                  return GestureDetector(
-                    onTap: () => context.push(
-                      RouterPath.details,
-                      extra: {'id': movie.id},
-                    ),
-                    child: SizedBox(
-                      width: 120,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: Image.network(
-                              '${AppConstants.imageUrl200}${movie.posterPath}',
-                              height: 160,
-                              width: 120,
-                              fit: BoxFit.cover,
-                              errorBuilder: (_, __, ___) => Container(
-                                height: 160,
-                                color: Colors.grey[300],
-                                child: const Icon(Icons.error),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            movie.title,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(fontWeight: FontWeight.w500),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              );
+              return _buildData(movies);
             },
           ),
         ),
       ],
     );
+  }
+
+  Widget _buildData(List<Movie> movies) {
+    Widget item;
+    if (movies.isEmpty) {
+      item = const Center(child: Text("Không có phim"));
+    } else {
+      item = ListView.separated(
+        scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        itemCount: movies.length,
+        separatorBuilder: (_, __) => const SizedBox(width: 12),
+        itemBuilder: (context, index) {
+          final movie = movies[index];
+          return GestureDetector(
+            onTap: () =>
+                context.push(RouterPath.details, extra: {'id': movie.id}),
+            child: SizedBox(
+              width: 120,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.network(
+                      '${AppConstants.imageUrl200}${movie.posterPath}',
+                      height: 160,
+                      width: 120,
+                      fit: BoxFit.cover,
+                      errorBuilder: (_, __, ___) => Container(
+                        height: 160,
+                        color: Colors.grey[300],
+                        child: const Icon(Icons.error),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    movie.title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(fontWeight: FontWeight.w500),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      );
+    }
+    return item;
   }
 }

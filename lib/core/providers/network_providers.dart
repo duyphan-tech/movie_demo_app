@@ -78,12 +78,28 @@ final tmdbDioProvider = Provider.autoDispose<Dio>((ref) {
 final basicDioProvider = Provider.autoDispose<Dio>((ref) {
   final dio = Dio();
 
-  dio.options.connectTimeout = const Duration(
-    seconds: AppConstants.connectTimeout,
-  );
-  dio.options.receiveTimeout = const Duration(
-    seconds: AppConstants.receiveTimeout,
-  );
+  dio.options.baseUrl = EnvConfig.reqresUrl;
+  dio.options.connectTimeout = const Duration(seconds: AppConstants.connectTimeout);
+  dio.options.receiveTimeout = const Duration(seconds: AppConstants.receiveTimeout);
+
+  dio.options.headers = {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+  };
+
+  dio.interceptors.add(InterceptorsWrapper(
+    onRequest: (options, handler) {
+      options.headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36';
+
+      if (options.headers.containsKey('Authorization')) {
+        options.headers.remove('Authorization');
+      }
+
+      print('🔍 [FINAL DEBUG] Headers gửi đi: ${options.headers}');
+
+      return handler.next(options);
+    },
+  ));
 
   dio.interceptors.add(ref.watch(loggerInterceptorProvider));
   dio.interceptors.add(ref.read(retryInterceptorProvider(dio)));

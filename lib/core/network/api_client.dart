@@ -9,9 +9,9 @@ class ApiClient {
   ApiClient(this._dio);
 
   Future<Either<Failure, dynamic>> get(
-      String path, {
-        Map<String, dynamic>? queryParameters,
-      }) async {
+    String path, {
+    Map<String, dynamic>? queryParameters,
+  }) async {
     try {
       final response = await _dio.get(path, queryParameters: queryParameters);
       return Right(response.data);
@@ -53,43 +53,53 @@ class ApiClient {
       case DioExceptionType.sendTimeout:
       case DioExceptionType.receiveTimeout:
         return const ServerFailure(message: 'Connection timeout');
+
       case DioExceptionType.badResponse:
-        switch (e.response?.statusCode) {
+        final statusCode = e.response?.statusCode;
+
+        final dynamic data = e.response?.data;
+        String? serverMessage;
+
+        if (data is Map<String, dynamic>) {
+          serverMessage =
+              data['message'] ?? data['error'] ?? data['status_message'];
+        } else if (data is String) {
+          serverMessage = data.length > 100
+              ? '${data.substring(0, 100)}...'
+              : data;
+        }
+
+        switch (statusCode) {
           case 400:
-            return ServerFailure(
-              message: e.response?.data['message'] ?? 'Bad Request',
-            );
+            return ServerFailure(message: serverMessage ?? 'Bad Request');
           case 401:
             return UnauthorizedFailure(
-              message: e.response?.data['message'] ?? 'Unauthorized',
+              message: serverMessage ?? 'Unauthorized',
             );
           case 403:
-            return ServerFailure(
-              message: e.response?.data['message'] ?? 'Forbidden',
-            );
+            return ServerFailure(message: serverMessage ?? 'Forbidden');
           case 404:
-            return ServerFailure(
-              message: e.response?.data['message'] ?? 'Not Found',
-            );
+            return ServerFailure(message: serverMessage ?? 'Not Found');
           case 500:
           case 501:
           case 502:
           case 503:
-            return ServerFailure(
-              message: e.response?.data['message'] ?? 'Server Error',
-            );
+            return ServerFailure(message: serverMessage ?? 'Server Error');
           default:
             return ServerFailure(
-              message: e.response?.data['message'] ?? 'Unknown error occurred',
+              message: serverMessage ?? 'Unknown error occurred ($statusCode)',
             );
         }
+
       case DioExceptionType.cancel:
         return const ServerFailure(message: 'Request cancelled');
+
       case DioExceptionType.unknown:
         if (e.error.toString().contains('SocketException')) {
           return const ServerFailure(message: 'No internet connection');
         }
         return const ServerFailure(message: 'Unknown error occurred');
+
       default:
         return const ServerFailure(message: 'Unknown error occurred');
     }
