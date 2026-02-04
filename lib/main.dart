@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'app_config.dart';
+import 'core/configs/app_config.dart';
 import 'my_app.dart';
-void mainCommon(AppConfig config) {
-  runApp(MyApp(config: config));
+
+Future<void> mainCommon(AppConfig config) async{
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(ProviderScope(child: MyApp(config: config)));
 }
