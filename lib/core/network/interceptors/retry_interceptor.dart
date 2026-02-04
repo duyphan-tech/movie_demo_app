@@ -1,15 +1,21 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
 class RetryInterceptor extends Interceptor {
   final Dio dio;
   final int maxRetries;
-  final int retryInterval;
+  final List<Duration> retryDelays;
 
   RetryInterceptor({
     required this.dio,
     this.maxRetries = 3,
-    this.retryInterval = 1000,
+    this.retryDelays = const [
+      Duration(seconds: 1),
+      Duration(seconds: 3),
+      Duration(seconds: 5),
+    ],
   });
 
   @override
@@ -18,27 +24,46 @@ class RetryInterceptor extends Interceptor {
     ErrorInterceptorHandler handler,
   ) async {
     if (_shouldRetry(err)) {
-      try {
-        final options = err.requestOptions;
-        final currentRetry = options.extra['retry_count'] ?? 0;
+      final attempt = err.requestOptions.headers['retry_attempt'] ?? 0;
 
-        if (currentRetry < maxRetries) {
-          final nextRetry = currentRetry + 1;
-          options.extra['retry_count'] = nextRetry;
+      if (attempt < maxRetries && attempt < retryDelays.length) {
+        final delay = retryDelays[attempt];
+        debugPrint(
+          '🔄 [Retry] Attempt ${attempt + 1}/$maxRetries after ${delay.inSeconds}s',
+        );
 
-          if (kDebugMode) {
-            print(
-              '[RetryInterceptor] Retrying request... ($nextRetry/$maxRetries)',
-            );
-          }
+        err.requestOptions.headers['retry_attempt'] = attempt + 1;
 
-          await Future.delayed(Duration(milliseconds: retryInterval));
+        await Future.delayed(delay);
 
-          final response = await dio.fetch(options);
+        try {
+          final options = Options(
+            method: err.requestOptions.method,
+            headers: err.requestOptions.headers,
+            contentType: err.requestOptions.contentType,
+            responseType: err.requestOptions.responseType,
+            followRedirects: err.requestOptions.followRedirects,
+            listFormat: err.requestOptions.listFormat,
+            receiveTimeout: err.requestOptions.receiveTimeout,
+            sendTimeout: err.requestOptions.sendTimeout,
+            validateStatus: err.requestOptions.validateStatus,
+            extra: err.requestOptions.extra,
+          );
+
+          final response = await dio.request(
+            err.requestOptions.path,
+            data: err.requestOptions.data,
+            queryParameters: err.requestOptions.queryParameters,
+            cancelToken: err.requestOptions.cancelToken,
+            options: options,
+            onSendProgress: err.requestOptions.onSendProgress,
+            onReceiveProgress: err.requestOptions.onReceiveProgress,
+          );
+
           return handler.resolve(response);
+        } catch (e) {
+          return super.onError(err, handler);
         }
-      } catch (e) {
-        return super.onError(err, handler);
       }
     }
     return super.onError(err, handler);
@@ -48,8 +73,6 @@ class RetryInterceptor extends Interceptor {
     return err.type == DioExceptionType.connectionTimeout ||
         err.type == DioExceptionType.sendTimeout ||
         err.type == DioExceptionType.receiveTimeout ||
-        (err.type == DioExceptionType.unknown &&
-            err.error != null &&
-            err.error.toString().contains('SocketException'));
+        (err.type == DioExceptionType.unknown && err.error is SocketException);
   }
 }

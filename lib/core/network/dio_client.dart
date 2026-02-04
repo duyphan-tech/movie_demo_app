@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../constants/app_constants.dart';
@@ -24,8 +23,6 @@ final basicDioProvider = Provider.autoDispose<Dio>((ref) {
 final tmdbDioProvider = Provider.autoDispose<Dio>((ref) {
   final dio = Dio();
 
-  // final baseUrl = dotenv.env['BASE_URL'] ?? 'https://api.themoviedb.org/3';
-  // final apiKey = dotenv.env['TMDB_API_KEY'];
 
   final apiKey = EnvConfig.tmdbApiKey;
   final baseUrl = EnvConfig.tmdbUrl;

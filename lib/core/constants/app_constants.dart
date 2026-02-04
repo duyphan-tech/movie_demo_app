@@ -6,4 +6,7 @@ class AppConstants {
   static const String refreshTokenKey = 'refreshToken';
   static const int connectTimeout = 30;
   static const int receiveTimeout = 30;
+
+  static const String imageUrl200 = 'https://image.tmdb.org/t/p/w200';
+  static const String imageUrl500 = 'https://image.tmdb.org/t/p/w500';
 }
