@@ -1,31 +1,45 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fpdart/fpdart.dart';
 
+import '../../../../core/errors/failures.dart';
 import '../../domain/repositories/auth_repository.dart';
-import '../datasources/auth_remote_data_source.dart';
+import '../datasources/local/auth_local_data_source.dart';
+import '../datasources/remote/auth_remote_data_source.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
-  final AuthRemoteDataSource dataSource;
+  final AuthRemoteDataSource remoteDataSource;
+  final AuthLocalDataSource localDataSource;
 
-  AuthRepositoryImpl(this.dataSource);
+  AuthRepositoryImpl(this.remoteDataSource, this.localDataSource);
 
   @override
-  Future<String> login(String email, String password) async {
-    try {
-      final token = await dataSource.login(email, password);
+  Future<Either<Failure, String>> login(String email, String password) async {
+    final result = await remoteDataSource.login(email, password);
+    return result.map((token) {
+      localDataSource.saveToken(token);
       return token;
-    } on Exception catch (e) {
-      throw Exception('Đăng nhập thất bại: $e');
-    }
+    });
   }
 
   @override
-  Future<String> register(String email, String password) async {
-    try {
-      final token = await dataSource.register(email, password);
+  Future<Either<Failure, String>> register(
+    String email,
+    String password,
+  ) async {
+    final result = await remoteDataSource.register(email, password);
+    return result.map((token) {
+      localDataSource.saveToken(token);
       return token;
-    } on Exception catch (e) {
-      throw Exception('Đăng ký thất bại: $e');
-    }
+    });
+  }
+
+  @override
+  Future<void> logout() async {
+    await localDataSource.clearToken();
+  }
+
+  @override
+  Future<String?> getSavedToken() async {
+    return localDataSource.getToken();
   }
 }
-final authRepositoryProvider = Provider((ref) => AuthRepositoryImpl(ref.watch(authDataSourceProvider)));

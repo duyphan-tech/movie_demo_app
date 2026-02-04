@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:movie_demo_app/core/router/router_path.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/widgets/movie_section.dart';
 
+import '../../../auth/presentation/providers/auth_controller.dart';
 import '../../../auth/presentation/providers/auth_provider.dart';
 import '../providers/movie_provider.dart';
 
@@ -19,13 +20,17 @@ class HomeScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Movies Dashboard'),
-        actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.search))],
+        actions: [IconButton(
+          icon: const Icon(Icons.logout),
+          onPressed: () {
+            ref.read(authControllerProvider.notifier).logout();
+          },
+        ),],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.only(bottom: 20),
         child: Column(
           children: [
-            // 1. Now Playing
             MovieSection(
               title: "Phim đang chiếu",
               moviesValue: nowPlayingState,

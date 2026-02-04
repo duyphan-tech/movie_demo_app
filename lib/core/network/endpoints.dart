@@ -6,5 +6,10 @@ class Endpoints {
   static const String upcomingMovie = '/movie/upcoming';
   static const String movieDetail = '/movie';
 
+  static const String login = '/login';
+  static const String register = '/register';
+  static const String logout = '/logout';
+
+
 
 }
