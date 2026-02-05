@@ -20,9 +20,17 @@ class ApiClient {
     }
   }
 
-  Future<Either<Failure, dynamic>> post(String path, {dynamic data}) async {
+  Future<Either<Failure, dynamic>> post(
+    String path, {
+    dynamic data,
+    Map<String, dynamic>? queryParameters,
+  }) async {
     try {
-      final response = await _dio.post(path, data: data);
+      final response = await _dio.post(
+        path,
+        data: data,
+        queryParameters: queryParameters,
+      );
       return Right(response.data);
     } on DioException catch (e) {
       return Left(_handleError(e));

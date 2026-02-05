@@ -27,7 +27,6 @@ class MovieReviewsSection extends ConsumerWidget {
                   color: Color(0xFF110E47),
                 ),
               ),
-              // Nút refresh nhỏ (tuỳ chọn)
               IconButton(
                 icon: const Icon(Icons.refresh, size: 20, color: Colors.grey),
                 onPressed: () {

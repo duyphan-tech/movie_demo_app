@@ -11,6 +11,6 @@ class Endpoints {
   static const String logout = '/logout';
 
   static String movieReviews(int movieId) => '/movie/$movieId/reviews';
-  static String favorite(int accountId) => '/account/$accountId/favorite';
+  static String favorite(String accountId) => '/account/$accountId/favorite';
 
 }

@@ -10,7 +10,8 @@
                 "--flavor", "dev",
                 "--dart-define", "TMDB_API_KEY=eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2YjM3OWY2YTAwNjE4ZWRhMmFhOWQ5MTY5MDQ5MmI0MCIsIm5iZiI6MTc3MDA5MDIzNi43MzgsInN1YiI6IjY5ODE2ZWZjNDYyMjJiZTkwMTgxYmZjOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.j_qfLUkXiP3y0LsDZUt2hsaKNH7xfgc1D0qImx2utJM",
                 "--dart-define", "TMDB_URL=https://api.themoviedb.org/3",
-                "--dart-define", "REGRES_URL=https://reqres.in/api"
+                "--dart-define", "REGRES_URL=https://reqres.in/api",
+                "--dart-define", "SESSION_ID=262060b18fb5b7d934be9c23e3c85341815cb669"
             ]
         },
         {
@@ -22,7 +23,8 @@
                 "--flavor", "prod",
                 "--dart-define", "TMDB_API_KEY=eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2YjM3OWY2YTAwNjE4ZWRhMmFhOWQ5MTY5MDQ5MmI0MCIsIm5iZiI6MTc3MDA5MDIzNi43MzgsInN1YiI6IjY5ODE2ZWZjNDYyMjJiZTkwMTgxYmZjOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.j_qfLUkXiP3y0LsDZUt2hsaKNH7xfgc1D0qImx2utJM",
                 "--dart-define", "TMDB_URL=https://api.themoviedb.org/3",
-                "--dart-define", "REGRES_URL=https://reqres.in/api"
+                "--dart-define", "REGRES_URL=https://reqres.in/api",
+                "--dart-define", "SESSION_ID=262060b18fb5b7d934be9c23e3c85341815cb669"
             ]
         }
     ]

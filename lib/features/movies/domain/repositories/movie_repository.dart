@@ -12,4 +12,8 @@ abstract class MovieRepository {
   Future<Either<Failure, List<Movie>>> getUpcomingMovies();
   Future<Either<Failure, MovieDetail>> getMovieDetail(int id);
   Future<Either<Failure, List<Review>>> getMovieReviews(int movieId);
+  Future<Either<Failure, bool>> markAsFavorite({
+    required int movieId,
+    required bool isFavorite,
+  });
 }

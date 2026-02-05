@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
+import 'package:movie_demo_app/core/configs/env_config.dart';
 import 'package:movie_demo_app/features/movies/data/models/review_model.dart';
 
 import '../../../../core/errors/failures.dart';
@@ -86,11 +87,12 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
     required bool isFavorite,
   }) async {
     
-    const accountId = "22732420";
+    const String accountId = "22732420";
+    const String sessionId = EnvConfig.sessionId;
 
     final result = await apiClient.post(
-      '/account/$accountId/favorite',
-      // queryParameters: {'session_id': ''},
+      Endpoints.favorite(accountId),
+      queryParameters: {'session_id': sessionId},
       data: {
         "media_type": "movie",
         "media_id": movieId,

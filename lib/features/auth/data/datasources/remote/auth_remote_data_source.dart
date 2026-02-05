@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:movie_demo_app/core/network/endpoints.dart';
 
-import '../../../../../core/constants/env_config.dart';
+import '../../../../../core/configs/env_config.dart';
 import '../../../../../core/errors/failures.dart';
 import '../../../../../core/network/api_client.dart';
 

@@ -46,4 +46,12 @@ class MovieRepositoryImpl implements MovieRepository {
   Future<Either<Failure, List<Review>>> getMovieReviews(int movieId) async {
     return dataSource.getMovieReviews(movieId);
   }
+
+  @override
+  Future<Either<Failure, bool>> markAsFavorite({
+    required int movieId,
+    required bool isFavorite,
+  }) async {
+    return dataSource.markAsFavorite(movieId: movieId, isFavorite: isFavorite);
+  }
 }

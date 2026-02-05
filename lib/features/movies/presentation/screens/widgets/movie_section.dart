@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:movie_demo_app/core/router/router_path.dart';
+import 'package:movie_demo_app/features/movies/presentation/screens/widgets/movie_item.dart';
 import '../../../../../core/constants/app_constants.dart';
 import '../../../domain/entities/movie.dart';
 
@@ -67,39 +68,7 @@ class MovieSection extends StatelessWidget {
         separatorBuilder: (_, __) => const SizedBox(width: 12),
         itemBuilder: (context, index) {
           final movie = movies[index];
-          return GestureDetector(
-            onTap: () =>
-                context.push(RouterPath.details, extra: {'id': movie.id}),
-            child: SizedBox(
-              width: 120,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: Image.network(
-                      '${AppConstants.imageUrl200}${movie.posterPath}',
-                      height: 160,
-                      width: 120,
-                      fit: BoxFit.cover,
-                      errorBuilder: (_, __, ___) => Container(
-                        height: 160,
-                        color: Colors.grey[300],
-                        child: const Icon(Icons.error),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    movie.title,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(fontWeight: FontWeight.w500),
-                  ),
-                ],
-              ),
-            ),
-          );
+          return MovieItem(movie: movie);
         },
       );
     }

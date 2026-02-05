@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../constants/app_constants.dart';
-import '../constants/env_config.dart';
+import '../configs/env_config.dart';
 import '../network/api_client.dart';
 import '../network/interceptors/logger_interceptor.dart';
 import '../network/interceptors/retry_interceptor.dart';
