@@ -87,7 +87,7 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
     required bool isFavorite,
   }) async {
     
-    const String accountId = "22732420";
+    const String accountId = EnvConfig.accountId;
     const String sessionId = EnvConfig.sessionId;
 
     final result = await apiClient.post(
