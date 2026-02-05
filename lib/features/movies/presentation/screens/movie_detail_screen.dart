@@ -4,6 +4,7 @@ import 'package:movie_demo_app/features/movies/presentation/screens/widgets/movi
 import 'package:movie_demo_app/features/movies/presentation/screens/widgets/movie_genres_list.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/widgets/movie_info_header.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/widgets/movie_overview.dart';
+import 'package:movie_demo_app/features/movies/presentation/screens/widgets/movie_reviews_section.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/widgets/movie_stats_row.dart';
 
 import '../../../../core/constants/app_constants.dart';
@@ -45,6 +46,9 @@ class MovieDetailScreen extends ConsumerWidget {
                       const SizedBox(height: 24),
 
                       MovieOverview(overview: movie.overview),
+                      const SizedBox(height: 24),
+
+                      MovieReviewsSection(movieId: movieId),
                       const SizedBox(height: 24),
                     ],
                   ),

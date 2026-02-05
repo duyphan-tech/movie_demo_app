@@ -58,7 +58,7 @@ final tmdbDioProvider = Provider.autoDispose<Dio>((ref) {
       onRequest: (options, handler) {
         options.queryParameters.addAll({
           'api_key': apiKey,
-          'language': 'vi-VN',
+          'language': 'en-US',
         });
         return handler.next(options);
       },

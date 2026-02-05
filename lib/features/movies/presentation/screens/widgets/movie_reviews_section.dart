@@ -1,0 +1,86 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:movie_demo_app/features/movies/domain/entities/review.dart';
+import 'package:movie_demo_app/features/movies/presentation/providers/review_provider.dart';
+import 'package:movie_demo_app/features/movies/presentation/screens/widgets/review_item.dart';
+
+class MovieReviewsSection extends ConsumerWidget {
+  final int movieId;
+  const MovieReviewsSection({super.key, required this.movieId});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final reviewsAsync = ref.watch(reviewProvider(movieId));
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                'Đánh giá',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF110E47),
+                ),
+              ),
+              // Nút refresh nhỏ (tuỳ chọn)
+              IconButton(
+                icon: const Icon(Icons.refresh, size: 20, color: Colors.grey),
+                onPressed: () {
+                  ref.read(reviewProvider(movieId).notifier).refresh();
+                },
+              ),
+            ],
+          ),
+        ),
+
+        _buildList(reviewsAsync),
+      ],
+    );
+  }
+
+  Widget _buildList(AsyncValue<List<Review>> reviewsAsync) {
+    return reviewsAsync.when(
+      loading: () => const Center(
+        child: Padding(
+          padding: EdgeInsets.all(20.0),
+          child: CircularProgressIndicator(),
+        ),
+      ),
+      error: (error, stack) => Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Text(
+          'Lỗi tải đánh giá: $error',
+          style: const TextStyle(color: Colors.red),
+        ),
+      ),
+      data: (reviews) {
+        if (reviews.isEmpty) {
+          return const Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Text(
+              "Chưa có đánh giá nào. Hãy là người đầu tiên!",
+              style: TextStyle(color: Colors.grey, fontStyle: FontStyle.italic),
+            ),
+          );
+        }
+
+        return ListView.separated(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          itemCount: reviews.length,
+          separatorBuilder: (context, index) => const SizedBox(height: 16),
+          itemBuilder: (context, index) {
+            final review = reviews[index];
+            return ReviewItem(review: review);
+          },
+        );
+      },
+    );
+  }
+}

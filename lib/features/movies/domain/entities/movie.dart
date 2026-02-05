@@ -45,3 +45,31 @@ class Movie extends Equatable {
     genreIds,
   ];
 }
+
+class HomeState {
+  final List<Movie> nowPlaying;
+  final List<Movie> topRated;
+  final List<Movie> upcoming;
+  final List<Movie> popular;
+
+  HomeState({
+    required this.nowPlaying,
+    required this.topRated,
+    required this.upcoming,
+    required this.popular,
+  });
+
+  HomeState copyWith({
+    List<Movie>? nowPlaying,
+    List<Movie>? topRated,
+    List<Movie>? upcoming,
+    List<Movie>? popular,
+  }) {
+    return HomeState(
+      nowPlaying: nowPlaying ?? this.nowPlaying,
+      topRated: topRated ?? this.topRated,
+      upcoming: upcoming ?? this.upcoming,
+      popular: popular ?? this.popular,
+    );
+  }
+}

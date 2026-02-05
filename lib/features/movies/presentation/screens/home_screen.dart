@@ -1,55 +1,132 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:movie_demo_app/core/constants/app_constants.dart';
 import 'package:movie_demo_app/core/router/router_path.dart';
+import 'package:movie_demo_app/features/movies/domain/entities/movie.dart';
+import 'package:movie_demo_app/features/movies/presentation/providers/home_provider.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/widgets/movie_section.dart';
 
 import '../../../auth/presentation/providers/auth_controller.dart';
 import '../../../auth/presentation/providers/auth_provider.dart';
-import '../providers/movie_provider.dart';
+import '../providers/movie_list_providers.dart';
 
-class HomeScreen extends ConsumerWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final nowPlayingState = ref.watch(nowPlayingMoviesProvider);
-    final popularState = ref.watch(popularMoviesProvider);
-    final topRatedState = ref.watch(topRatedMoviesProvider);
-    final upcomingState = ref.watch(upcomingMoviesProvider);
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends ConsumerState<HomeScreen> {
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_onScroll);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    if (_scrollController.position.pixels >=
+        _scrollController.position.maxScrollExtent - 200) {
+      ref.read(homeViewModelProvider.notifier).loadMorePopular();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final homeStateAsync = ref.watch(homeViewModelProvider);
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Movies Dashboard'),
-        actions: [IconButton(
-          icon: const Icon(Icons.logout),
-          onPressed: () {
-            ref.read(authControllerProvider.notifier).logout();
-          },
-        ),],
+      appBar: AppBar(title: const Text('Movies Dashboard')),
+      body: homeStateAsync.when(
+        loading: () {
+          if (homeStateAsync.hasValue) {
+            return _buildBody(homeStateAsync.value!, isLoadingMore: true);
+          }
+          return const Center(child: CircularProgressIndicator());
+        },
+
+        error: (err, stack) => Center(child: Text('Lỗi tải dữ liệu: $err')),
+
+        data: (homeState) => _buildBody(homeState, isLoadingMore: false),
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.only(bottom: 20),
-        child: Column(
-          children: [
-            MovieSection(
-              title: "Phim đang chiếu",
-              moviesValue: nowPlayingState,
-            ),
+    );
+  }
 
-            const SizedBox(height: 10),
-
-            MovieSection(title: "Phổ biến", moviesValue: popularState),
-
-            const SizedBox(height: 10),
-
-            MovieSection(title: "Đánh giá cao", moviesValue: topRatedState),
-
-            const SizedBox(height: 10),
-
-            MovieSection(title: "Sắp ra mắt", moviesValue: upcomingState),
-          ],
+  Widget _buildBody(HomeState state, {required bool isLoadingMore}) {
+    return CustomScrollView(
+      controller: _scrollController,
+      slivers: [
+        SliverToBoxAdapter(
+          child: Column(
+            children: [
+              MovieSection(
+                title: "Phim đang chiếu",
+                moviesValue: AsyncData(state.nowPlaying),
+              ),
+              const SizedBox(height: 10),
+              MovieSection(
+                title: "Đánh giá cao",
+                moviesValue: AsyncData(state.topRated),
+              ),
+              const SizedBox(height: 10),
+              MovieSection(
+                title: "Sắp ra mắt",
+                moviesValue: AsyncData(state.upcoming),
+              ),
+              const SizedBox(height: 10),
+              const Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Phổ biến",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
-      ),
+
+        SliverPadding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          sliver: SliverGrid(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              childAspectRatio: 0.7,
+              mainAxisSpacing: 10,
+              crossAxisSpacing: 10,
+            ),
+            delegate: SliverChildBuilderDelegate((context, index) {
+              final movie = state.popular[index];
+              return GestureDetector(
+                onTap: () =>
+                    context.push(RouterPath.details, extra: {'id': movie.id}),
+                child: Image.network(
+                  '${AppConstants.imageUrl500}${movie.posterPath}',
+                ),
+              );
+            }, childCount: state.popular.length),
+          ),
+        ),
+
+        if (isLoadingMore)
+          const SliverToBoxAdapter(
+            child: Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Center(child: CircularProgressIndicator()),
+            ),
+          ),
+      ],
     );
   }
 }

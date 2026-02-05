@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/src/either.dart';
 import 'package:movie_demo_app/core/errors/failures.dart';
 import 'package:movie_demo_app/features/movies/domain/entities/movie_detail.dart';
+import 'package:movie_demo_app/features/movies/domain/entities/review.dart';
 
 import '../../domain/entities/movie.dart';
 import '../../domain/repositories/movie_repository.dart';
@@ -21,8 +22,8 @@ class MovieRepositoryImpl implements MovieRepository {
   }
 
   @override
-  Future<Either<Failure, List<Movie>>> getPopularMovies() =>
-      _getMoviesFromSource(() => dataSource.getPopularMovies());
+  Future<Either<Failure, List<Movie>>> getPopularMovies({int page = 1}) =>
+      _getMoviesFromSource(() => dataSource.getPopularMovies(page: page));
 
   @override
   Future<Either<Failure, List<Movie>>> getNowPlayingMovies() =>
@@ -39,5 +40,10 @@ class MovieRepositoryImpl implements MovieRepository {
   @override
   Future<Either<Failure, MovieDetail>> getMovieDetail(int id) async {
     return dataSource.getMovieDetail(id);
+  }
+
+  @override
+  Future<Either<Failure, List<Review>>> getMovieReviews(int movieId) async {
+    return dataSource.getMovieReviews(movieId);
   }
 }

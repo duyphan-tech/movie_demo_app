@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
+import 'package:movie_demo_app/features/movies/data/models/review_model.dart';
 
 import '../../../../core/errors/failures.dart';
 import '../../../../core/network/api_client.dart';
@@ -8,10 +9,9 @@ import '../../../../core/network/endpoints.dart';
 import '../../../../core/providers/network_providers.dart';
 import '../models/movie_detail_model.dart';
 import '../models/movie_model.dart';
-import '../models/response/movie_response.dart';
 
 abstract class MovieRemoteDataSource {
-  Future<Either<Failure, List<MovieModel>>> getPopularMovies();
+  Future<Either<Failure, List<MovieModel>>> getPopularMovies({int page = 1});
 
   Future<Either<Failure, List<MovieModel>>> getNowPlayingMovies();
 
@@ -20,6 +20,13 @@ abstract class MovieRemoteDataSource {
   Future<Either<Failure, List<MovieModel>>> getUpcomingMovies();
 
   Future<Either<Failure, MovieDetailModel>> getMovieDetail(int id);
+
+  Future<Either<Failure, List<ReviewModel>>> getMovieReviews(int movieId);
+
+  Future<Either<Failure, bool>> markAsFavorite({
+    required int movieId,
+    required bool isFavorite,
+  });
 }
 
 class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
@@ -36,14 +43,9 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
     });
   }
 
-  // Future<MovieDetailModel> fetchMovieDetail(int movieId) async {
-  //   final response = await dio.get('/movie/$movieId');
-  //   return MovieDetailModel.fromJson(response.data);
-  // }
-
   @override
-  Future<Either<Failure, List<MovieModel>>> getPopularMovies() =>
-      _getMovies(Endpoints.popularMovie);
+  Future<Either<Failure, List<MovieModel>>> getPopularMovies({int page = 1}) =>
+      _getMovies('${Endpoints.popularMovie}?page=$page');
 
   @override
   Future<Either<Failure, List<MovieModel>>> getNowPlayingMovies() =>
@@ -64,5 +66,38 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
     return result.map((data) {
       return MovieDetailModel.fromJson(data);
     });
+  }
+
+  @override
+  Future<Either<Failure, List<ReviewModel>>> getMovieReviews(
+    int movieId,
+  ) async {
+    final result = await apiClient.get(Endpoints.movieReviews(movieId));
+
+    return result.map((data) {
+      final List results = data['results'];
+      return results.map((e) => ReviewModel.fromJson(e)).toList();
+    });
+  }
+
+  @override
+  Future<Either<Failure, bool>> markAsFavorite({
+    required int movieId,
+    required bool isFavorite,
+  }) async {
+    
+    const accountId = "22732420";
+
+    final result = await apiClient.post(
+      '/account/$accountId/favorite',
+      // queryParameters: {'session_id': ''},
+      data: {
+        "media_type": "movie",
+        "media_id": movieId,
+        "favorite": isFavorite,
+      },
+    );
+
+    return result.map((data) => true);
   }
 }
