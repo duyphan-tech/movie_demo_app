@@ -10,7 +10,6 @@ import 'package:movie_demo_app/features/movies/presentation/screens/widgets/home
 import 'package:movie_demo_app/features/movies/presentation/screens/widgets/movie_section.dart';
 
 import '../../../auth/presentation/providers/auth_controller.dart';
-import '../../../auth/presentation/providers/auth_provider.dart';
 import '../providers/movie_list_providers.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
@@ -78,17 +77,17 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             children: [
               MovieSection(
                 title: "Phim đang chiếu",
-                moviesValue: AsyncData(state.nowPlaying),
+                category: MovieCategory.nowPlaying,
               ),
               const SizedBox(height: 10),
               MovieSection(
                 title: "Đánh giá cao",
-                moviesValue: AsyncData(state.topRated),
+                category: MovieCategory.topRated,
               ),
               const SizedBox(height: 10),
               MovieSection(
                 title: "Sắp ra mắt",
-                moviesValue: AsyncData(state.upcoming),
+                category: MovieCategory.upcoming,
               ),
               const SizedBox(height: 10),
               const Padding(

@@ -28,6 +28,7 @@ class MovieDetailScreen extends ConsumerWidget {
           ScaffoldMessenger.of(
             context,
           ).showSnackBar(SnackBar(content: Text('Lỗi : ${err}')));
+          return null;
         },
         data: (movie) {
           return CustomScrollView(

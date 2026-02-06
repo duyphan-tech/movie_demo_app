@@ -4,7 +4,6 @@ import 'package:movie_demo_app/core/constants/app_constants.dart';
 import 'package:movie_demo_app/features/movies/presentation/providers/favorite_provider.dart';
 import 'package:movie_demo_app/features/movies/presentation/providers/movie_provider.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/widgets/favorite_button.dart';
-// Nhớ import các model, provider và FavoriteButton của bạn
 
 class FavoriteMoviesScreen extends ConsumerWidget {
   const FavoriteMoviesScreen({super.key});
@@ -12,8 +11,6 @@ class FavoriteMoviesScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final favoritesAsync = ref.watch(favoriteMoviesListProvider);
-
-    final favoriteIds = ref.watch(favoritesProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -28,13 +25,10 @@ class FavoriteMoviesScreen extends ConsumerWidget {
           ScaffoldMessenger.of(
             context,
           ).showSnackBar(SnackBar(content: Text('Lỗi : ${err}')));
+          return null;
         },
         data: (movies) {
-          final displayedMovies = movies
-              .where((m) => favoriteIds.contains(m.id))
-              .toList();
-
-          if (displayedMovies.isEmpty) {
+          if (movies.isEmpty) {
             return const Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -55,9 +49,9 @@ class FavoriteMoviesScreen extends ConsumerWidget {
               crossAxisSpacing: 16,
               mainAxisSpacing: 16,
             ),
-            itemCount: displayedMovies.length,
+            itemCount: movies.length,
             itemBuilder: (context, index) {
-              final movie = displayedMovies[index];
+              final movie = movies[index];
               return Stack(
                 children: [
                   GestureDetector(

@@ -9,7 +9,6 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../../core/utils/widgets/custom_text_field.dart';
 import '../providers/auth_controller.dart';
-import '../providers/auth_provider.dart';
 
 class LoginScreen extends HookConsumerWidget {
   const LoginScreen({super.key});

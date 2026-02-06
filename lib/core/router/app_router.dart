@@ -5,7 +5,6 @@ import 'package:movie_demo_app/core/router/router_path.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/rated_movies_screen_screen.dart';
 
 import '../../features/auth/presentation/providers/auth_controller.dart';
-import '../../features/auth/presentation/providers/auth_provider.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/movies/presentation/screens/home_screen.dart';
 import 'package:go_router/go_router.dart';
@@ -16,7 +15,7 @@ final routerProvider = Provider<GoRouter>((ref) {
   final authState = ref.watch(authControllerProvider);
 
   return GoRouter(
-    initialLocation: RouterPath.home,
+    initialLocation: RouterPath.login,
     debugLogDiagnostics: true,
 
     refreshListenable: AuthStateListenable(authState),

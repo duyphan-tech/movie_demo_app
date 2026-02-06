@@ -23,6 +23,7 @@ class RatedMoviesScreen extends ConsumerWidget {
           ScaffoldMessenger.of(
             context,
           ).showSnackBar(SnackBar(content: Text('Lỗi : ${err}')));
+          return null;
         },
         data: (movies) {
           if (movies.isEmpty) {

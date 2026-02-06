@@ -30,3 +30,7 @@ final favoriteMoviesListProvider = FutureProvider.autoDispose<List<Movie>>((
   final repo = ref.watch(movieRepositoryProvider);
   return _fetchData(() => repo.getFavoriteMovies());
 });
+
+final currentMovieIdProvider = Provider<int>(
+  (ref) => throw UnimplementedError(),
+);
