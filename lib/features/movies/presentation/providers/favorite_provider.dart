@@ -3,9 +3,28 @@ import 'package:movie_demo_app/features/movies/providers/movie_providers.dart';
 
 class FavoriteNotifier extends Notifier<Set<int>> {
   @override
-  Set<int> build() => {};
+  Set<int> build() {
+    Future.microtask(() => _loadInitialFavorites());
+    return {};
+  }
 
   bool isFavorite(int movieId) => state.contains(movieId);
+  Future<void> _loadInitialFavorites() async {
+    final repo = ref.read(movieRepositoryProvider);
+
+    final result = await repo.getFavoriteMovies();
+
+    result.fold(
+      (failure) {
+        print("Lỗi load favorites: ${failure.message}");
+      },
+      (movies) {
+        final movieIds = movies.map((e) => e.id).toSet();
+        state = movieIds;
+        print("Đã load được ${movieIds.length} phim yêu thích từ Server");
+      },
+    );
+  }
 
   Future<void> toggleFavorite(int movieId) async {
     final bool isCurrentlyFavorite = state.contains(movieId);

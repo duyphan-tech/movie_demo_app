@@ -24,7 +24,11 @@ class MovieDetailScreen extends ConsumerWidget {
       backgroundColor: Colors.white,
       body: asyncValue.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (err, stack) => Center(child: Text('Lỗi: $err')),
+        error: (err, stack) {
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text('Lỗi : ${err}')));
+        },
         data: (movie) {
           return CustomScrollView(
             slivers: [

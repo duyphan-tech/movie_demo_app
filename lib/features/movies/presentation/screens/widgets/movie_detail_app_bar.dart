@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:movie_demo_app/core/router/router_path.dart';
 import '../../../../../core/constants/app_constants.dart';
 import '../../../domain/entities/movie_detail.dart';
 
@@ -20,7 +22,9 @@ class MovieDetailAppBar extends StatelessWidget {
       actions: [
         IconButton(
           icon: const Icon(Icons.more_horiz, color: Colors.white),
-          onPressed: () {},
+          onPressed: () {
+            context.push(RouterPath.rated);
+          },
         ),
       ],
       flexibleSpace: FlexibleSpaceBar(
@@ -40,8 +44,7 @@ class MovieDetailAppBar extends StatelessWidget {
                   size: 64,
                   color: Colors.white,
                 ),
-                onPressed: () {
-                },
+                onPressed: () {},
               ),
             ),
           ],

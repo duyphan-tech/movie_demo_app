@@ -11,11 +11,11 @@ final sharedPreferencesProvider = Provider<SharedPreferences>((ref) {
   throw UnimplementedError();
 });
 
-final authLocalDataSourceProvider = Provider((ref) {
+final authLocalDataSourceProvider = Provider<AuthLocalDataSource>((ref) {
   return AuthLocalDataSource(ref.watch(sharedPreferencesProvider));
 });
 
-final authRemoteDataSourceProvider = Provider((ref) {
+final authRemoteDataSourceProvider = Provider<AuthRemoteDataSource>((ref) {
   return AuthRemoteDataSourceImpl(ref.watch(basicApiClientProvider));
 });
 

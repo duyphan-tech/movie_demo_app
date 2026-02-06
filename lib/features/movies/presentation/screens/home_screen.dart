@@ -5,6 +5,8 @@ import 'package:movie_demo_app/core/constants/app_constants.dart';
 import 'package:movie_demo_app/core/router/router_path.dart';
 import 'package:movie_demo_app/features/movies/domain/entities/movie.dart';
 import 'package:movie_demo_app/features/movies/presentation/providers/home_provider.dart';
+import 'package:movie_demo_app/features/movies/presentation/screens/widgets/favorite_button.dart';
+import 'package:movie_demo_app/features/movies/presentation/screens/widgets/home_drawer.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/widgets/movie_section.dart';
 
 import '../../../auth/presentation/providers/auth_controller.dart';
@@ -45,7 +47,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final homeStateAsync = ref.watch(homeViewModelProvider);
 
     return Scaffold(
+      drawer: const HomeDrawer(),
       appBar: AppBar(title: const Text('Movies Dashboard')),
+
       body: homeStateAsync.when(
         loading: () {
           if (homeStateAsync.hasValue) {
@@ -54,7 +58,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           return const Center(child: CircularProgressIndicator());
         },
 
-        error: (err, stack) => Center(child: Text('Lỗi tải dữ liệu: $err')),
+        error: (err, stack) {
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text('Lỗi : ${err}')));
+        },
 
         data: (homeState) => _buildBody(homeState, isLoadingMore: false),
       ),
@@ -111,8 +119,20 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               return GestureDetector(
                 onTap: () =>
                     context.push(RouterPath.details, extra: {'id': movie.id}),
-                child: Image.network(
-                  '${AppConstants.imageUrl500}${movie.posterPath}',
+                child: Stack(
+                  children: [
+                    Image.network(
+                      '${AppConstants.imageUrl500}${movie.posterPath}',
+                    ),
+                    Positioned(
+                      right: 0,
+                      top: 0,
+                      child: FavoriteButton(
+                        movieId: movie.id,
+                        color: Colors.red,
+                      ),
+                    ),
+                  ],
                 ),
               );
             }, childCount: state.popular.length),

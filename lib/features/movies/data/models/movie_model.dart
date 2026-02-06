@@ -14,6 +14,7 @@ class MovieModel extends Movie {
     required super.popularity,
     required super.isAdult,
     required super.genreIds,
+    required super.rating,
   });
 
   factory MovieModel.fromJson(Map<String, dynamic> json) {
@@ -32,6 +33,7 @@ class MovieModel extends Movie {
       genreIds: json['genre_ids'] != null
           ? List<int>.from(json['genre_ids'])
           : [],
+      rating: json['rating'] ?? 0,
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/src/either.dart';
 import 'package:movie_demo_app/core/errors/failures.dart';
+import 'package:movie_demo_app/features/movies/domain/entities/account_state.dart';
 import 'package:movie_demo_app/features/movies/domain/entities/movie_detail.dart';
 import 'package:movie_demo_app/features/movies/domain/entities/review.dart';
 
@@ -53,5 +54,31 @@ class MovieRepositoryImpl implements MovieRepository {
     required bool isFavorite,
   }) async {
     return dataSource.markAsFavorite(movieId: movieId, isFavorite: isFavorite);
+  }
+
+  @override
+  Future<Either<Failure, bool>> rateMovie({
+    required int movieId,
+    required double value,
+  }) async => dataSource.rateMovie(movieId: movieId, value: value);
+
+  @override
+  Future<Either<Failure, List<Movie>>> getRatedMovies({int page = 1}) =>
+      _getMoviesFromSource(() => dataSource.getRatedMovies(page: page));
+
+  @override
+  Future<Either<Failure, List<Movie>>> getFavoriteMovies() =>
+      _getMoviesFromSource(() => dataSource.getFavoriteMovies());
+
+  @override
+  Future<Either<Failure, AccountState>> getMovieAccountState(
+    int movieId,
+  ) async {
+    return dataSource.getMovieAccountState(movieId);
+  }
+
+  @override
+  Future<Either<Failure, bool>> deleteRating({required int movieId}) {
+    return dataSource.deleteRating(movieId: movieId);
   }
 }

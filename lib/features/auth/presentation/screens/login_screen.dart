@@ -16,40 +16,12 @@ class LoginScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final TextEditingController emailController = useTextEditingController(
-      text: kDebugMode ? 'eve.holt@reqres.in' : '',
-    );
+    final emailController = useTextEditingController(text: 'emilys');
+    final passwordController = useTextEditingController(text: 'emilyspass');
 
-    final TextEditingController passwordController = useTextEditingController(
-      text: kDebugMode ? 'cityslicka' : '',
-    );
-
-    final ValueNotifier<bool> isPasswordVisible = useState(false);
-
-    final GlobalKey<FormState> formKey = useMemoized(
-      () => GlobalKey<FormState>(),
-    );
-
-    void onLogin() {
-      if (formKey.currentState!.validate()) {
-        FocusScope.of(context).unfocus();
-        ref
-            .read(authControllerProvider.notifier)
-            .login(emailController.text.trim(), passwordController.text.trim());
-      }
-    }
-
-    void onRegister() {
-      if (formKey.currentState!.validate()) {
-        FocusScope.of(context).unfocus();
-        ref
-            .read(authControllerProvider.notifier)
-            .register(
-              emailController.text.trim(),
-              passwordController.text.trim(),
-            );
-      }
-    }
+    final isPasswordVisible = useState(false);
+    final isRegistering = useState(false);
+    final formKey = useMemoized(() => GlobalKey<FormState>());
 
     ref.listen<AsyncValue<bool>>(authControllerProvider, (previous, next) {
       if (next.hasError && !next.isLoading) {
@@ -59,7 +31,7 @@ class LoginScreen extends HookConsumerWidget {
               next.error.toString().replaceAll('Exception: ', ''),
               style: const TextStyle(color: Colors.white),
             ),
-            backgroundColor: Colors.red,
+            backgroundColor: Colors.redAccent,
             behavior: SnackBarBehavior.floating,
           ),
         );
@@ -69,8 +41,21 @@ class LoginScreen extends HookConsumerWidget {
     final authState = ref.watch(authControllerProvider);
     final isLoading = authState.isLoading;
 
+    void onSubmit() {
+      if (formKey.currentState!.validate()) {
+        FocusScope.of(context).unfocus();
+        final email = emailController.text.trim();
+        final password = passwordController.text.trim();
+
+        if (isRegistering.value) {
+          ref.read(authControllerProvider.notifier).register(email, password);
+        } else {
+          ref.read(authControllerProvider.notifier).login(email, password);
+        }
+      }
+    }
+
     return Scaffold(
-      backgroundColor: Colors.white,
       body: Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24.0),
@@ -80,77 +65,58 @@ class LoginScreen extends HookConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                // Logo / Icon
                 const Icon(
                   Icons.movie_filter_rounded,
                   size: 80,
                   color: Colors.indigo,
                 ),
-                const SizedBox(height: 16),
-                const Text(
-                  'Movies Demo',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.indigo,
-                  ),
-                ),
 
                 const SizedBox(height: 40),
 
-                CustomTextField(
+                TextFormField(
                   controller: emailController,
-                  label: 'Email',
-                  hintText: 'example@gmail.com',
-                  prefixIcon: Icons.email_outlined,
-                  keyboardType: TextInputType.emailAddress,
-                  textInputAction: TextInputAction.next,
+                  decoration: const InputDecoration(
+                    labelText: 'Username / Email',
+                    prefixIcon: Icon(Icons.person_outline),
+                    border: OutlineInputBorder(),
+                  ),
                   enabled: !isLoading,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Vui lòng nhập Email';
-                    }
-                    if (!value.contains('@')) return 'Email không hợp lệ';
-                    return null;
-                  },
+                  validator: (value) => (value == null || value.isEmpty)
+                      ? 'Vui lòng nhập tài khoản'
+                      : null,
                 ),
                 const SizedBox(height: 16),
 
-                CustomTextField(
+                TextFormField(
                   controller: passwordController,
-                  label: 'Mật khẩu',
-                  prefixIcon: Icons.lock_outline,
-                  textInputAction: TextInputAction.done,
-                  enabled: !isLoading,
-
                   obscureText: !isPasswordVisible.value,
-
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      isPasswordVisible.value
-                          ? Icons.visibility
-                          : Icons.visibility_off,
+                  decoration: InputDecoration(
+                    labelText: 'Mật khẩu',
+                    prefixIcon: const Icon(Icons.lock_outline),
+                    border: const OutlineInputBorder(),
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        isPasswordVisible.value
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                      ),
+                      onPressed: () =>
+                          isPasswordVisible.value = !isPasswordVisible.value,
                     ),
-                    onPressed: () {
-                      isPasswordVisible.value = !isPasswordVisible.value;
-                    },
                   ),
-
-                  validator: (value) {
-                    if (value == null || value.isEmpty)
-                      return 'Vui lòng nhập mật khẩu';
-                    if (value.length < 6) return 'Mật khẩu phải hơn 6 ký tự';
-                    return null;
-                  },
-                  onFieldSubmitted: (_) => onLogin(),
+                  enabled: !isLoading,
+                  validator: (value) => (value == null || value.length < 3)
+                      ? 'Mật khẩu quá ngắn'
+                      : null,
+                  onFieldSubmitted: (_) => onSubmit(),
                 ),
                 const SizedBox(height: 24),
 
                 FilledButton(
-                  onPressed: isLoading ? null : onLogin,
+                  onPressed: isLoading ? null : onSubmit,
                   style: FilledButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 16),
-                    backgroundColor: Colors.indigo,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
@@ -164,14 +130,16 @@ class LoginScreen extends HookConsumerWidget {
                             strokeWidth: 2,
                           ),
                         )
-                      : const Text(
-                          'ĐĂNG NHẬP',
-                          style: TextStyle(
+                      : Text(
+                          isRegistering.value ? 'ĐĂNG KÝ' : 'ĐĂNG NHẬP',
+                          style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                 ),
+
+                const SizedBox(height: 16),
               ],
             ),
           ),

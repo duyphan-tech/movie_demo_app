@@ -13,15 +13,16 @@ class AuthController extends AsyncNotifier<bool> {
     return token != null && token.isNotEmpty;
   }
 
-  Future<void> login(String email, String password) async {
+  Future<void> login(String username, String password) async {
     state = const AsyncLoading();
-    final result = await _repo.login(email, password);
+    final result = await _repo.login(username, password);
 
     result.fold(
       (failure) {
-        state = AsyncError(failure.message, StackTrace.current);
+        state = AsyncError(failure, StackTrace.current);
       },
-      (token) {
+      (userModel) async {
+        await _repo.saveToken(userModel.token ?? '');
         state = const AsyncData(true);
       },
     );
@@ -31,10 +32,12 @@ class AuthController extends AsyncNotifier<bool> {
     state = const AsyncLoading();
     final result = await _repo.register(email, password);
 
-    result.fold(
-      (failure) => state = AsyncError(failure.message, StackTrace.current),
-      (token) => state = const AsyncData(true),
-    );
+    result.fold((failure) => state = AsyncError(failure, StackTrace.current), (
+      token,
+    ) async {
+      await _repo.saveToken(token);
+      state = const AsyncData(true);
+    });
   }
 
   Future<void> logout() async {

@@ -9,6 +9,7 @@ class Movie extends Equatable {
   final String? backdropPath;
   final String releaseDate;
   final double voteAverage;
+  final double rating;
   final int voteCount;
   final double popularity;
   final bool isAdult;
@@ -23,6 +24,7 @@ class Movie extends Equatable {
     this.backdropPath,
     required this.releaseDate,
     required this.voteAverage,
+    required this.rating,
     required this.voteCount,
     required this.popularity,
     required this.isAdult,
@@ -43,6 +45,7 @@ class Movie extends Equatable {
     popularity,
     isAdult,
     genreIds,
+    rating,
   ];
 }
 

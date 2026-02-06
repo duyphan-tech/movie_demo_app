@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:movie_demo_app/core/configs/env_config.dart';
+import 'package:movie_demo_app/features/movies/data/models/account_state_model.dart';
 import 'package:movie_demo_app/features/movies/data/models/review_model.dart';
 
 import '../../../../core/errors/failures.dart';
@@ -28,12 +29,26 @@ abstract class MovieRemoteDataSource {
     required int movieId,
     required bool isFavorite,
   });
+
+  Future<Either<Failure, bool>> rateMovie({
+    required int movieId,
+    required double value,
+  });
+
+  Future<Either<Failure, List<MovieModel>>> getRatedMovies({int page = 1});
+
+  Future<Either<Failure, List<MovieModel>>> getFavoriteMovies({int page = 1});
+  Future<Either<Failure, AccountStateModel>> getMovieAccountState(int movieId);
+  Future<Either<Failure, bool>> deleteRating({required int movieId});
 }
 
 class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
   final ApiClient apiClient;
 
   MovieRemoteDataSourceImpl(this.apiClient);
+
+  final String accountId = EnvConfig.accountId;
+  final String sessionId = EnvConfig.sessionId;
 
   Future<Either<Failure, List<MovieModel>>> _getMovies(String endpoint) async {
     final result = await apiClient.get(endpoint);
@@ -86,10 +101,6 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
     required int movieId,
     required bool isFavorite,
   }) async {
-    
-    const String accountId = EnvConfig.accountId;
-    const String sessionId = EnvConfig.sessionId;
-
     final result = await apiClient.post(
       Endpoints.favorite(accountId),
       queryParameters: {'session_id': sessionId},
@@ -100,6 +111,80 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
       },
     );
 
+    return result.map((data) => true);
+  }
+
+  @override
+  Future<Either<Failure, bool>> rateMovie({
+    required int movieId,
+    required double value,
+  }) async {
+    const String sessionId = EnvConfig.sessionId;
+    final result = await apiClient.post(
+      Endpoints.rating(movieId),
+      queryParameters: {'session_id': sessionId},
+      data: {"value": value},
+    );
+    return result.map((data) => true);
+  }
+
+  @override
+  Future<Either<Failure, List<MovieModel>>> getRatedMovies({
+    int page = 1,
+  }) async {
+    final result = await apiClient.get(
+      Endpoints.ratedMovies(accountId),
+      queryParameters: {
+        'session_id': sessionId,
+        'sort_by': 'created_at.desc',
+        'page': page,
+      },
+    );
+
+    return result.map((data) {
+      final List results = data['results'];
+      return results.map((e) => MovieModel.fromJson(e)).toList();
+    });
+  }
+
+  @override
+  Future<Either<Failure, List<MovieModel>>> getFavoriteMovies({
+    int page = 1,
+  }) async {
+    final result = await apiClient.get(
+      Endpoints.favoriteMovies(accountId),
+      queryParameters: {
+        'session_id': sessionId,
+        'sort_by': 'created_at.desc',
+        'page': page,
+      },
+    );
+
+    return result.map((data) {
+      final List results = data['results'];
+      return results.map((e) => MovieModel.fromJson(e)).toList();
+    });
+  }
+
+  @override
+  Future<Either<Failure, AccountStateModel>> getMovieAccountState(
+    int movieId,
+  ) async {
+    const String sessionId = EnvConfig.sessionId;
+    final result = await apiClient.get(
+      Endpoints.movieAccountState(movieId),
+      queryParameters: {'session_id': sessionId},
+    );
+
+    return result.map((data) => AccountStateModel.fromJson(data));
+  }
+
+  @override
+  Future<Either<Failure, bool>> deleteRating({required int movieId}) async {
+    final result = await apiClient.delete(
+      Endpoints.deleteRating(movieId),
+      queryParameters: {'session_id': sessionId},
+    );
     return result.map((data) => true);
   }
 }

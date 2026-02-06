@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:fpdart/fpdart.dart';
+import 'package:movie_demo_app/features/movies/domain/entities/account_state.dart';
 
 import '../../../../core/errors/failures.dart';
 import '../../data/repositories/movie_repository_impl.dart';
@@ -18,22 +19,14 @@ Future<List<Movie>> _fetchData(
   );
 }
 
-final nowPlayingMoviesProvider = FutureProvider.autoDispose<List<Movie>>((ref) {
+final ratedMoviesProvider = FutureProvider.autoDispose<List<Movie>>((ref) {
   final repo = ref.watch(movieRepositoryProvider);
-  return _fetchData(() => repo.getNowPlayingMovies());
+  return _fetchData(() => repo.getRatedMovies());
 });
 
-final popularMoviesProvider = FutureProvider.autoDispose<List<Movie>>((ref) {
+final favoriteMoviesListProvider = FutureProvider.autoDispose<List<Movie>>((
+  ref,
+) {
   final repo = ref.watch(movieRepositoryProvider);
-  return _fetchData(() => repo.getPopularMovies());
-});
-
-final topRatedMoviesProvider = FutureProvider.autoDispose<List<Movie>>((ref) {
-  final repo = ref.watch(movieRepositoryProvider);
-  return _fetchData(() => repo.getTopRatedMovies());
-});
-
-final upcomingMoviesProvider = FutureProvider.autoDispose<List<Movie>>((ref) {
-  final repo = ref.watch(movieRepositoryProvider);
-  return _fetchData(() => repo.getUpcomingMovies());
+  return _fetchData(() => repo.getFavoriteMovies());
 });
