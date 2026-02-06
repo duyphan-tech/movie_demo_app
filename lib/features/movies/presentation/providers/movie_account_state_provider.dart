@@ -1,7 +1,6 @@
 import 'package:movie_demo_app/features/movies/domain/entities/account_state.dart';
 import 'package:movie_demo_app/features/movies/providers/movie_providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-// Dòng này bắt buộc để tạo file gen
 part 'movie_account_state_provider.g.dart';
 
 @riverpod

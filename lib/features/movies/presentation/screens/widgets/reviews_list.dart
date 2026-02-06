@@ -29,13 +29,15 @@ class ReviewsList extends ConsumerWidget {
               child: CircularProgressIndicator(),
             ),
           ),
-          error: (error, stack) => Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text(
-              'Lỗi tải đánh giá: $error',
-              style: const TextStyle(color: Colors.red),
-            ),
-          ),
+          error: (error, stack) {
+            return Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                'Lỗi tải đánh giá: $error',
+                style: const TextStyle(color: Colors.red),
+              ),
+            );
+          },
           data: (reviews) {
             if (reviews.isEmpty) {
               return const Padding(

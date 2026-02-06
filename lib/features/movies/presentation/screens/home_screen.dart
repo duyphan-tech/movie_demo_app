@@ -10,7 +10,6 @@ import 'package:movie_demo_app/features/movies/presentation/screens/widgets/home
 import 'package:movie_demo_app/features/movies/presentation/screens/widgets/movie_section.dart';
 
 import '../../../auth/presentation/providers/auth_controller.dart';
-import '../providers/movie_list_providers.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -61,6 +60,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           ScaffoldMessenger.of(
             context,
           ).showSnackBar(SnackBar(content: Text('Lỗi : ${err}')));
+          return null;
         },
 
         data: (homeState) => _buildBody(homeState, isLoadingMore: false),
