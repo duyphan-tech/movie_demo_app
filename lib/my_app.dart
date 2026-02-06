@@ -14,7 +14,7 @@ class MyApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final GoRouter routerConfig = ref.watch(routerProvider);
     return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: config.flavor == Flavor.dev,
 
       theme: ThemeData(
         useMaterial3: true,
