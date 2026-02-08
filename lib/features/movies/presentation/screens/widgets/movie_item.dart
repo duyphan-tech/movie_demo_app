@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:movie_demo_app/core/constants/app_constants.dart';
 import 'package:movie_demo_app/core/router/router_path.dart';
+import 'package:movie_demo_app/core/utils/widgets/custom_network_image.dart';
 import 'package:movie_demo_app/features/movies/domain/entities/movie.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/widgets/favorite_button.dart';
 
@@ -20,18 +21,13 @@ class MovieItem extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
-                  child: Image.network(
-                    '${AppConstants.imageUrl200}${movie.posterPath}',
-                    height: 160,
-                    width: 120,
+                SizedBox(
+                  height: 160,
+                  width: 120,
+                  child: CustomNetworkImage(
+                    imageUrl: '${AppConstants.imageUrl200}${movie.posterPath}',
+                    borderRadius: 8,
                     fit: BoxFit.cover,
-                    errorBuilder: (_, __, ___) => Container(
-                      height: 160,
-                      color: Colors.grey[300],
-                      child: const Icon(Icons.error),
-                    ),
                   ),
                 ),
                 const SizedBox(height: 4),

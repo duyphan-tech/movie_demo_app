@@ -1,14 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:movie_demo_app/core/router/router_path.dart';
+import 'package:movie_demo_app/features/movies/domain/entities/movie.dart';
 import 'package:movie_demo_app/features/movies/presentation/providers/home_provider.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/widgets/movie_item.dart';
-import '../../../../../core/constants/app_constants.dart';
-import '../../../domain/entities/movie.dart';
-
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 enum MovieCategory { nowPlaying, topRated, upcoming }
 
@@ -43,12 +37,15 @@ class MovieSection extends ConsumerWidget {
           height: 200,
           child: moviesValue.when(
             loading: () => const Center(child: CircularProgressIndicator()),
-            error: (err, stack) {
-              ScaffoldMessenger.of(
-                context,
-              ).showSnackBar(SnackBar(content: Text('Lỗi : ${err}')));
-              return null;
-            },
+            error: (err, stack) => const Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.error_outline, color: Colors.red),
+                  Text("Lỗi tải", style: TextStyle(fontSize: 12)),
+                ],
+              ),
+            ),
             data: (movies) => _buildData(movies),
           ),
         ),
