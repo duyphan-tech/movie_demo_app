@@ -1,28 +1,25 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:movie_demo_app/features/auth/providers/auth_providers.dart';
 
-import '../../domain/repositories/auth_repository.dart';
-import '../../providers/auth_providers.dart';
-
-class AuthController extends AsyncNotifier<bool> {
-  late AuthRepository _repo;
-
+class AuthNotifier extends AsyncNotifier<bool> {
   @override
   Future<bool> build() async {
-    _repo = ref.watch(authRepositoryProvider);
-    final token = await _repo.getSavedToken();
+    final repo = ref.watch(authRepositoryProvider);
+    final token = await repo.getSavedToken();
     return token != null && token.isNotEmpty;
   }
 
   Future<void> login(String username, String password) async {
     state = const AsyncLoading();
-    final result = await _repo.login(username, password);
+    final repo = ref.read(authRepositoryProvider);
+    final result = await repo.login(username, password);
 
     result.fold(
       (failure) {
         state = AsyncError(failure, StackTrace.current);
       },
       (userModel) async {
-        await _repo.saveToken(userModel.token ?? '');
+        await repo.saveToken(userModel.token ?? '');
         state = const AsyncData(true);
       },
     );
@@ -30,23 +27,24 @@ class AuthController extends AsyncNotifier<bool> {
 
   Future<void> register(String email, String password) async {
     state = const AsyncLoading();
-    final result = await _repo.register(email, password);
+    final repo = ref.read(authRepositoryProvider);
+    final result = await repo.register(email, password);
 
     result.fold((failure) => state = AsyncError(failure, StackTrace.current), (
       token,
     ) async {
-      await _repo.saveToken(token);
+      await repo.saveToken(token);
       state = const AsyncData(true);
     });
   }
 
   Future<void> logout() async {
     state = const AsyncLoading();
-    await _repo.logout();
+    await ref.read(authRepositoryProvider).logout();
     state = const AsyncData(false);
   }
 }
 
-final authControllerProvider = AsyncNotifierProvider<AuthController, bool>(() {
-  return AuthController();
+final authControllerProvider = AsyncNotifierProvider<AuthNotifier, bool>(() {
+  return AuthNotifier();
 });

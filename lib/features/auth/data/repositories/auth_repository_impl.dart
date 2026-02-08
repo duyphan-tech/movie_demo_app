@@ -26,7 +26,7 @@ class AuthRepositoryImpl implements AuthRepository {
   ) async {
     final result = await remoteDataSource.register(email, password);
     return result.map((token) {
-      localDataSource.saveToken(token);
+      // localDataSource.saveToken(token);
       return token;
     });
   }
@@ -38,7 +38,7 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<String?> getSavedToken() async {
-    return localDataSource.getToken();
+    return await localDataSource.getToken();
   }
 
   @override

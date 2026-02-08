@@ -10,9 +10,12 @@ import '../domain/repositories/auth_repository.dart';
 final sharedPreferencesProvider = Provider<SharedPreferences>((ref) {
   throw UnimplementedError();
 });
+final sharedPreferencesAsyncProvider = Provider<SharedPreferencesAsync>((ref) {
+  return SharedPreferencesAsync();
+});
 
 final authLocalDataSourceProvider = Provider<AuthLocalDataSource>((ref) {
-  return AuthLocalDataSource(ref.watch(sharedPreferencesProvider));
+  return AuthLocalDataSource();
 });
 
 final authRemoteDataSourceProvider = Provider<AuthRemoteDataSource>((ref) {
@@ -20,8 +23,7 @@ final authRemoteDataSourceProvider = Provider<AuthRemoteDataSource>((ref) {
 });
 
 final authRepositoryProvider = Provider<AuthRepository>((ref) {
-  return AuthRepositoryImpl(
-    ref.watch(authRemoteDataSourceProvider),
-    ref.watch(authLocalDataSourceProvider),
-  );
+  final local = ref.watch(authLocalDataSourceProvider);
+  final remote = ref.watch(authRemoteDataSourceProvider);
+  return AuthRepositoryImpl(remote, local);
 });

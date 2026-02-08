@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:movie_demo_app/features/auth/presentation/providers/auth_controller.dart';
+import 'package:movie_demo_app/features/auth/presentation/providers/auth_provider.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/favorite_movies_screen.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/rated_movies_screen_screen.dart';
 

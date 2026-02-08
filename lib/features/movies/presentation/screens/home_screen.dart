@@ -9,8 +9,6 @@ import 'package:movie_demo_app/features/movies/presentation/screens/widgets/favo
 import 'package:movie_demo_app/features/movies/presentation/screens/widgets/home_drawer.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/widgets/movie_section.dart';
 
-import '../../../auth/presentation/providers/auth_controller.dart';
-
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 

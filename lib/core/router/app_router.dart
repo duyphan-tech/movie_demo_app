@@ -4,7 +4,7 @@ import 'package:movie_demo_app/core/router/router_name.dart';
 import 'package:movie_demo_app/core/router/router_path.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/rated_movies_screen_screen.dart';
 
-import '../../features/auth/presentation/providers/auth_controller.dart';
+import '../../features/auth/presentation/providers/auth_provider.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/movies/presentation/screens/home_screen.dart';
 import 'package:go_router/go_router.dart';
