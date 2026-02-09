@@ -1,87 +1,46 @@
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:movie_demo_app/core/utils/extensions/l10n.dart';
 import 'package:movie_demo_app/features/movies/presentation/providers/movie_provider.dart';
-import 'package:movie_demo_app/features/movies/presentation/screens/rated/widgets/rated_movies_grid.dart';
+import 'package:movie_demo_app/features/movies/presentation/screens/widgets/base_movie_grid_item.dart';
+import 'package:movie_demo_app/features/movies/presentation/screens/widgets/base_movie_list_screen.dart';
 
-class RatedMoviesScreen extends HookConsumerWidget {
+class RatedMoviesScreen extends StatelessWidget {
   const RatedMoviesScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final ratedMoviesAsync = ref.watch(ratedMoviesProvider);
-
-    ref.listen(ratedMoviesProvider, (previous, next) {
-      if (next.hasError && !next.isLoading) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('${context.l10n.dataLoadError}: ${next.error}'),
-            backgroundColor: Colors.red,
-            behavior: SnackBarBehavior.floating,
+  Widget build(BuildContext context) {
+    return BaseMovieListScreen(
+      title: context.l10n.ratedMovies,
+      provider: ratedMoviesProvider,
+      emptyMessage: context.l10n.noRatedMoviesMsg,
+      emptyIcon: Icons.star_border_rounded,
+      childAspectRatio: 0.65,
+      itemBuilder: (context, movie) {
+        return BaseMovieGridItem(
+          movie: movie,
+          onTap: () {
+            // context.push(RouterPath.details, extra: {'id': movie.id});
+          },
+          overlay: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            decoration: BoxDecoration(
+              color: Colors.black54,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(Icons.star, color: Colors.amber, size: 12),
+                const SizedBox(width: 4),
+                Text(
+                  '${movie.rating}',
+                  style: const TextStyle(color: Colors.white, fontSize: 12),
+                ),
+              ],
+            ),
           ),
         );
-      }
-    });
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          context.l10n.ratedMovies,
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
-        elevation: 0,
-      ),
-      body: ratedMoviesAsync.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
-
-        error: (err, stack) => Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Icon(
-                Icons.warning_amber_rounded,
-                size: 48,
-                color: Colors.orange,
-              ),
-              const SizedBox(height: 8),
-              Text(
-                context.l10n.somethingWentWrong,
-                style: TextStyle(color: Colors.grey[600]),
-              ),
-            ],
-          ),
-        ),
-
-        data: (movies) {
-          if (movies.isEmpty) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.star_border_rounded,
-                    size: 80,
-                    color: Colors.grey[300],
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    context.l10n.noRatedMoviesMsg,
-                    style: TextStyle(
-                      color: Colors.grey[600],
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ],
-              ),
-            );
-          }
-          return RatedMoviesGrid(movies: movies);
-        },
-      ),
+      },
     );
   }
 }
