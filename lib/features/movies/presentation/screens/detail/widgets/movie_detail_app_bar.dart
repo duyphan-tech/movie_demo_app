@@ -29,7 +29,7 @@ class MovieDetailAppBar extends ConsumerWidget {
           color: Colors.white,
           onRefresh: () async {
             final int id = movie.id;
-            Future.wait([
+            await Future.wait([
               ref.refresh(movieDetailProvider(id).future),
 
               ref.refresh(reviewProvider(id).future),
