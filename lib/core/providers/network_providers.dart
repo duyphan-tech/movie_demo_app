@@ -1,6 +1,9 @@
+import 'dart:ui';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:movie_demo_app/core/providers/locale_provider.dart';
 
 import '../constants/app_constants.dart';
 import '../configs/env_config.dart';
@@ -35,7 +38,11 @@ final tmdbDioProvider = Provider.autoDispose<Dio>((ref) {
 
   final apiKey = EnvConfig.tmdbApiKey;
   final baseUrl = EnvConfig.tmdbUrl;
-
+  final localeAsync = ref.watch(localeProvider);
+  final currentLocale = localeAsync.value ?? const Locale('en');
+  final String tmdbLanguage = currentLocale.languageCode == 'vi'
+      ? 'vi-VN'
+      : 'en-US';
   if (apiKey.isEmpty) {
     throw Exception('Error: Config TMDB API Key is empty');
   }
@@ -58,7 +65,7 @@ final tmdbDioProvider = Provider.autoDispose<Dio>((ref) {
       onRequest: (options, handler) {
         options.queryParameters.addAll({
           'api_key': apiKey,
-          'language': 'en-US',
+          'language': tmdbLanguage,
         });
         return handler.next(options);
       },

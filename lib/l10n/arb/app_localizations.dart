@@ -379,6 +379,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Agree'**
   String get agree;
+
+  /// No description provided for @emptyList.
+  ///
+  /// In en, this message translates to:
+  /// **'Empty list'**
+  String get emptyList;
 }
 
 class _AppLocalizationsDelegate

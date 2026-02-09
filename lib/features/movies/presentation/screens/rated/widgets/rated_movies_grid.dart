@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movie_demo_app/features/movies/domain/entities/movie.dart';
-import 'package:movie_demo_app/features/movies/presentation/screens/widgets/rated_movie_item.dart';
+import 'package:movie_demo_app/features/movies/presentation/screens/rated/widgets/rated_movie_item.dart';
 
 class RatedMoviesGrid extends StatelessWidget {
   final List<Movie> movies;

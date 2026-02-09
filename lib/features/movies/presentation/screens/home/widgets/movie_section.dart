@@ -1,8 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
+import 'package:movie_demo_app/core/utils/extensions/l10n.dart';
 import 'package:movie_demo_app/features/movies/domain/entities/movie.dart';
 import 'package:movie_demo_app/features/movies/presentation/providers/home_provider.dart';
-import 'package:movie_demo_app/features/movies/presentation/screens/widgets/movie_item.dart';
+import 'package:movie_demo_app/features/movies/presentation/screens/home/widgets/movie_item.dart';
 
 enum MovieCategory { nowPlaying, topRated, upcoming }
 
@@ -32,28 +33,31 @@ class MovieSection extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildHeader(),
+        _buildHeader(context),
         SizedBox(
           height: 200,
           child: moviesValue.when(
             loading: () => const Center(child: CircularProgressIndicator()),
-            error: (err, stack) => const Center(
+            error: (err, stack) => Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(Icons.error_outline, color: Colors.red),
-                  Text("Lỗi tải", style: TextStyle(fontSize: 12)),
+                  Text(
+                    context.l10n.loadingError,
+                    style: TextStyle(fontSize: 12),
+                  ),
                 ],
               ),
             ),
-            data: (movies) => _buildData(movies),
+            data: (movies) => _buildData(movies, context),
           ),
         ),
       ],
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildHeader(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Row(
@@ -63,14 +67,14 @@ class MovieSection extends ConsumerWidget {
             title,
             style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
-          const Text('Xem tất cả', style: TextStyle(color: Colors.blue)),
+          Text(context.l10n.seeAll, style: TextStyle(color: Colors.blue)),
         ],
       ),
     );
   }
 
-  Widget _buildData(List<Movie> movies) {
-    if (movies.isEmpty) return const Center(child: Text("Không có phim"));
+  Widget _buildData(List<Movie> movies, BuildContext context) {
+    if (movies.isEmpty) return Center(child: Text(context.l10n.noMoviesFound));
     return ListView.separated(
       scrollDirection: Axis.horizontal,
       padding: const EdgeInsets.symmetric(horizontal: 16),

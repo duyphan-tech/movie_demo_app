@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:movie_demo_app/core/constants/app_constants.dart';
 import 'package:movie_demo_app/core/router/router_path.dart';
 import 'package:movie_demo_app/features/movies/domain/entities/movie_detail.dart';
-import 'package:movie_demo_app/features/movies/presentation/screens/widgets/app_bar_background.dart';
+import 'package:movie_demo_app/features/movies/presentation/screens/detail/widgets/app_bar_background.dart';
 
 class MovieDetailAppBar extends StatelessWidget {
   final MovieDetail movie;

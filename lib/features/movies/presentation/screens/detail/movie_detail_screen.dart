@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:movie_demo_app/core/utils/extensions/l10n.dart';
 import 'package:movie_demo_app/features/movies/presentation/providers/movie_detail_provider.dart';
-import 'package:movie_demo_app/features/movies/presentation/screens/widgets/movie_detail_app_bar.dart';
-import 'package:movie_demo_app/features/movies/presentation/screens/widgets/movie_genres_list.dart';
-import 'package:movie_demo_app/features/movies/presentation/screens/widgets/movie_info_header.dart';
-import 'package:movie_demo_app/features/movies/presentation/screens/widgets/movie_overview.dart';
-import 'package:movie_demo_app/features/movies/presentation/screens/widgets/movie_reviews_section.dart';
-import 'package:movie_demo_app/features/movies/presentation/screens/widgets/movie_stats_row.dart';
+import 'package:movie_demo_app/features/movies/presentation/screens/detail/widgets/movie_detail_app_bar.dart';
+import 'package:movie_demo_app/features/movies/presentation/screens/detail/widgets/movie_genres_list.dart';
+import 'package:movie_demo_app/features/movies/presentation/screens/detail/widgets/movie_info_header.dart';
+import 'package:movie_demo_app/features/movies/presentation/screens/detail/widgets/movie_overview.dart';
+import 'package:movie_demo_app/features/movies/presentation/screens/detail/widgets/movie_reviews_section.dart';
+import 'package:movie_demo_app/features/movies/presentation/screens/detail/widgets/movie_stats_row.dart';
 
 class MovieDetailScreen extends HookConsumerWidget {
   final int movieId;

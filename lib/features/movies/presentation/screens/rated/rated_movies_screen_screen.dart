@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:movie_demo_app/core/utils/extensions/l10n.dart';
 import 'package:movie_demo_app/features/movies/presentation/providers/movie_provider.dart';
-import 'package:movie_demo_app/features/movies/presentation/screens/widgets/rated_movies_grid.dart';
+import 'package:movie_demo_app/features/movies/presentation/screens/rated/widgets/rated_movies_grid.dart';
 
 class RatedMoviesScreen extends HookConsumerWidget {
   const RatedMoviesScreen({super.key});

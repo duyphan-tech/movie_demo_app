@@ -3,7 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:movie_demo_app/core/utils/extensions/l10n.dart';
 import 'package:movie_demo_app/features/movies/presentation/providers/movie_provider.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/widgets/empty_state.dart';
-import 'package:movie_demo_app/features/movies/presentation/screens/widgets/favorite_grid.dart';
+import 'package:movie_demo_app/features/movies/presentation/screens/favorite/widgets/favorite_grid.dart';
 
 class FavoriteMoviesScreen extends HookConsumerWidget {
   const FavoriteMoviesScreen({super.key});
@@ -16,7 +16,7 @@ class FavoriteMoviesScreen extends HookConsumerWidget {
       if (next.hasError && !next.isLoading) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Lỗi: ${next.error}'),
+            content: Text('${context.l10n.error}: ${next.error}'),
             backgroundColor: Colors.red,
             behavior: SnackBarBehavior.floating,
           ),

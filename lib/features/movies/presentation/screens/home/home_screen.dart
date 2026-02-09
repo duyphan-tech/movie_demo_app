@@ -4,9 +4,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:movie_demo_app/core/utils/extensions/l10n.dart';
 import 'package:movie_demo_app/core/utils/widgets/load_more_indicator.dart';
 import 'package:movie_demo_app/features/movies/presentation/providers/home_provider.dart';
-import 'package:movie_demo_app/features/movies/presentation/screens/widgets/home_drawer.dart';
-import 'package:movie_demo_app/features/movies/presentation/screens/widgets/movie_section.dart';
-import 'package:movie_demo_app/features/movies/presentation/screens/widgets/popular_movies_grid.dart';
+import 'package:movie_demo_app/features/movies/presentation/screens/home/widgets/home_drawer.dart';
+import 'package:movie_demo_app/features/movies/presentation/screens/home/widgets/movie_section.dart';
+import 'package:movie_demo_app/features/movies/presentation/screens/home/widgets/popular_movies_grid.dart';
 
 class HomeScreen extends HookConsumerWidget {
   const HomeScreen({super.key});

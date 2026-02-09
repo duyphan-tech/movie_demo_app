@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_demo_app/features/auth/providers/auth_providers.dart';
 import 'package:movie_demo_app/l10n/arb/app_localizations.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 const _kLocaleKey = 'APP_LOCALE';
 

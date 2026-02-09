@@ -148,4 +148,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get agree => 'Đồng ý';
+
+  @override
+  String get emptyList => 'Danh sách trống';
 }

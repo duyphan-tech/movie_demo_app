@@ -148,4 +148,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get agree => 'Agree';
+
+  @override
+  String get emptyList => 'Empty list';
 }

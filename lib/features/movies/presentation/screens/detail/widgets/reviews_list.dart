@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_demo_app/core/utils/extensions/l10n.dart';
 import 'package:movie_demo_app/features/movies/presentation/providers/movie_provider.dart';
 import 'package:movie_demo_app/features/movies/presentation/providers/review_provider.dart';
-import 'package:movie_demo_app/features/movies/presentation/screens/widgets/review_item.dart';
+import 'package:movie_demo_app/features/movies/presentation/screens/detail/widgets/review_item.dart';
 
 class ReviewsList extends ConsumerWidget {
   const ReviewsList({super.key});
@@ -33,16 +33,16 @@ class ReviewsList extends ConsumerWidget {
           error: (error, _) => Padding(
             padding: const EdgeInsets.all(16),
             child: Text(
-              'Lỗi tải đánh giá: $error',
+              '${context.l10n.loadReviewsError}: $error',
               style: const TextStyle(color: Colors.red),
             ),
           ),
           data: (reviews) {
             if (reviews.isEmpty) {
-              return const Padding(
+              return Padding(
                 padding: EdgeInsets.all(16),
                 child: Text(
-                  "Chưa có đánh giá nào. Hãy là người đầu tiên!",
+                  context.l10n.noReviewsMsg,
                   style: TextStyle(
                     color: Colors.grey,
                     fontStyle: FontStyle.italic,

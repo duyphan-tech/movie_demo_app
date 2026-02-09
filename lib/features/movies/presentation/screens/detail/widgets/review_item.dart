@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movie_demo_app/core/constants/app_constants.dart';
+import 'package:movie_demo_app/core/utils/extensions/l10n.dart';
 import 'package:movie_demo_app/features/movies/domain/entities/review.dart';
 
 class ReviewItem extends StatelessWidget {
@@ -62,7 +63,7 @@ class ReviewItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      review.author ?? 'Anonymous',
+                      review.author ?? context.l10n.anonymous,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 14,

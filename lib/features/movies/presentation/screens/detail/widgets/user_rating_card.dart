@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_demo_app/core/utils/extensions/l10n.dart';
 import 'package:movie_demo_app/features/movies/presentation/providers/movie_account_state_provider.dart';
 import 'package:movie_demo_app/features/movies/presentation/providers/movie_provider.dart';
-import 'package:movie_demo_app/features/movies/presentation/screens/widgets/rating_dialog.dart';
+import 'package:movie_demo_app/features/movies/presentation/screens/detail/widgets/rating_dialog.dart';
 
 class UserRatingCard extends ConsumerWidget {
   const UserRatingCard({super.key});

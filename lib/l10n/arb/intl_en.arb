@@ -47,4 +47,5 @@
   "logout": "Logout",
   "logoutConfirmation": "Are you sure you want to log out?",
   "agree": "Agree",
+  "emptyList": "Empty list"
 }
