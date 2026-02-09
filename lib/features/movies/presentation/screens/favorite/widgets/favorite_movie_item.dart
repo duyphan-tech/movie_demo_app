@@ -48,6 +48,7 @@ class FavoriteMovieItem extends StatelessWidget {
             right: 8,
             child: Container(
               decoration: BoxDecoration(
+                // ignore: deprecated_member_use
                 color: Colors.black.withOpacity(0.5),
                 shape: BoxShape.circle,
               ),

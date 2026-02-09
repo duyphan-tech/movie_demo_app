@@ -27,6 +27,29 @@ class FavoriteNotifier extends Notifier<Set<int>> {
     );
   }
 
+  Future<void> checkFavoriteStatus(int movieId) async {
+    final repo = ref.read(movieRepositoryProvider);
+
+    final result = await repo.getMovieAccountState(movieId);
+
+    result.fold(
+      (failure) {
+        debugPrint("Lỗi sync status: ${failure.message}");
+      },
+      (accountState) {
+        final bool isServerFavorite = accountState.favorite;
+        final bool isLocalFavorite = state.contains(movieId);
+        if (isServerFavorite && !isLocalFavorite) {
+          state = {...state, movieId};
+          debugPrint("Đã đồng bộ: Thêm $movieId vào yêu thích (từ Server)");
+        } else if (!isServerFavorite && isLocalFavorite) {
+          state = {...state}..remove(movieId);
+          debugPrint("Đã đồng bộ: Xóa $movieId khỏi yêu thích (từ Server)");
+        }
+      },
+    );
+  }
+
   Future<void> toggleFavorite(int movieId) async {
     final bool isCurrentlyFavorite = state.contains(movieId);
     final repo = ref.read(movieRepositoryProvider);

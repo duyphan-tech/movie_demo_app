@@ -14,6 +14,7 @@ class MovieGenresList extends StatelessWidget {
         return Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
           decoration: BoxDecoration(
+            // ignore: deprecated_member_use
             color: Colors.blue.withOpacity(0.1),
             borderRadius: BorderRadius.circular(20),
           ),

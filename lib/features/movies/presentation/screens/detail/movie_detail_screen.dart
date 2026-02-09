@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:movie_demo_app/core/utils/extensions/l10n.dart';
+import 'package:movie_demo_app/features/movies/presentation/providers/favorite_provider.dart';
 import 'package:movie_demo_app/features/movies/presentation/providers/movie_detail_provider.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/detail/widgets/movie_detail_app_bar.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/detail/widgets/movie_genres_list.dart';
@@ -17,6 +19,13 @@ class MovieDetailScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final asyncValue = ref.watch(movieDetailProvider(movieId));
+
+    useEffect(() {
+      Future.microtask(() {
+        ref.read(favoritesProvider.notifier).checkFavoriteStatus(movieId);
+      });
+      return null;
+    }, const []);
 
     ref.listen(movieDetailProvider(movieId), (previous, next) {
       if (next.hasError && !next.isLoading) {

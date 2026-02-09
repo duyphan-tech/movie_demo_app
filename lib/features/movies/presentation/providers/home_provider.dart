@@ -8,11 +8,12 @@ part 'home_provider.g.dart';
 class HomeNotifier extends _$HomeNotifier {
   int _popularPage = 1;
   bool _hasMorePopular = true;
-
+  bool _isFetching = false;
   @override
   Future<HomeState> build() async {
     _popularPage = 1;
     _hasMorePopular = true;
+    _isFetching = false;
     final repo = ref.watch(movieRepositoryProvider);
 
     final results = await Future.wait([
@@ -35,8 +36,9 @@ class HomeNotifier extends _$HomeNotifier {
   }
 
   Future<void> loadMorePopular() async {
-    if (state.isLoading || !_hasMorePopular) return;
-
+    if (_isFetching || !_hasMorePopular || state.isLoading) return;
+    _isFetching = true;
+    // ignore: invalid_use_of_internal_member
     state = const AsyncLoading<HomeState>().copyWithPrevious(state);
 
     try {
@@ -65,7 +67,10 @@ class HomeNotifier extends _$HomeNotifier {
         state = AsyncData(newState);
       });
     } catch (e, st) {
+      // ignore: invalid_use_of_internal_member
       state = AsyncError<HomeState>(e, st).copyWithPrevious(state);
+    } finally {
+      _isFetching = false;
     }
   }
 }

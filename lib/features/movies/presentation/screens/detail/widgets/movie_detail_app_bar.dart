@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_demo_app/core/constants/app_constants.dart';
-import 'package:movie_demo_app/core/router/router_path.dart';
 import 'package:movie_demo_app/features/movies/domain/entities/movie_detail.dart';
+import 'package:movie_demo_app/features/movies/presentation/providers/favorite_provider.dart';
+import 'package:movie_demo_app/features/movies/presentation/providers/movie_account_state_provider.dart';
+import 'package:movie_demo_app/features/movies/presentation/providers/movie_detail_provider.dart';
+import 'package:movie_demo_app/features/movies/presentation/providers/review_provider.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/detail/widgets/app_bar_background.dart';
+import 'package:movie_demo_app/features/movies/presentation/screens/widgets/animated_refresh_button.dart';
 
-class MovieDetailAppBar extends StatelessWidget {
+class MovieDetailAppBar extends ConsumerWidget {
   final MovieDetail movie;
 
   const MovieDetailAppBar({super.key, required this.movie});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SliverAppBar(
       expandedHeight: 300,
       pinned: true,
@@ -21,10 +25,18 @@ class MovieDetailAppBar extends StatelessWidget {
         onPressed: () => Navigator.pop(context),
       ),
       actions: [
-        IconButton(
-          icon: const Icon(Icons.more_horiz, color: Colors.white),
-          onPressed: () {
-            context.push(RouterPath.rated);
+        AnimatedRefreshButton(
+          color: Colors.white,
+          onRefresh: () async {
+            final int id = movie.id;
+            Future.wait([
+              ref.refresh(movieDetailProvider(id).future),
+
+              ref.refresh(reviewProvider(id).future),
+
+              ref.refresh(movieAccountStateProvider(id).future),
+              ref.read(favoritesProvider.notifier).checkFavoriteStatus(id),
+            ]);
           },
         ),
       ],

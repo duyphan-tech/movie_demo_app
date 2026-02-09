@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:movie_demo_app/core/utils/extensions/l10n.dart';
 import 'package:movie_demo_app/features/movies/presentation/providers/movie_provider.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/widgets/base_movie_grid_item.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/widgets/base_movie_list_screen.dart';
-import 'package:movie_demo_app/features/movies/presentation/screens/widgets/empty_state.dart';
-import 'package:movie_demo_app/features/movies/presentation/screens/favorite/widgets/favorite_grid.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/widgets/favorite_button.dart';
 
 class FavoriteMoviesScreen extends StatelessWidget {
@@ -27,6 +24,7 @@ class FavoriteMoviesScreen extends StatelessWidget {
           },
           overlay: Container(
             decoration: BoxDecoration(
+              // ignore: deprecated_member_use
               color: Colors.black.withOpacity(0.5),
               shape: BoxShape.circle,
             ),

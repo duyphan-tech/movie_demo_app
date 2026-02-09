@@ -22,8 +22,10 @@ class UserRatingCard extends ConsumerWidget {
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
+            // ignore: deprecated_member_use
             color: Colors.amber.withOpacity(0.1),
             borderRadius: BorderRadius.circular(12),
+            // ignore: deprecated_member_use
             border: Border.all(color: Colors.amber.withOpacity(0.3)),
           ),
           child: Row(

@@ -21,7 +21,7 @@ class LoginScreen extends HookConsumerWidget {
     final passwordFocusNode = useFocusNode();
     final formKey = useMemoized(() => GlobalKey<FormState>());
 
-    print('inside build');
+    debugPrint('inside build');
 
     ref.listen<AsyncValue<bool>>(authControllerProvider, (previous, next) {
       if (next.hasError && !next.isLoading) {
@@ -99,7 +99,7 @@ class LoginScreen extends HookConsumerWidget {
 
                       final isPasswordVisible = useState(false);
 
-                      print('inside HookConsumer - Password');
+                      debugPrint('inside HookConsumer - Password');
 
                       return CustomTextField(
                         controller: passwordController,
@@ -134,13 +134,21 @@ class LoginScreen extends HookConsumerWidget {
                       final isLoading = ref
                           .watch(authControllerProvider)
                           .isLoading;
-                      return FilledButton(
+
+                      return ElevatedButton(
                         onPressed: isLoading ? null : onSubmit,
-                        style: FilledButton.styleFrom(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.indigo,
+                          foregroundColor: Colors.white,
+
                           padding: const EdgeInsets.symmetric(vertical: 16),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
                           ),
+
+                          elevation: 4,
+                          // ignore: deprecated_member_use
+                          shadowColor: Colors.indigo.withOpacity(0.4),
                         ),
                         child: isLoading
                             ? const SizedBox(
@@ -156,6 +164,7 @@ class LoginScreen extends HookConsumerWidget {
                                 style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
+                                  inherit: true,
                                 ),
                               ),
                       );
