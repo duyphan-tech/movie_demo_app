@@ -1,13 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_riverpod/legacy.dart';
 import 'package:fpdart/fpdart.dart';
-import 'package:movie_demo_app/features/movies/domain/entities/account_state.dart';
-
-import '../../../../core/errors/failures.dart';
-import '../../data/repositories/movie_repository_impl.dart';
-import '../../domain/entities/movie.dart';
-import '../../domain/entities/movie_detail.dart';
-import '../../providers/movie_providers.dart';
+import 'package:movie_demo_app/core/errors/failures.dart';
+import 'package:movie_demo_app/features/movies/domain/entities/movie.dart';
+import 'package:movie_demo_app/features/movies/providers/movie_providers.dart';
 
 Future<List<Movie>> _fetchData(
   Future<Either<Failure, List<Movie>>> Function() useCase,

@@ -1,11 +1,11 @@
+import 'package:movie_demo_app/features/movies/domain/entities/movie.dart';
 import 'package:movie_demo_app/features/movies/providers/movie_providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import '../../domain/entities/movie.dart';
 
 part 'home_provider.g.dart';
 
 @riverpod
-class HomeViewModel extends _$HomeViewModel {
+class HomeNotifier extends _$HomeNotifier {
   int _popularPage = 1;
   bool _hasMorePopular = true;
 

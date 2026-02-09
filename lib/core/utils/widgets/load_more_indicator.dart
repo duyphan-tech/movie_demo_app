@@ -3,14 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_demo_app/features/movies/presentation/providers/home_provider.dart';
 
 class LoadMoreIndicator extends ConsumerWidget {
-  const LoadMoreIndicator();
+  const LoadMoreIndicator({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isLoadingMore = ref.watch(
-      homeViewModelProvider.select(
-        (state) => state.isLoading && state.hasValue,
-      ),
+      homeProvider.select((state) => state.isLoading && state.hasValue),
     );
 
     if (isLoadingMore) {

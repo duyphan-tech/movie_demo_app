@@ -1,12 +1,8 @@
-import 'package:dio/dio.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
+import 'package:movie_demo_app/core/errors/failures.dart';
+import 'package:movie_demo_app/core/network/api_client.dart';
 import 'package:movie_demo_app/core/network/endpoints.dart';
 import 'package:movie_demo_app/features/auth/data/models/user_model.dart';
-
-import '../../../../../core/configs/env_config.dart';
-import '../../../../../core/errors/failures.dart';
-import '../../../../../core/network/api_client.dart';
 
 abstract class AuthRemoteDataSource {
   Future<Either<Failure, UserModel>> login(String username, String password);

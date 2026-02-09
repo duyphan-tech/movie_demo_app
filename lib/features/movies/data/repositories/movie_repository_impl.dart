@@ -1,14 +1,12 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fpdart/src/either.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:movie_demo_app/core/errors/failures.dart';
+import 'package:movie_demo_app/features/movies/data/datasources/movie_remote_data_source.dart';
+import 'package:movie_demo_app/features/movies/data/models/movie_model.dart';
 import 'package:movie_demo_app/features/movies/domain/entities/account_state.dart';
+import 'package:movie_demo_app/features/movies/domain/entities/movie.dart';
 import 'package:movie_demo_app/features/movies/domain/entities/movie_detail.dart';
 import 'package:movie_demo_app/features/movies/domain/entities/review.dart';
-
-import '../../domain/entities/movie.dart';
-import '../../domain/repositories/movie_repository.dart';
-import '../datasources/movie_remote_data_source.dart';
-import '../models/movie_model.dart';
+import 'package:movie_demo_app/features/movies/domain/repositories/movie_repository.dart';
 
 class MovieRepositoryImpl implements MovieRepository {
   final MovieRemoteDataSource dataSource;

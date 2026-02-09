@@ -1,11 +1,9 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
+import 'package:movie_demo_app/core/errors/failures.dart';
+import 'package:movie_demo_app/features/auth/data/datasources/local/auth_local_data_source.dart';
+import 'package:movie_demo_app/features/auth/data/datasources/remote/auth_remote_data_source.dart';
 import 'package:movie_demo_app/features/auth/domain/entities/user.dart';
-
-import '../../../../core/errors/failures.dart';
-import '../../domain/repositories/auth_repository.dart';
-import '../datasources/local/auth_local_data_source.dart';
-import '../datasources/remote/auth_remote_data_source.dart';
+import 'package:movie_demo_app/features/auth/domain/repositories/auth_repository.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource remoteDataSource;

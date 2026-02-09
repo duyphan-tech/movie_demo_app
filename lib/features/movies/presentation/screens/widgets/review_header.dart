@@ -27,7 +27,7 @@ class ReviewHeader extends ConsumerWidget {
           IconButton(
             icon: const Icon(Icons.refresh, size: 20, color: Colors.grey),
             onPressed: () {
-              ref.read(reviewProvider(movieId).notifier).refresh();
+              ref.refresh(reviewProvider(movieId));
               ref.refresh(movieAccountStateProvider(movieId));
             },
           ),

@@ -1,15 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:movie_demo_app/core/constants/app_constants.dart';
-import 'package:movie_demo_app/core/router/router_path.dart';
-import 'package:movie_demo_app/core/utils/widgets/custom_network_image.dart';
 import 'package:movie_demo_app/core/utils/widgets/load_more_indicator.dart';
-import 'package:movie_demo_app/features/movies/domain/entities/movie.dart';
 import 'package:movie_demo_app/features/movies/presentation/providers/home_provider.dart';
-import 'package:movie_demo_app/features/movies/presentation/screens/widgets/favorite_button.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/widgets/home_drawer.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/widgets/movie_section.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/widgets/popular_movies_grid.dart';
@@ -22,16 +15,14 @@ class HomeScreen extends HookConsumerWidget {
     final scrollController = useScrollController();
 
     final isInitialLoading = ref.watch(
-      homeViewModelProvider.select(
-        (value) => value.isLoading && !value.hasValue,
-      ),
+      homeProvider.select((value) => value.isLoading && !value.hasValue),
     );
 
     useEffect(() {
       void onScroll() {
         if (scrollController.position.pixels >=
             scrollController.position.maxScrollExtent - 200) {
-          ref.read(homeViewModelProvider.notifier).loadMorePopular();
+          ref.read(homeProvider.notifier).loadMorePopular();
         }
       }
 
@@ -39,7 +30,7 @@ class HomeScreen extends HookConsumerWidget {
       return () => scrollController.removeListener(onScroll);
     }, [scrollController]);
 
-    ref.listen(homeViewModelProvider, (previous, next) {
+    ref.listen(homeProvider, (previous, next) {
       if (next.hasError && !next.isLoading) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -58,7 +49,6 @@ class HomeScreen extends HookConsumerWidget {
           : CustomScrollView(
               controller: scrollController,
               slivers: [
-                // Phần Header tĩnh - Dùng const để không bao giờ bị rebuild thừa
                 const SliverToBoxAdapter(
                   child: Column(
                     children: [
@@ -130,13 +120,13 @@ class HomeScreen extends HookConsumerWidget {
 //   void _onScroll() {
 //     if (_scrollController.position.pixels >=
 //         _scrollController.position.maxScrollExtent - 200) {
-//       ref.read(homeViewModelProvider.notifier).loadMorePopular();
+//       ref.read(homeProvider.notifier).loadMorePopular();
 //     }
 //   }
 
 //   @override
 //   Widget build(BuildContext context) {
-//     final homeStateAsync = ref.watch(homeViewModelProvider);
+//     final homeStateAsync = ref.watch(homeProvider);
 
 //     return Scaffold(
 //       drawer: const HomeDrawer(),

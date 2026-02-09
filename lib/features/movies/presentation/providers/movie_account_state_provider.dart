@@ -4,7 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'movie_account_state_provider.g.dart';
 
 @riverpod
-class MovieAccountState extends _$MovieAccountState {
+class MovieAccountStateNotifier extends _$MovieAccountStateNotifier {
   @override
   Future<AccountState> build(int movieId) async {
     final repo = ref.watch(movieRepositoryProvider);

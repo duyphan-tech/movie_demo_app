@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:movie_demo_app/features/movies/domain/entities/movie_detail.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/widgets/favorite_button.dart';
-import '../../../domain/entities/movie_detail.dart';
-import '../../providers/movie_provider.dart';
 
-class MovieInfoHeader extends ConsumerWidget {
+class MovieInfoHeader extends StatelessWidget {
   final MovieDetail movie;
 
   const MovieInfoHeader({super.key, required this.movie});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
               child: Text(
@@ -36,7 +35,10 @@ class MovieInfoHeader extends ConsumerWidget {
             const SizedBox(width: 4),
             Text(
               '${movie.voteAverage.toStringAsFixed(1)}/10 IMDb',
-              style: const TextStyle(color: Colors.grey),
+              style: const TextStyle(
+                color: Colors.grey,
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ],
         ),

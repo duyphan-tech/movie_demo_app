@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-
-import '../../../domain/entities/movie_detail.dart';
+import 'package:movie_demo_app/features/movies/domain/entities/movie_detail.dart';
 
 class MovieStatsRow extends StatelessWidget {
   final MovieDetail movie;
-
   const MovieStatsRow({super.key, required this.movie});
 
   @override

@@ -9,13 +9,13 @@ part of 'movie_account_state_provider.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(MovieAccountState)
-const movieAccountStateProvider = MovieAccountStateFamily._();
+@ProviderFor(MovieAccountStateNotifier)
+const movieAccountStateProvider = MovieAccountStateNotifierFamily._();
 
-final class MovieAccountStateProvider
-    extends $AsyncNotifierProvider<MovieAccountState, AccountState> {
-  const MovieAccountStateProvider._({
-    required MovieAccountStateFamily super.from,
+final class MovieAccountStateNotifierProvider
+    extends $AsyncNotifierProvider<MovieAccountStateNotifier, AccountState> {
+  const MovieAccountStateNotifierProvider._({
+    required MovieAccountStateNotifierFamily super.from,
     required int super.argument,
   }) : super(
          retry: null,
@@ -26,7 +26,7 @@ final class MovieAccountStateProvider
        );
 
   @override
-  String debugGetCreateSourceHash() => _$movieAccountStateHash();
+  String debugGetCreateSourceHash() => _$movieAccountStateNotifierHash();
 
   @override
   String toString() {
@@ -37,11 +37,12 @@ final class MovieAccountStateProvider
 
   @$internal
   @override
-  MovieAccountState create() => MovieAccountState();
+  MovieAccountStateNotifier create() => MovieAccountStateNotifier();
 
   @override
   bool operator ==(Object other) {
-    return other is MovieAccountStateProvider && other.argument == argument;
+    return other is MovieAccountStateNotifierProvider &&
+        other.argument == argument;
   }
 
   @override
@@ -50,18 +51,19 @@ final class MovieAccountStateProvider
   }
 }
 
-String _$movieAccountStateHash() => r'395c60c0403eb4d4efc1e1a92218b06b3addadc1';
+String _$movieAccountStateNotifierHash() =>
+    r'4822c399f463710e0e6902adc6e298b798b041a9';
 
-final class MovieAccountStateFamily extends $Family
+final class MovieAccountStateNotifierFamily extends $Family
     with
         $ClassFamilyOverride<
-          MovieAccountState,
+          MovieAccountStateNotifier,
           AsyncValue<AccountState>,
           AccountState,
           FutureOr<AccountState>,
           int
         > {
-  const MovieAccountStateFamily._()
+  const MovieAccountStateNotifierFamily._()
     : super(
         retry: null,
         name: r'movieAccountStateProvider',
@@ -70,14 +72,15 @@ final class MovieAccountStateFamily extends $Family
         isAutoDispose: true,
       );
 
-  MovieAccountStateProvider call(int movieId) =>
-      MovieAccountStateProvider._(argument: movieId, from: this);
+  MovieAccountStateNotifierProvider call(int movieId) =>
+      MovieAccountStateNotifierProvider._(argument: movieId, from: this);
 
   @override
   String toString() => r'movieAccountStateProvider';
 }
 
-abstract class _$MovieAccountState extends $AsyncNotifier<AccountState> {
+abstract class _$MovieAccountStateNotifier
+    extends $AsyncNotifier<AccountState> {
   late final _$args = ref.$arg as int;
   int get movieId => _$args;
 

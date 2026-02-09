@@ -25,23 +25,21 @@ class ReviewsList extends ConsumerWidget {
         reviewsAsync.when(
           loading: () => const Center(
             child: Padding(
-              padding: EdgeInsets.all(20.0),
+              padding: EdgeInsets.all(20),
               child: CircularProgressIndicator(),
             ),
           ),
-          error: (error, stack) {
-            return Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                'Lỗi tải đánh giá: $error',
-                style: const TextStyle(color: Colors.red),
-              ),
-            );
-          },
+          error: (error, _) => Padding(
+            padding: const EdgeInsets.all(16),
+            child: Text(
+              'Lỗi tải đánh giá: $error',
+              style: const TextStyle(color: Colors.red),
+            ),
+          ),
           data: (reviews) {
             if (reviews.isEmpty) {
               return const Padding(
-                padding: EdgeInsets.all(16.0),
+                padding: EdgeInsets.all(16),
                 child: Text(
                   "Chưa có đánh giá nào. Hãy là người đầu tiên!",
                   style: TextStyle(
@@ -56,9 +54,8 @@ class ReviewsList extends ConsumerWidget {
               physics: const NeverScrollableScrollPhysics(),
               padding: const EdgeInsets.symmetric(horizontal: 16),
               itemCount: reviews.length,
-              separatorBuilder: (context, index) => const SizedBox(height: 16),
-              itemBuilder: (context, index) =>
-                  ReviewItem(review: reviews[index]),
+              separatorBuilder: (_, __) => const SizedBox(height: 16),
+              itemBuilder: (_, index) => ReviewItem(review: reviews[index]),
             );
           },
         ),

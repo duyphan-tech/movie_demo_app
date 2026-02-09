@@ -1,12 +1,8 @@
-import 'package:flutter/material.dart';
 import 'core/configs/app_config.dart';
-import 'main.dart'; // File main gốc của bạn
+import 'main.dart';
 
 void main() {
-  var configuredApp = AppConfig(
-    flavor: Flavor.dev,
-    appName: "My App (Dev)",
-  );
+  var configuredApp = AppConfig(flavor: Flavor.dev, appName: "My App (Dev)");
 
   mainCommon(configuredApp);
 }

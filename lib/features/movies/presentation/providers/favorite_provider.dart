@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_demo_app/features/movies/providers/movie_providers.dart';
 
@@ -16,12 +17,12 @@ class FavoriteNotifier extends Notifier<Set<int>> {
 
     result.fold(
       (failure) {
-        print("Lỗi load favorites: ${failure.message}");
+        debugPrint("Lỗi load favorites: ${failure.message}");
       },
       (movies) {
         final movieIds = movies.map((e) => e.id).toSet();
         state = movieIds;
-        print("Đã load được ${movieIds.length} phim yêu thích từ Server");
+        debugPrint("Đã load được ${movieIds.length} phim yêu thích từ Server");
       },
     );
   }
@@ -50,7 +51,7 @@ class FavoriteNotifier extends Notifier<Set<int>> {
         }
       },
       (success) {
-        print("Đã update favorite cho movie $movieId thành công");
+        debugPrint("Đã update favorite cho movie $movieId thành công");
       },
     );
   }

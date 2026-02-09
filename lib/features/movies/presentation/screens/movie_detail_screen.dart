@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:movie_demo_app/features/movies/presentation/providers/movie_detail_provider.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/widgets/movie_detail_app_bar.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/widgets/movie_genres_list.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/widgets/movie_info_header.dart';
@@ -7,11 +8,7 @@ import 'package:movie_demo_app/features/movies/presentation/screens/widgets/movi
 import 'package:movie_demo_app/features/movies/presentation/screens/widgets/movie_reviews_section.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/widgets/movie_stats_row.dart';
 
-import '../../../../core/constants/app_constants.dart';
-import '../../domain/entities/movie_detail.dart';
-import '../providers/movie_detail_provider.dart';
-
-class MovieDetailScreen extends ConsumerWidget {
+class MovieDetailScreen extends HookConsumerWidget {
   final int movieId;
 
   const MovieDetailScreen({super.key, required this.movieId});
@@ -20,16 +17,38 @@ class MovieDetailScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final asyncValue = ref.watch(movieDetailProvider(movieId));
 
+    ref.listen(movieDetailProvider(movieId), (previous, next) {
+      if (next.hasError && !next.isLoading) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Lỗi: ${next.error}'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    });
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: asyncValue.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (err, stack) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text('Lỗi : ${err}')));
-          return null;
-        },
+        error: (err, stack) => Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.error_outline, size: 48, color: Colors.red),
+              const SizedBox(height: 16),
+              Text(
+                'Không thể tải thông tin phim',
+                style: TextStyle(color: Colors.grey[600]),
+              ),
+              TextButton(
+                onPressed: () => ref.refresh(movieDetailProvider(movieId)),
+                child: const Text('Thử lại'),
+              ),
+            ],
+          ),
+        ),
         data: (movie) {
           return CustomScrollView(
             slivers: [

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 class MovieOverview extends StatelessWidget {
   final String overview;
-
   const MovieOverview({super.key, required this.overview});
 
   @override
@@ -19,10 +18,7 @@ class MovieOverview extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 8),
-        Text(
-          overview,
-          style: const TextStyle(color: Colors.grey, height: 1.5),
-        ),
+        Text(overview, style: const TextStyle(color: Colors.grey, height: 1.5)),
       ],
     );
   }

@@ -1,7 +1,5 @@
 import 'dart:async';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_demo_app/features/movies/domain/entities/review.dart';
-import 'package:movie_demo_app/features/movies/domain/entities/review_response.dart';
 import 'package:movie_demo_app/features/movies/providers/movie_providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'review_provider.g.dart';

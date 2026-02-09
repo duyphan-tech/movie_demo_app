@@ -6,8 +6,23 @@ class ReviewItem extends StatelessWidget {
   final Review review;
   const ReviewItem({super.key, required this.review});
 
+  ImageProvider? _getAvatarImage() {
+    final path = review.authorDetails?.avatarPath;
+    if (path == null || path.isEmpty) return null;
+
+    if (path.startsWith('http')) {
+      return NetworkImage(path);
+    }
+    return NetworkImage('${AppConstants.imageUrl200}$path');
+  }
+
   @override
   Widget build(BuildContext context) {
+    final avatarImage = _getAvatarImage();
+    final initial = (review.author?.isNotEmpty == true)
+        ? review.author![0].toUpperCase()
+        : '?';
+
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
@@ -30,20 +45,10 @@ class ReviewItem extends StatelessWidget {
               CircleAvatar(
                 radius: 20,
                 backgroundColor: Colors.indigo.shade100,
-                backgroundImage:
-                    (review.authorDetails?.avatarPath?.isNotEmpty ?? false)
-                    ? NetworkImage(
-                        (review.authorDetails?.avatarPath?.startsWith('http') ??
-                                false)
-                            ? review.authorDetails!.avatarPath!
-                            : '${AppConstants.imageUrl200}${review.authorDetails?.avatarPath ?? ""}',
-                      )
-                    : null,
-                child: (review.authorDetails?.avatarPath?.isEmpty ?? true)
+                backgroundImage: avatarImage,
+                child: avatarImage == null
                     ? Text(
-                        (review.author?.isNotEmpty ?? false)
-                            ? (review.author?[0].toUpperCase() ?? '?')
-                            : '?',
+                        initial,
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.indigo,
@@ -52,13 +57,12 @@ class ReviewItem extends StatelessWidget {
                     : null,
               ),
               const SizedBox(width: 10),
-
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      review.author ?? '',
+                      review.author ?? 'Anonymous',
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 14,
@@ -72,7 +76,6 @@ class ReviewItem extends StatelessWidget {
                   ],
                 ),
               ),
-
               if (review.authorDetails?.rating != null)
                 Container(
                   padding: const EdgeInsets.symmetric(
@@ -101,7 +104,6 @@ class ReviewItem extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 10),
-
           Text(
             review.content ?? '',
             style: const TextStyle(

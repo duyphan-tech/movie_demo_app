@@ -1,16 +1,12 @@
-import 'package:dio/dio.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:movie_demo_app/core/configs/env_config.dart';
+import 'package:movie_demo_app/core/errors/failures.dart';
+import 'package:movie_demo_app/core/network/api_client.dart';
+import 'package:movie_demo_app/core/network/endpoints.dart';
 import 'package:movie_demo_app/features/movies/data/models/account_state_model.dart';
+import 'package:movie_demo_app/features/movies/data/models/movie_detail_model.dart';
+import 'package:movie_demo_app/features/movies/data/models/movie_model.dart';
 import 'package:movie_demo_app/features/movies/data/models/review_model.dart';
-
-import '../../../../core/errors/failures.dart';
-import '../../../../core/network/api_client.dart';
-import '../../../../core/network/endpoints.dart';
-import '../../../../core/providers/network_providers.dart';
-import '../models/movie_detail_model.dart';
-import '../models/movie_model.dart';
 
 abstract class MovieRemoteDataSource {
   Future<Either<Failure, List<MovieModel>>> getPopularMovies({int page = 1});

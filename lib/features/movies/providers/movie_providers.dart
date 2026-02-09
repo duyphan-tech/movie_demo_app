@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../core/network/api_client.dart';
 import '../../../core/providers/network_providers.dart';
 import '../data/datasources/movie_remote_data_source.dart';
 import '../data/repositories/movie_repository_impl.dart';

@@ -15,7 +15,7 @@ class MovieSection extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final moviesValue = ref.watch(
-      homeViewModelProvider.select((asyncState) {
+      homeProvider.select((asyncState) {
         return asyncState.whenData((state) {
           switch (category) {
             case MovieCategory.nowPlaying:

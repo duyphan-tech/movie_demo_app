@@ -9,33 +9,33 @@ part of 'home_provider.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(HomeViewModel)
-const homeViewModelProvider = HomeViewModelProvider._();
+@ProviderFor(HomeNotifier)
+const homeProvider = HomeNotifierProvider._();
 
-final class HomeViewModelProvider
-    extends $AsyncNotifierProvider<HomeViewModel, HomeState> {
-  const HomeViewModelProvider._()
+final class HomeNotifierProvider
+    extends $AsyncNotifierProvider<HomeNotifier, HomeState> {
+  const HomeNotifierProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'homeViewModelProvider',
+        name: r'homeProvider',
         isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$homeViewModelHash();
+  String debugGetCreateSourceHash() => _$homeNotifierHash();
 
   @$internal
   @override
-  HomeViewModel create() => HomeViewModel();
+  HomeNotifier create() => HomeNotifier();
 }
 
-String _$homeViewModelHash() => r'21fe3b37a88f1aa8ebf16f5a895c0eede2ee798c';
+String _$homeNotifierHash() => r'7a9ab9984f2cb5d9356ad7b57fe63569c2630799';
 
-abstract class _$HomeViewModel extends $AsyncNotifier<HomeState> {
+abstract class _$HomeNotifier extends $AsyncNotifier<HomeState> {
   FutureOr<HomeState> build();
   @$mustCallSuper
   @override

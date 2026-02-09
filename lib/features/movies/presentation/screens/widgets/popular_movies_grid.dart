@@ -12,13 +12,13 @@ class PopularMoviesGrid extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Chỉ lắng nghe danh sách popular
     final popularState = ref.watch(
-      homeViewModelProvider.select((state) => state.value?.popular),
+      homeProvider.select((state) => state.value?.popular),
     );
 
-    if (popularState == null)
+    if (popularState == null) {
       return const SliverToBoxAdapter(child: SizedBox());
+    }
 
     return SliverPadding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
