@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:movie_demo_app/core/providers/locale_provider.dart';
+import 'package:movie_demo_app/core/utils/extensions/l10n.dart';
 import 'package:movie_demo_app/features/auth/presentation/providers/auth_provider.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/favorite_movies_screen.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/rated_movies_screen_screen.dart';
@@ -9,6 +11,10 @@ class HomeDrawer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final localeAsync = ref.watch(localeProvider);
+    final currentLocale = localeAsync.value ?? const Locale('en');
+
+    final localeNotifier = ref.read(localeProvider.notifier);
     return Drawer(
       child: Column(
         children: [
@@ -38,7 +44,7 @@ class HomeDrawer extends ConsumerWidget {
               children: [
                 ListTile(
                   leading: const Icon(Icons.home),
-                  title: const Text('Trang chủ'),
+                  title: Text(context.l10n.homePage),
                   onTap: () {
                     Navigator.pop(context);
                   },
@@ -46,7 +52,7 @@ class HomeDrawer extends ConsumerWidget {
 
                 ListTile(
                   leading: const Icon(Icons.favorite, color: Colors.red),
-                  title: const Text('Phim yêu thích'),
+                  title: Text(context.l10n.favoriteMovies),
                   onTap: () {
                     Navigator.pop(context);
                     Navigator.push(
@@ -60,27 +66,51 @@ class HomeDrawer extends ConsumerWidget {
 
                 ListTile(
                   leading: const Icon(Icons.star, color: Colors.amber),
-                  title: const Text('Phim đã đánh giá'),
+                  title: Text(context.l10n.ratedMovies),
                   onTap: () {
                     Navigator.pop(context);
-                    // Navigate sang màn hình Rated
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => const RatedMoviesScreen(),
-                      ), // Màn hình bạn tạo ở bài trước
+                      ),
                     );
                   },
                 ),
 
-                const Divider(),
+                ExpansionTile(
+                  leading: const Icon(Icons.language, color: Colors.blue),
+                  title: Text(context.l10n.language),
+                  subtitle: Text(
+                    localeNotifier.getLanguageName(currentLocale.languageCode),
+                    style: const TextStyle(fontSize: 12, color: Colors.grey),
+                  ),
+                  children: localeNotifier.supportedLocales.map((locale) {
+                    final isSelected =
+                        currentLocale.languageCode == locale.languageCode;
 
-                ListTile(
-                  leading: const Icon(Icons.settings),
-                  title: const Text('Cài đặt'),
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
+                    return ListTile(
+                      contentPadding: const EdgeInsets.only(
+                        left: 72,
+                        right: 24,
+                      ),
+                      title: Text(
+                        localeNotifier.getLanguageName(locale.languageCode),
+                      ),
+                      trailing: isSelected
+                          ? const Icon(
+                              Icons.check,
+                              color: Colors.green,
+                              size: 20,
+                            )
+                          : null,
+                      selected: isSelected,
+                      onTap: () {
+                        ref.read(localeProvider.notifier).setLocale(locale);
+                        Navigator.pop(context);
+                      },
+                    );
+                  }).toList(),
                 ),
               ],
             ),
@@ -88,25 +118,25 @@ class HomeDrawer extends ConsumerWidget {
 
           ListTile(
             leading: const Icon(Icons.logout, color: Colors.grey),
-            title: const Text('Đăng xuất'),
+            title: Text(context.l10n.logout),
             onTap: () {
               showDialog(
                 context: context,
                 builder: (dialogContext) => AlertDialog(
-                  title: const Text('Đăng xuất'),
-                  content: const Text('Bạn có chắc chắn muốn đăng xuất không?'),
+                  title: Text(context.l10n.logout),
+                  content: Text(context.l10n.logoutConfirmation),
                   actions: [
                     TextButton(
                       onPressed: () => Navigator.of(dialogContext).pop(),
-                      child: const Text('Hủy'),
+                      child: Text(context.l10n.cancel),
                     ),
                     TextButton(
                       onPressed: () {
                         Navigator.of(dialogContext).pop();
                         ref.read(authControllerProvider.notifier).logout();
                       },
-                      child: const Text(
-                        'Đồng ý',
+                      child: Text(
+                        context.l10n.agree,
                         style: TextStyle(color: Colors.red),
                       ),
                     ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:movie_demo_app/core/utils/extensions/l10n.dart';
 import 'package:movie_demo_app/core/utils/widgets/load_more_indicator.dart';
 import 'package:movie_demo_app/features/movies/presentation/providers/home_provider.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/widgets/home_drawer.dart';
@@ -43,27 +44,27 @@ class HomeScreen extends HookConsumerWidget {
 
     return Scaffold(
       drawer: const HomeDrawer(),
-      appBar: AppBar(title: const Text('Movies Dashboard')),
+      appBar: AppBar(title: Text(context.l10n.movieOverviewTitle)),
       body: isInitialLoading
           ? const Center(child: CircularProgressIndicator())
           : CustomScrollView(
               controller: scrollController,
               slivers: [
-                const SliverToBoxAdapter(
+                SliverToBoxAdapter(
                   child: Column(
                     children: [
                       MovieSection(
-                        title: "Phim đang chiếu",
+                        title: context.l10n.nowPlaying,
                         category: MovieCategory.nowPlaying,
                       ),
                       SizedBox(height: 10),
                       MovieSection(
-                        title: "Đánh giá cao",
+                        title: context.l10n.topRated,
                         category: MovieCategory.topRated,
                       ),
                       SizedBox(height: 10),
                       MovieSection(
-                        title: "Sắp ra mắt",
+                        title: context.l10n.upcoming,
                         category: MovieCategory.upcoming,
                       ),
                       SizedBox(height: 10),
@@ -72,7 +73,7 @@ class HomeScreen extends HookConsumerWidget {
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            "Phổ biến",
+                            context.l10n.popular,
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,

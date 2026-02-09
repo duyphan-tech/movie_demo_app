@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:movie_demo_app/core/utils/extensions/l10n.dart';
 import 'package:movie_demo_app/features/movies/presentation/providers/movie_account_state_provider.dart';
 import 'package:movie_demo_app/features/movies/presentation/providers/movie_provider.dart';
 import 'package:movie_demo_app/features/movies/providers/movie_providers.dart';
@@ -15,7 +16,7 @@ class RatingDialog extends HookConsumerWidget {
     final currentRating = useState(initialRating);
 
     return AlertDialog(
-      title: const Text('Đánh giá phim'),
+      title: Text(context.l10n.movieReviews),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -55,24 +56,31 @@ class RatingDialog extends HookConsumerWidget {
               result.fold(
                 (error) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Lỗi xóa: ${error.message}')),
+                    SnackBar(
+                      content: Text(
+                        '${context.l10n.delelteError}: ${error.message}',
+                      ),
+                    ),
                   );
                   ref.invalidate(movieAccountStateProvider(movieId));
                 },
                 (success) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Đã xóa đánh giá!')),
+                    SnackBar(content: Text(context.l10n.reviewRemoved)),
                   );
                 },
               );
             }
           },
           style: TextButton.styleFrom(foregroundColor: Colors.red),
-          child: const Text('Xóa'),
+          child: Text(context.l10n.delete),
         ),
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Hủy', style: TextStyle(color: Colors.grey)),
+          child: Text(
+            context.l10n.cancel,
+            style: TextStyle(color: Colors.grey),
+          ),
         ),
         TextButton(
           onPressed: () async {
@@ -84,8 +92,8 @@ class RatingDialog extends HookConsumerWidget {
                 .read(movieRepositoryProvider)
                 .rateMovie(movieId: movieId, value: currentRating.value);
           },
-          child: const Text(
-            'Gửi',
+          child: Text(
+            context.l10n.send,
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),

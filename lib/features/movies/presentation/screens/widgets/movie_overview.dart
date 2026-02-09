@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movie_demo_app/core/utils/extensions/l10n.dart';
 
 class MovieOverview extends StatelessWidget {
   final String overview;
@@ -9,8 +10,8 @@ class MovieOverview extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Description',
+        Text(
+          context.l10n.description,
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,

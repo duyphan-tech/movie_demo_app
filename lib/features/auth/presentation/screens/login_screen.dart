@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:movie_demo_app/core/utils/extensions/l10n.dart';
 import 'package:movie_demo_app/core/utils/widgets/custom_text_field.dart';
 import 'package:movie_demo_app/features/auth/presentation/providers/auth_provider.dart';
 
@@ -83,7 +84,7 @@ class LoginScreen extends HookConsumerWidget {
                         enabled: !isLoading,
                         prefixIcon: Icons.person_outline,
                         validator: (value) => (value == null || value.isEmpty)
-                            ? 'Vui lòng nhập tài khoản'
+                            ? context.l10n.enterAccountError
                             : null,
                       );
                     },
@@ -110,7 +111,7 @@ class LoginScreen extends HookConsumerWidget {
                         prefixIcon: Icons.lock_outline,
                         validator: (value) =>
                             (value == null || value.length < 3)
-                            ? 'Mật khẩu quá ngắn'
+                            ? context.l10n.passwordTooShortError
                             : null,
                         onFieldSubmitted: (_) => onSubmit(),
                         suffixIcon: IconButton(
@@ -151,7 +152,7 @@ class LoginScreen extends HookConsumerWidget {
                                 ),
                               )
                             : Text(
-                                'ĐĂNG NHẬP',
+                                context.l10n.signIn,
                                 style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,

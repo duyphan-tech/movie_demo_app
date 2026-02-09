@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:movie_demo_app/core/utils/extensions/l10n.dart';
 import 'package:movie_demo_app/features/movies/presentation/providers/movie_provider.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/widgets/rated_movies_grid.dart';
 
@@ -15,7 +15,7 @@ class RatedMoviesScreen extends HookConsumerWidget {
       if (next.hasError && !next.isLoading) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Lỗi tải dữ liệu: ${next.error}'),
+            content: Text('${context.l10n.dataLoadError}: ${next.error}'),
             backgroundColor: Colors.red,
             behavior: SnackBarBehavior.floating,
           ),
@@ -25,8 +25,8 @@ class RatedMoviesScreen extends HookConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "Phim đã đánh giá",
+        title: Text(
+          context.l10n.ratedMovies,
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
@@ -48,7 +48,7 @@ class RatedMoviesScreen extends HookConsumerWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                'Đã có lỗi xảy ra',
+                context.l10n.somethingWentWrong,
                 style: TextStyle(color: Colors.grey[600]),
               ),
             ],
@@ -68,7 +68,7 @@ class RatedMoviesScreen extends HookConsumerWidget {
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    "Bạn chưa đánh giá phim nào.",
+                    context.l10n.noRatedMoviesMsg,
                     style: TextStyle(
                       color: Colors.grey[600],
                       fontSize: 16,

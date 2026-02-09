@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:movie_demo_app/core/utils/extensions/l10n.dart';
 import 'package:movie_demo_app/features/movies/presentation/providers/movie_detail_provider.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/widgets/movie_detail_app_bar.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/widgets/movie_genres_list.dart';
@@ -21,7 +22,7 @@ class MovieDetailScreen extends HookConsumerWidget {
       if (next.hasError && !next.isLoading) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Lỗi: ${next.error}'),
+            content: Text('${context.l10n.dataLoadError}: ${next.error}'),
             backgroundColor: Colors.red,
           ),
         );
@@ -39,12 +40,12 @@ class MovieDetailScreen extends HookConsumerWidget {
               const Icon(Icons.error_outline, size: 48, color: Colors.red),
               const SizedBox(height: 16),
               Text(
-                'Không thể tải thông tin phim',
+                context.l10n.cannotLoadMovieInfo,
                 style: TextStyle(color: Colors.grey[600]),
               ),
               TextButton(
                 onPressed: () => ref.refresh(movieDetailProvider(movieId)),
-                child: const Text('Thử lại'),
+                child: Text(context.l10n.retry),
               ),
             ],
           ),

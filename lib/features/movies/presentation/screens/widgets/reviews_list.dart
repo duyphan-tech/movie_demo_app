@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:movie_demo_app/core/utils/extensions/l10n.dart';
 import 'package:movie_demo_app/features/movies/presentation/providers/movie_provider.dart';
 import 'package:movie_demo_app/features/movies/presentation/providers/review_provider.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/widgets/review_item.dart';
@@ -15,10 +16,10 @@ class ReviewsList extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Padding(
+        Padding(
           padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: Text(
-            "Cộng đồng",
+            context.l10n.community,
             style: TextStyle(color: Colors.grey, fontSize: 12),
           ),
         ),

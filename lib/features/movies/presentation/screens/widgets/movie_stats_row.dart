@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movie_demo_app/core/utils/extensions/l10n.dart';
 import 'package:movie_demo_app/features/movies/domain/entities/movie_detail.dart';
 
 class MovieStatsRow extends StatelessWidget {
@@ -10,9 +11,9 @@ class MovieStatsRow extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        _buildInfoItem('Length', '${movie.runtime} min'),
-        _buildInfoItem('Language', 'English'),
-        _buildInfoItem('Rating', 'PG-13'),
+        _buildInfoItem(context.l10n.duration, '${movie.runtime} min'),
+        _buildInfoItem(context.l10n.language, 'English'),
+        _buildInfoItem(context.l10n.reviews, 'PG-13'),
       ],
     );
   }

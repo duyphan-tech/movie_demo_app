@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:movie_demo_app/core/utils/extensions/l10n.dart';
 import 'package:movie_demo_app/features/movies/presentation/providers/movie_provider.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/widgets/empty_state.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/widgets/favorite_grid.dart';
@@ -25,8 +26,8 @@ class FavoriteMoviesScreen extends HookConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "Danh sách yêu thích",
+        title: Text(
+          context.l10n.favoriteList,
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
@@ -44,7 +45,7 @@ class FavoriteMoviesScreen extends HookConsumerWidget {
               const Icon(Icons.error_outline, size: 48, color: Colors.red),
               const SizedBox(height: 16),
               Text(
-                'Đã xảy ra lỗi tải dữ liệu',
+                context.l10n.dataLoadError,
                 style: TextStyle(color: Colors.grey[600]),
               ),
             ],

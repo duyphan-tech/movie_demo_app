@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_riverpod/legacy.dart';
 import 'package:go_router/go_router.dart';
+import 'package:movie_demo_app/core/providers/locale_provider.dart';
 import 'package:movie_demo_app/core/router/app_router.dart';
 import 'package:movie_demo_app/l10n/arb/app_localizations.dart';
 
 import 'core/configs/app_config.dart';
-
-final localeProvider = StateProvider<Locale>((ref) {
-  return const Locale('en');
-});
 
 class MyApp extends ConsumerWidget {
   final AppConfig config;
@@ -19,19 +15,34 @@ class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final GoRouter routerConfig = ref.watch(routerProvider);
-    final currentLocale = ref.watch(localeProvider);
+    final localeAsync = ref.watch(localeProvider);
+
+    return localeAsync.when(
+      loading: () => const MaterialApp(
+        home: Scaffold(body: Center(child: CircularProgressIndicator())),
+      ),
+
+      error: (err, stack) =>
+          _buildMaterialApp(const Locale('vi'), routerConfig, config),
+
+      data: (locale) => _buildMaterialApp(locale, routerConfig, config),
+    );
+  }
+
+  Widget _buildMaterialApp(Locale locale, GoRouter router, AppConfig config) {
     return MaterialApp.router(
       debugShowCheckedModeBanner: config.flavor == Flavor.dev,
-      locale: currentLocale,
+
+      locale: locale,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
+
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
           seedColor: Colors.indigo,
           brightness: Brightness.light,
         ),
-
         inputDecorationTheme: InputDecorationTheme(
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
           filled: true,
@@ -55,8 +66,7 @@ class MyApp extends ConsumerWidget {
           ),
         ),
       ),
-
-      routerConfig: routerConfig,
+      routerConfig: router,
     );
   }
 }
