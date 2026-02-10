@@ -1,3 +1,4 @@
+import 'package:movie_demo_app/core/providers/locale_provider.dart';
 import 'package:movie_demo_app/features/movies/domain/entities/movie.dart';
 import 'package:movie_demo_app/features/movies/domain/repositories/movie_repository.dart';
 import 'package:movie_demo_app/features/movies/providers/movie_providers.dart';
@@ -14,6 +15,7 @@ class HomeNotifier extends _$HomeNotifier {
   bool _isFetching = false;
   @override
   Future<HomeState> build() async {
+    ref.watch(localeProvider);
     _popularPage = 1;
     _hasMorePopular = true;
     _isFetching = false;
