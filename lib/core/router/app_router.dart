@@ -2,17 +2,16 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_demo_app/core/router/router_name.dart';
 import 'package:movie_demo_app/core/router/router_path.dart';
+import 'package:movie_demo_app/features/auth/presentation/providers/auth_provider.dart';
+import 'package:movie_demo_app/features/auth/presentation/screens/login_screen.dart';
+import 'package:movie_demo_app/features/movies/presentation/screens/detail/movie_detail_screen.dart';
+import 'package:movie_demo_app/features/movies/presentation/screens/home/home_screen.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/rated/rated_movies_screen_screen.dart';
 
-import '../../features/auth/presentation/providers/auth_provider.dart';
-import '../../features/auth/presentation/screens/login_screen.dart';
-import '../../features/movies/presentation/screens/home/home_screen.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../features/movies/presentation/screens/detail/movie_detail_screen.dart';
-
 final routerProvider = Provider<GoRouter>((ref) {
-  final authState = ref.watch(authControllerProvider);
+  final authState = ref.watch(authProvider);
 
   return GoRouter(
     initialLocation: RouterPath.login,

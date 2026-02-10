@@ -133,7 +133,7 @@ class HomeDrawer extends ConsumerWidget {
                     TextButton(
                       onPressed: () {
                         Navigator.of(dialogContext).pop();
-                        ref.read(authControllerProvider.notifier).logout();
+                        ref.read(authProvider.notifier).logout();
                       },
                       child: Text(
                         context.l10n.agree,

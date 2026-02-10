@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:movie_demo_app/features/movies/domain/repositories/movie_repository.dart';
 import 'package:movie_demo_app/features/movies/providers/movie_providers.dart';
 
 class FavoriteNotifier extends Notifier<Set<int>> {
+  MovieRepository get _movieRepo => ref.read(movieRepositoryProvider);
   @override
   Set<int> build() {
     Future.microtask(() => _loadInitialFavorites());
@@ -11,9 +13,7 @@ class FavoriteNotifier extends Notifier<Set<int>> {
 
   bool isFavorite(int movieId) => state.contains(movieId);
   Future<void> _loadInitialFavorites() async {
-    final repo = ref.read(movieRepositoryProvider);
-
-    final result = await repo.getFavoriteMovies();
+    final result = await _movieRepo.getFavoriteMovies();
 
     result.fold(
       (failure) {
@@ -28,9 +28,7 @@ class FavoriteNotifier extends Notifier<Set<int>> {
   }
 
   Future<void> checkFavoriteStatus(int movieId) async {
-    final repo = ref.read(movieRepositoryProvider);
-
-    final result = await repo.getMovieAccountState(movieId);
+    final result = await _movieRepo.getMovieAccountState(movieId);
 
     result.fold(
       (failure) {
@@ -52,7 +50,6 @@ class FavoriteNotifier extends Notifier<Set<int>> {
 
   Future<void> toggleFavorite(int movieId) async {
     final bool isCurrentlyFavorite = state.contains(movieId);
-    final repo = ref.read(movieRepositoryProvider);
 
     if (isCurrentlyFavorite) {
       state = {...state}..remove(movieId);
@@ -60,7 +57,7 @@ class FavoriteNotifier extends Notifier<Set<int>> {
       state = {...state, movieId};
     }
 
-    final result = await repo.markAsFavorite(
+    final result = await _movieRepo.markAsFavorite(
       movieId: movieId,
       isFavorite: !isCurrentlyFavorite,
     );

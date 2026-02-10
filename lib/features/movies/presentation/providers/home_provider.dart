@@ -1,4 +1,5 @@
 import 'package:movie_demo_app/features/movies/domain/entities/movie.dart';
+import 'package:movie_demo_app/features/movies/domain/repositories/movie_repository.dart';
 import 'package:movie_demo_app/features/movies/providers/movie_providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -6,6 +7,8 @@ part 'home_provider.g.dart';
 
 @riverpod
 class HomeNotifier extends _$HomeNotifier {
+  MovieRepository get _movieRepo => ref.read(movieRepositoryProvider);
+
   int _popularPage = 1;
   bool _hasMorePopular = true;
   bool _isFetching = false;
@@ -14,13 +17,12 @@ class HomeNotifier extends _$HomeNotifier {
     _popularPage = 1;
     _hasMorePopular = true;
     _isFetching = false;
-    final repo = ref.watch(movieRepositoryProvider);
 
     final results = await Future.wait([
-      repo.getNowPlayingMovies(),
-      repo.getTopRatedMovies(),
-      repo.getUpcomingMovies(),
-      repo.getPopularMovies(page: 1),
+      _movieRepo.getNowPlayingMovies(),
+      _movieRepo.getTopRatedMovies(),
+      _movieRepo.getUpcomingMovies(),
+      _movieRepo.getPopularMovies(page: 1),
     ]);
 
     List<Movie> unwrap(dynamic result) {
@@ -42,10 +44,9 @@ class HomeNotifier extends _$HomeNotifier {
     state = const AsyncLoading<HomeState>().copyWithPrevious(state);
 
     try {
-      final repo = ref.read(movieRepositoryProvider);
       final nextPage = _popularPage + 1;
 
-      final result = await repo.getPopularMovies(page: nextPage);
+      final result = await _movieRepo.getPopularMovies(page: nextPage);
 
       result.fold((l) => state = AsyncError(l.message, StackTrace.current), (
         newMovies,

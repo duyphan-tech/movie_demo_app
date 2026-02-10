@@ -1,25 +1,26 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:movie_demo_app/features/auth/domain/repositories/auth_repository.dart';
 import 'package:movie_demo_app/features/auth/providers/auth_providers.dart';
 
 class AuthNotifier extends AsyncNotifier<bool> {
+  AuthRepository get _repo => ref.read(authRepositoryProvider);
+
   @override
   Future<bool> build() async {
-    final repo = ref.watch(authRepositoryProvider);
-    final token = await repo.getSavedToken();
+    final token = await _repo.getSavedToken();
     return token != null && token.isNotEmpty;
   }
 
   Future<void> login(String username, String password) async {
     state = const AsyncLoading();
-    final repo = ref.read(authRepositoryProvider);
-    final result = await repo.login(username, password);
+    final result = await _repo.login(username, password);
 
     result.fold(
       (failure) {
         state = AsyncError(failure, StackTrace.current);
       },
       (userModel) async {
-        await repo.saveToken(userModel.token ?? '');
+        await _repo.saveToken(userModel.token ?? '');
         state = const AsyncData(true);
       },
     );
@@ -27,13 +28,12 @@ class AuthNotifier extends AsyncNotifier<bool> {
 
   Future<void> register(String email, String password) async {
     state = const AsyncLoading();
-    final repo = ref.read(authRepositoryProvider);
-    final result = await repo.register(email, password);
+    final result = await _repo.register(email, password);
 
     result.fold((failure) => state = AsyncError(failure, StackTrace.current), (
       token,
     ) async {
-      await repo.saveToken(token);
+      await _repo.saveToken(token);
       state = const AsyncData(true);
     });
   }
@@ -45,6 +45,6 @@ class AuthNotifier extends AsyncNotifier<bool> {
   }
 }
 
-final authControllerProvider = AsyncNotifierProvider<AuthNotifier, bool>(() {
+final authProvider = AsyncNotifierProvider<AuthNotifier, bool>(() {
   return AuthNotifier();
 });

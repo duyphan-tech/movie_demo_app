@@ -23,7 +23,7 @@ class LoginScreen extends HookConsumerWidget {
 
     debugPrint('inside build');
 
-    ref.listen<AsyncValue<bool>>(authControllerProvider, (previous, next) {
+    ref.listen<AsyncValue<bool>>(authProvider, (previous, next) {
       if (next.hasError && !next.isLoading) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -43,7 +43,7 @@ class LoginScreen extends HookConsumerWidget {
         FocusScope.of(context).unfocus();
         final email = emailController.text.trim();
         final password = passwordController.text.trim();
-        ref.read(authControllerProvider.notifier).login(email, password);
+        ref.read(authProvider.notifier).login(email, password);
       }
     }
 
@@ -69,9 +69,7 @@ class LoginScreen extends HookConsumerWidget {
 
                   Consumer(
                     builder: (context, ref, child) {
-                      final isLoading = ref
-                          .watch(authControllerProvider)
-                          .isLoading;
+                      final isLoading = ref.watch(authProvider).isLoading;
                       return CustomTextField(
                         controller: emailController,
                         onFieldSubmitted: (_) {
@@ -93,9 +91,7 @@ class LoginScreen extends HookConsumerWidget {
 
                   HookConsumer(
                     builder: (context, ref, child) {
-                      final isLoading = ref
-                          .watch(authControllerProvider)
-                          .isLoading;
+                      final isLoading = ref.watch(authProvider).isLoading;
 
                       final isPasswordVisible = useState(false);
 
@@ -131,9 +127,7 @@ class LoginScreen extends HookConsumerWidget {
 
                   Consumer(
                     builder: (context, ref, child) {
-                      final isLoading = ref
-                          .watch(authControllerProvider)
-                          .isLoading;
+                      final isLoading = ref.watch(authProvider).isLoading;
 
                       return ElevatedButton(
                         onPressed: isLoading ? null : onSubmit,
