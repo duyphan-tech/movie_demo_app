@@ -12,13 +12,11 @@ class HomeNotifier extends _$HomeNotifier {
 
   int _popularPage = 1;
   bool _hasMorePopular = true;
-  bool _isFetching = false;
   @override
   Future<HomeState> build() async {
     ref.watch(localeProvider);
     _popularPage = 1;
     _hasMorePopular = true;
-    _isFetching = false;
 
     final results = await Future.wait([
       _movieRepo.getNowPlayingMovies(),
@@ -40,8 +38,7 @@ class HomeNotifier extends _$HomeNotifier {
   }
 
   Future<void> loadMorePopular() async {
-    if (_isFetching || !_hasMorePopular || state.isLoading) return;
-    _isFetching = true;
+    if (!_hasMorePopular || state.isLoading) return;
     // ignore: invalid_use_of_internal_member
     state = const AsyncLoading<HomeState>().copyWithPrevious(state);
 
@@ -72,8 +69,6 @@ class HomeNotifier extends _$HomeNotifier {
     } catch (e, st) {
       // ignore: invalid_use_of_internal_member
       state = AsyncError<HomeState>(e, st).copyWithPrevious(state);
-    } finally {
-      _isFetching = false;
     }
   }
 }
