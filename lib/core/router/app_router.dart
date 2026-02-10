@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:movie_demo_app/core/constants/app_constants.dart';
 import 'package:movie_demo_app/core/router/router_name.dart';
 import 'package:movie_demo_app/core/router/router_path.dart';
 import 'package:movie_demo_app/features/auth/presentation/providers/auth_provider.dart';
@@ -11,31 +13,63 @@ import 'package:movie_demo_app/features/movies/presentation/screens/rated/rated_
 import 'package:go_router/go_router.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
-  final authState = ref.watch(authProvider);
+  debugPrint(' 🔥🔥🔥 ROUTER PROVIDER BUILT! (Time: ${DateTime.now()})');
+  final authStateListenable = ValueNotifier<AsyncValue<bool>>(
+    const AsyncLoading(),
+  );
+
+  ref.listen<AsyncValue<bool>>(authProvider, (previous, next) {
+    debugPrint(' 👀 Auth changed: ${next.value}');
+    authStateListenable.value = next;
+  }, fireImmediately: true);
+
+  ref.onDispose(() {
+    debugPrint(' 🗑️ Router Provider Disposed');
+    authStateListenable.dispose();
+  });
 
   return GoRouter(
-    initialLocation: RouterPath.login,
+    initialLocation: RouterPath.initial,
     debugLogDiagnostics: true,
 
-    refreshListenable: AuthStateListenable(authState),
-
+    refreshListenable: authStateListenable,
     redirect: (context, state) {
-      if (authState.isLoading || authState.hasError) return null;
+      final authState = authStateListenable.value;
 
-      final isLoggedIn = authState.asData?.value ?? false;
-      final isLoginRoute = state.matchedLocation == RouterPath.login;
-
-      if (isLoggedIn && isLoginRoute) {
-        return RouterPath.home;
+      if (authState.isLoading) {
+        if (state.matchedLocation != RouterPath.initial) {
+          return RouterPath.initial;
+        }
+        return null;
       }
 
-      if (!isLoggedIn && !isLoginRoute) {
+      if (authState.hasError) {
         return RouterPath.login;
+      }
+
+      final isLoggedIn = authState.value ?? false;
+      final isLoginRoute = state.matchedLocation == RouterPath.login;
+      final isInitialRoute = state.matchedLocation == RouterPath.initial;
+
+      if (isLoggedIn) {
+        if (isLoginRoute || isInitialRoute) {
+          return RouterPath.home;
+        }
+      } else {
+        if (!isLoginRoute) {
+          return RouterPath.login;
+        }
       }
 
       return null;
     },
     routes: [
+      GoRoute(
+        path: RouterPath.initial,
+        name: RouterName.initial,
+        builder: (context, state) =>
+            const Scaffold(body: Center(child: CircularProgressIndicator())),
+      ),
       GoRoute(
         path: RouterPath.login,
         name: RouterName.login,
@@ -60,15 +94,32 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: RouterPath.rated,
         name: RouterName.rated,
         builder: (context, state) {
-          return RatedMoviesScreen();
+          return const RatedMoviesScreen();
         },
       ),
     ],
+    errorBuilder: (context, state) {
+      return Scaffold(
+        appBar: AppBar(title: const Text('Page Not Found')),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                '404',
+                style: TextStyle(fontSize: 48, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 8),
+              Text('Page ${state.uri.path} not found'),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () => context.go(RouterPath.home),
+                child: const Text('Go Home'),
+              ),
+            ],
+          ),
+        ),
+      );
+    },
   );
 });
-
-class AuthStateListenable extends ChangeNotifier {
-  AuthStateListenable(AsyncValue<bool> state) {
-    if (!state.isLoading) notifyListeners();
-  }
-}
