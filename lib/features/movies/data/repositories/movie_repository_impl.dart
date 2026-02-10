@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:movie_demo_app/core/errors/failures.dart';
 import 'package:movie_demo_app/features/movies/data/datasources/movie_remote_data_source.dart';
@@ -50,6 +51,7 @@ class MovieRepositoryImpl implements MovieRepository {
   Future<Either<Failure, bool>> markAsFavorite({
     required int movieId,
     required bool isFavorite,
+    CancelToken? cancelToken,
   }) async {
     return dataSource.markAsFavorite(movieId: movieId, isFavorite: isFavorite);
   }

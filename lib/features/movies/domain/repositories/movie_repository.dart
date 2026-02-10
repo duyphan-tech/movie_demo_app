@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:movie_demo_app/features/movies/domain/entities/account_state.dart';
 import 'package:movie_demo_app/features/movies/domain/entities/review.dart';
@@ -16,6 +17,7 @@ abstract class MovieRepository {
   Future<Either<Failure, bool>> markAsFavorite({
     required int movieId,
     required bool isFavorite,
+    CancelToken? cancelToken,
   });
   Future<Either<Failure, bool>> rateMovie({
     required int movieId,

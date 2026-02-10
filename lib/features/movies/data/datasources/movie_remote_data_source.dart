@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:movie_demo_app/core/configs/env_config.dart';
 import 'package:movie_demo_app/core/errors/failures.dart';
@@ -24,6 +25,7 @@ abstract class MovieRemoteDataSource {
   Future<Either<Failure, bool>> markAsFavorite({
     required int movieId,
     required bool isFavorite,
+    CancelToken? cancelToken,
   });
 
   Future<Either<Failure, bool>> rateMovie({
@@ -96,6 +98,7 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
   Future<Either<Failure, bool>> markAsFavorite({
     required int movieId,
     required bool isFavorite,
+    CancelToken? cancelToken,
   }) async {
     final result = await apiClient.post(
       Endpoints.favorite(accountId),
@@ -105,6 +108,7 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
         "media_id": movieId,
         "favorite": isFavorite,
       },
+      cancelToken: cancelToken,
     );
 
     return result.map((data) => true);
