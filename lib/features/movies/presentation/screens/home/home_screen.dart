@@ -50,16 +50,9 @@ class HomeScreen extends HookConsumerWidget {
     });
 
     final onRefresh = useCallback(() async {
-      // Hỗ trợ UX: Đợi ít nhất 1 giây để người dùng kịp nhìn thấy hiệu ứng loading
-      // Đồng thời gọi lệnh refresh provider
       await Future.wait([
         Future.delayed(const Duration(seconds: 1)),
         ref.refresh(homeProvider.future),
-
-        // LƯU Ý: Nếu MovieSection dùng provider riêng (ví dụ: nowPlayingProvider),
-        // bạn nên thêm vào đây để refresh tất cả cùng lúc:
-        // ref.refresh(nowPlayingProvider.future),
-        // ref.refresh(topRatedProvider.future),
       ]);
     }, []);
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:movie_demo_app/core/utils/extensions/l10n.dart';
 
 class ErrorView extends StatelessWidget {
@@ -27,6 +28,7 @@ class ErrorView extends StatelessWidget {
                       color: Colors.red,
                     ),
                     const SizedBox(height: 16),
+                    Gap(16),
                     Text(
                       context.l10n.error,
                       style: TextStyle(color: Colors.grey[600]),

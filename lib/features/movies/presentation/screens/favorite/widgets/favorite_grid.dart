@@ -11,6 +11,9 @@ class FavoriteGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return GridView.builder(
       padding: const EdgeInsets.all(16),
+      physics: const AlwaysScrollableScrollPhysics(
+        parent: BouncingScrollPhysics(),
+      ),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         childAspectRatio: 0.7,
@@ -19,7 +22,10 @@ class FavoriteGrid extends StatelessWidget {
       ),
       itemCount: movies.length,
       itemBuilder: (context, index) {
-        return FavoriteMovieItem(movie: movies[index]);
+        return FavoriteMovieItem(
+          key: ValueKey(movies[index].id),
+          movie: movies[index],
+        );
       },
     );
   }

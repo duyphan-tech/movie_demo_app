@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:shimmer/shimmer.dart';
 
 class CustomNetworkImage extends StatelessWidget {
@@ -46,7 +47,7 @@ class CustomNetworkImage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(Icons.broken_image, color: Colors.grey),
-              SizedBox(height: 4),
+              Gap(4),
               Text(
                 'No Image',
                 style: TextStyle(fontSize: 10, color: Colors.grey),
