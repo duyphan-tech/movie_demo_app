@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:gap/gap.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:movie_demo_app/core/utils/extensions/l10n.dart';
@@ -20,6 +21,8 @@ class LoginScreen extends HookConsumerWidget {
     );
     final passwordFocusNode = useFocusNode();
     final formKey = useMemoized(() => GlobalKey<FormState>());
+
+    final isPasswordVisible = useValueNotifier(false);
 
     debugPrint('inside build');
 
@@ -52,6 +55,7 @@ class LoginScreen extends HookConsumerWidget {
       child: Scaffold(
         body: Center(
           child: SingleChildScrollView(
+            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
             padding: const EdgeInsets.all(24.0),
             child: Form(
               key: formKey,
@@ -65,7 +69,7 @@ class LoginScreen extends HookConsumerWidget {
                     color: Colors.indigo,
                   ),
 
-                  const SizedBox(height: 40),
+                  Gap(40),
 
                   Consumer(
                     builder: (context, ref, child) {
@@ -89,41 +93,70 @@ class LoginScreen extends HookConsumerWidget {
                   ),
                   const SizedBox(height: 16),
 
-                  HookConsumer(
-                    builder: (context, ref, child) {
+                  ValueListenableBuilder<bool>(
+                    valueListenable: isPasswordVisible,
+                    builder: (context, isVisible, child) {
+                      debugPrint('Rebuild Password Field Only');
                       final isLoading = ref.watch(authProvider).isLoading;
-
-                      final isPasswordVisible = useState(false);
-
-                      debugPrint('inside HookConsumer - Password');
 
                       return CustomTextField(
                         controller: passwordController,
                         label: 'Password',
                         focusNode: passwordFocusNode,
-                        obscureText: !isPasswordVisible.value,
+
+                        obscureText: !isVisible,
+
                         enabled: !isLoading,
-                        textInputAction: TextInputAction.done,
                         prefixIcon: Icons.lock_outline,
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            isVisible ? Icons.visibility : Icons.visibility_off,
+                          ),
+                          onPressed: () => isPasswordVisible.value = !isVisible,
+                        ),
+                        onFieldSubmitted: (_) => onSubmit(),
                         validator: (value) =>
                             (value == null || value.length < 3)
                             ? context.l10n.passwordTooShortError
                             : null,
-                        onFieldSubmitted: (_) => onSubmit(),
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            isPasswordVisible.value
-                                ? Icons.visibility
-                                : Icons.visibility_off,
-                          ),
-                          onPressed: () => isPasswordVisible.value =
-                              !isPasswordVisible.value,
-                        ),
                       );
                     },
                   ),
 
-                  const SizedBox(height: 24),
+                  // HookConsumer(
+                  //   builder: (context, ref, child) {
+                  //     final isLoading = ref.watch(authProvider).isLoading;
+
+                  //     final isPasswordVisible = useState(false);
+
+                  //     debugPrint('inside HookConsumer - Password');
+
+                  //     return CustomTextField(
+                  //       controller: passwordController,
+                  //       label: 'Password',
+                  //       focusNode: passwordFocusNode,
+                  //       obscureText: !isPasswordVisible.value,
+                  //       enabled: !isLoading,
+                  //       textInputAction: TextInputAction.done,
+                  //       prefixIcon: Icons.lock_outline,
+                  //       validator: (value) =>
+                  //           (value == null || value.length < 3)
+                  //           ? context.l10n.passwordTooShortError
+                  //           : null,
+                  //       onFieldSubmitted: (_) => onSubmit(),
+                  //       suffixIcon: IconButton(
+                  //         icon: Icon(
+                  //           isPasswordVisible.value
+                  //               ? Icons.visibility
+                  //               : Icons.visibility_off,
+                  //         ),
+                  //         onPressed: () => isPasswordVisible.value =
+                  //             !isPasswordVisible.value,
+                  //       ),
+                  //     );
+                  //   },
+                  // ),
+                  Gap(24),
 
                   Consumer(
                     builder: (context, ref, child) {
@@ -165,7 +198,7 @@ class LoginScreen extends HookConsumerWidget {
                     },
                   ),
 
-                  const SizedBox(height: 16),
+                  Gap(16),
                 ],
               ),
             ),

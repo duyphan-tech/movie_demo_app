@@ -11,9 +11,14 @@ class ApiClient {
   Future<Either<Failure, dynamic>> get(
     String path, {
     Map<String, dynamic>? queryParameters,
+    CancelToken? cancelToken,
   }) async {
     try {
-      final response = await _dio.get(path, queryParameters: queryParameters);
+      final response = await _dio.get(
+        path,
+        queryParameters: queryParameters,
+        cancelToken: cancelToken,
+      );
       return Right(response.data);
     } on DioException catch (e) {
       return Left(_handleError(e));
@@ -24,12 +29,14 @@ class ApiClient {
     String path, {
     dynamic data,
     Map<String, dynamic>? queryParameters,
+    CancelToken? cancelToken,
   }) async {
     try {
       final response = await _dio.post(
         path,
         data: data,
         queryParameters: queryParameters,
+        cancelToken: cancelToken,
       );
       return Right(response.data);
     } on DioException catch (e) {
@@ -37,9 +44,17 @@ class ApiClient {
     }
   }
 
-  Future<Either<Failure, dynamic>> put(String path, {dynamic data}) async {
+  Future<Either<Failure, dynamic>> put(
+    String path, {
+    dynamic data,
+    CancelToken? cancelToken,
+  }) async {
     try {
-      final response = await _dio.put(path, data: data);
+      final response = await _dio.put(
+        path,
+        data: data,
+        cancelToken: cancelToken,
+      );
       return Right(response.data);
     } on DioException catch (e) {
       return Left(_handleError(e));
@@ -49,11 +64,13 @@ class ApiClient {
   Future<Either<Failure, dynamic>> delete(
     String path, {
     Map<String, dynamic>? queryParameters,
+    CancelToken? cancelToken,
   }) async {
     try {
       final response = await _dio.delete(
         path,
         queryParameters: queryParameters,
+        cancelToken: cancelToken,
       );
       return Right(response.data);
     } on DioException catch (e) {
