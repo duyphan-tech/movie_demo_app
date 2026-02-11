@@ -16,6 +16,8 @@ class AppColor {
   static const Color black = Colors.black;
   static const Color greyText = Color(0xFF9E9E9E);
 
+  static const Color iconColor = Colors.indigo;
+
   static const Color error = Color(0xFFCF6679);
   static const Color success = Color(0xFF4CAF50);
 }

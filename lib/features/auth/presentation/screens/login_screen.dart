@@ -4,6 +4,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:gap/gap.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:movie_demo_app/core/theme/app_color.dart';
+import 'package:movie_demo_app/core/theme/app_icon.dart';
 import 'package:movie_demo_app/core/utils/extensions/l10n.dart';
 import 'package:movie_demo_app/core/utils/widgets/custom_text_field.dart';
 import 'package:movie_demo_app/features/auth/presentation/providers/auth_provider.dart';
@@ -64,9 +66,9 @@ class LoginScreen extends HookConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   const Icon(
-                    Icons.movie_filter_rounded,
+                    AppIcon.movie_filter_rounded,
                     size: 80,
-                    color: Colors.indigo,
+                    color: AppColor.primaryColor,
                   ),
 
                   Gap(40),
@@ -165,17 +167,13 @@ class LoginScreen extends HookConsumerWidget {
                       return ElevatedButton(
                         onPressed: isLoading ? null : onSubmit,
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.indigo,
-                          foregroundColor: Colors.white,
-
                           padding: const EdgeInsets.symmetric(vertical: 16),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
                           ),
-
                           elevation: 4,
                           // ignore: deprecated_member_use
-                          shadowColor: Colors.indigo.withOpacity(0.4),
+                          // shadowColor: Colors.indigo.withOpacity(0.4),
                         ),
                         child: isLoading
                             ? const SizedBox(
