@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'review_provider.dart';
+part of '../review_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -50,7 +50,7 @@ final class ReviewNotifierProvider
   }
 }
 
-String _$reviewNotifierHash() => r'04546c00901cff83c40edfd0593b3ff0202653aa';
+String _$reviewNotifierHash() => r'c89af9d6a83a6316e46f68cb87625ccdb28fbf04';
 
 final class ReviewNotifierFamily extends $Family
     with

@@ -14,7 +14,7 @@ class SplashScreen extends HookWidget {
     useEffect(() {
       controller.forward();
       return null;
-    }, []);
+    }, const []);
 
     // final animation = useAnimation(
     //   CurvedAnimation(parent: controller, curve: Curves.easeOutBack),

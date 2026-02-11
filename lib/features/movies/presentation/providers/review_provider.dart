@@ -3,7 +3,7 @@ import 'package:movie_demo_app/features/movies/domain/entities/review.dart';
 import 'package:movie_demo_app/features/movies/domain/repositories/movie_repository.dart';
 import 'package:movie_demo_app/features/movies/providers/movie_providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-part 'review_provider.g.dart';
+part 'generated/review_provider.g.dart';
 
 @riverpod
 class ReviewNotifier extends _$ReviewNotifier {

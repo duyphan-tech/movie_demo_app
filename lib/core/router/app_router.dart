@@ -13,6 +13,9 @@ import 'package:movie_demo_app/features/movies/presentation/screens/rated/rated_
 
 import 'package:go_router/go_router.dart';
 
+import 'package:movie_demo_app/features/movies/movie.dart';
+import 'package:movie_demo_app/features/auth/auth.dart';
+
 final routerProvider = Provider<GoRouter>((ref) {
   debugPrint(' 🔥🔥🔥 ROUTER PROVIDER BUILT! (Time: ${DateTime.now()})');
   final authStateListenable = ValueNotifier<AsyncValue<bool>>(

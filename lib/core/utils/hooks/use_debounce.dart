@@ -10,7 +10,7 @@ void Function() useDebounce(
 
   useEffect(() {
     return () => timer.value?.cancel();
-  }, []);
+  }, const []);
 
   return useCallback(() {
     timer.value?.cancel();

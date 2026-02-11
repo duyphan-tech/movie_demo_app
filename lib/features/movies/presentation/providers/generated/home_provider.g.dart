@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'home_provider.dart';
+part of '../home_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -33,7 +33,7 @@ final class HomeNotifierProvider
   HomeNotifier create() => HomeNotifier();
 }
 
-String _$homeNotifierHash() => r'7a9ab9984f2cb5d9356ad7b57fe63569c2630799';
+String _$homeNotifierHash() => r'1052969a8488f47575a900431f254c29da4b3cea';
 
 abstract class _$HomeNotifier extends $AsyncNotifier<HomeState> {
   FutureOr<HomeState> build();

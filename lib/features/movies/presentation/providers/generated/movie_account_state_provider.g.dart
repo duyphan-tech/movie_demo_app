@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'movie_account_state_provider.dart';
+part of '../movie_account_state_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -52,7 +52,7 @@ final class MovieAccountStateNotifierProvider
 }
 
 String _$movieAccountStateNotifierHash() =>
-    r'4822c399f463710e0e6902adc6e298b798b041a9';
+    r'0edb6956e0131c2248a23702e14ce4082cf162c8';
 
 final class MovieAccountStateNotifierFamily extends $Family
     with

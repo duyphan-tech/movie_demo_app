@@ -1,0 +1,3 @@
+class AppSizes {
+  AppSizes._();
+}

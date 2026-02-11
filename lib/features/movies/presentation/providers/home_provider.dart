@@ -4,7 +4,7 @@ import 'package:movie_demo_app/features/movies/domain/repositories/movie_reposit
 import 'package:movie_demo_app/features/movies/providers/movie_providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'home_provider.g.dart';
+part 'generated/home_provider.g.dart';
 
 @riverpod
 class HomeNotifier extends _$HomeNotifier {

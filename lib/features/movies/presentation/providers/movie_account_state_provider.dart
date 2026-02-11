@@ -2,7 +2,7 @@ import 'package:movie_demo_app/features/movies/domain/entities/account_state.dar
 import 'package:movie_demo_app/features/movies/domain/repositories/movie_repository.dart';
 import 'package:movie_demo_app/features/movies/providers/movie_providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-part 'movie_account_state_provider.g.dart';
+part 'generated/movie_account_state_provider.g.dart';
 
 @riverpod
 class MovieAccountStateNotifier extends _$MovieAccountStateNotifier {
