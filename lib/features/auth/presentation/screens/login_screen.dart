@@ -9,6 +9,7 @@ import 'package:movie_demo_app/core/theme/app_icon.dart';
 import 'package:movie_demo_app/core/utils/extensions/l10n.dart';
 import 'package:movie_demo_app/core/utils/widgets/custom_text_field.dart';
 import 'package:movie_demo_app/features/auth/presentation/providers/auth_provider.dart';
+import 'package:movie_demo_app/features/auth/presentation/providers/login_provider.dart';
 
 class LoginScreen extends HookConsumerWidget {
   const LoginScreen({super.key});
@@ -28,7 +29,7 @@ class LoginScreen extends HookConsumerWidget {
 
     debugPrint('inside build');
 
-    ref.listen<AsyncValue<bool>>(authProvider, (previous, next) {
+    ref.listen<AsyncValue<void>>(loginProvider, (previous, next) {
       if (next.hasError && !next.isLoading) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -48,9 +49,12 @@ class LoginScreen extends HookConsumerWidget {
         FocusScope.of(context).unfocus();
         final email = emailController.text.trim();
         final password = passwordController.text.trim();
-        ref.read(authProvider.notifier).login(email, password);
+        ref.read(loginProvider.notifier).login(email, password);
       }
     }
+
+    final loginState = ref.watch(loginProvider);
+    final isLoading = loginState.isLoading;
 
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
@@ -75,7 +79,6 @@ class LoginScreen extends HookConsumerWidget {
 
                   Consumer(
                     builder: (context, ref, child) {
-                      final isLoading = ref.watch(authProvider).isLoading;
                       return CustomTextField(
                         controller: emailController,
                         onFieldSubmitted: (_) {
@@ -99,7 +102,6 @@ class LoginScreen extends HookConsumerWidget {
                     valueListenable: isPasswordVisible,
                     builder: (context, isVisible, child) {
                       debugPrint('Rebuild Password Field Only');
-                      final isLoading = ref.watch(authProvider).isLoading;
 
                       return CustomTextField(
                         controller: passwordController,
@@ -162,8 +164,6 @@ class LoginScreen extends HookConsumerWidget {
 
                   Consumer(
                     builder: (context, ref, child) {
-                      final isLoading = ref.watch(authProvider).isLoading;
-
                       return ElevatedButton(
                         onPressed: isLoading ? null : onSubmit,
                         style: ElevatedButton.styleFrom(

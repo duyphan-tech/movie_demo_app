@@ -18,27 +18,23 @@ import 'package:movie_demo_app/features/auth/auth.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
   debugPrint(' 🔥🔥🔥 ROUTER PROVIDER BUILT! (Time: ${DateTime.now()})');
-  final authStateListenable = ValueNotifier<AsyncValue<bool>>(
-    const AsyncLoading(),
-  );
+  final authNotifier = ValueNotifier<AsyncValue<bool>>(ref.read(authProvider));
 
-  ref.listen<AsyncValue<bool>>(authProvider, (previous, next) {
-    debugPrint(' 👀 Auth changed: ${next.value}');
-    authStateListenable.value = next;
-  }, fireImmediately: true);
+  ref.listen<AsyncValue<bool>>(authProvider, (_, next) {
+    authNotifier.value = next;
+  });
 
   ref.onDispose(() {
-    debugPrint(' 🗑️ Router Provider Disposed');
-    authStateListenable.dispose();
+    authNotifier.dispose();
   });
 
   return GoRouter(
     initialLocation: RouterPath.initial,
     debugLogDiagnostics: true,
 
-    refreshListenable: authStateListenable,
+    refreshListenable: authNotifier,
     redirect: (context, state) {
-      final authState = authStateListenable.value;
+      final authState = authNotifier.value;
 
       if (authState.isLoading) {
         if (state.matchedLocation != RouterPath.initial) {

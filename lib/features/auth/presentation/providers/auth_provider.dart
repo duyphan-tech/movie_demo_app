@@ -11,31 +11,8 @@ class AuthNotifier extends AsyncNotifier<bool> {
     return token != null && token.isNotEmpty;
   }
 
-  Future<void> login(String username, String password) async {
-    state = const AsyncLoading();
-    final result = await _repo.login(username, password);
-
-    result.fold(
-      (failure) {
-        state = AsyncError(failure, StackTrace.current);
-      },
-      (userModel) async {
-        await _repo.saveToken(userModel.token ?? '');
-        state = const AsyncData(true);
-      },
-    );
-  }
-
-  Future<void> register(String email, String password) async {
-    state = const AsyncLoading();
-    final result = await _repo.register(email, password);
-
-    result.fold((failure) => state = AsyncError(failure, StackTrace.current), (
-      token,
-    ) async {
-      await _repo.saveToken(token);
-      state = const AsyncData(true);
-    });
+  Future<void> authenticateUser(String token) async {
+    state = const AsyncData(true);
   }
 
   Future<void> logout() async {
