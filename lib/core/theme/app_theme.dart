@@ -48,6 +48,11 @@ class AppTheme {
         backgroundColor: AppColor.primaryColor,
         foregroundColor: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+
+        textStyle: AppTypography.textTheme.labelLarge?.copyWith(
+          fontWeight: FontWeight.bold,
+          inherit: true,
+        ),
       ),
     ),
     iconTheme: const IconThemeData(color: AppColor.black, size: 24.0),
@@ -102,6 +107,7 @@ class AppTheme {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         textStyle: AppTypography.textTheme.labelLarge?.copyWith(
           fontWeight: FontWeight.bold,
+          inherit: true,
         ),
       ),
     ),

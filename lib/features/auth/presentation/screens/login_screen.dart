@@ -8,7 +8,6 @@ import 'package:movie_demo_app/core/theme/app_color.dart';
 import 'package:movie_demo_app/core/theme/app_icon.dart';
 import 'package:movie_demo_app/core/utils/extensions/l10n.dart';
 import 'package:movie_demo_app/core/utils/widgets/custom_text_field.dart';
-import 'package:movie_demo_app/features/auth/presentation/providers/auth_provider.dart';
 import 'package:movie_demo_app/features/auth/presentation/providers/login_provider.dart';
 
 class LoginScreen extends HookConsumerWidget {
@@ -184,14 +183,7 @@ class LoginScreen extends HookConsumerWidget {
                                   strokeWidth: 2,
                                 ),
                               )
-                            : Text(
-                                context.l10n.signIn,
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  inherit: true,
-                                ),
-                              ),
+                            : Text(context.l10n.signIn),
                       );
                     },
                   ),
