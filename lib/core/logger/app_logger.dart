@@ -38,3 +38,5 @@ class AppLogger {
     }
   }
 }
+
+AppLogger logger = AppLogger();

@@ -4,7 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 class AppTypography {
   AppTypography._();
 
-  // Định nghĩa TextTheme cơ bản (chưa có màu sắc cụ thể)
   static TextTheme get textTheme {
     return TextTheme(
       // --- DISPLAY (Dùng cho số lớn, intro ngắn) ---

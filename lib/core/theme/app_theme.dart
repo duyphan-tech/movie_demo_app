@@ -66,18 +66,18 @@ class AppTheme {
     colorScheme: ColorScheme.dark(
       primary: AppColor.primaryColor,
       secondary: AppColor.secondaryColor,
-      surface: AppColor.darkSurface, // Màu nền của các Card
+      surface: AppColor.darkSurface,
       onPrimary: Colors.white,
-      onSurface: Colors.white, // Text chính màu trắng
-      onSurfaceVariant: AppColor.greyText, // Text phụ màu xám
+      onSurface: Colors.white,
+      onSurfaceVariant: AppColor.greyText,
       error: AppColor.error,
     ),
     appBarTheme: const AppBarTheme(
-      backgroundColor: AppColor.darkBackground, // Đồng bộ màu nền
+      backgroundColor: AppColor.darkBackground,
       foregroundColor: Colors.white,
       elevation: 0,
       centerTitle: true,
-      scrolledUnderElevation: 0, // Tránh đổi màu khi scroll
+      scrolledUnderElevation: 0,
     ),
     cardTheme: CardThemeData(
       color: AppColor.darkSurface,
@@ -85,7 +85,7 @@ class AppTheme {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
     ),
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-      backgroundColor: AppColor.darkSurface, // Tách biệt nhẹ với nền
+      backgroundColor: AppColor.darkSurface,
       selectedItemColor: AppColor.primaryColor,
       unselectedItemColor: Colors.white38,
       type: BottomNavigationBarType.fixed,
