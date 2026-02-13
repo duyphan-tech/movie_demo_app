@@ -7,19 +7,24 @@ class MovieOverview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           context.l10n.description,
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF110E47),
-          ),
+          style: textTheme.titleLarge,
         ),
         const SizedBox(height: 8),
-        Text(overview, style: const TextStyle(color: Colors.grey, height: 1.5)),
+        Text(
+          overview,
+          style: textTheme.bodyMedium?.copyWith(
+            height: 1.5,
+            color: colorScheme.onSurfaceVariant,
+          ),
+        ),
       ],
     );
   }

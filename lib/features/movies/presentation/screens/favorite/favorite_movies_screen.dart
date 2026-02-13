@@ -13,6 +13,8 @@ class FavoriteMoviesScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
     final favoritesAsync = ref.watch(favoriteMoviesListProvider);
 
     final favoriteIds = ref.watch(favoritesProvider);
@@ -25,8 +27,13 @@ class FavoriteMoviesScreen extends HookConsumerWidget {
       if (next.hasError && !next.isLoading) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('${context.l10n.error}: ${next.error}'),
-            backgroundColor: Colors.red,
+            content: Text(
+              '${context.l10n.error}: ${next.error}',
+              style: textTheme.bodyMedium?.copyWith(
+                color: colorScheme.onError,
+              ),
+            ),
+            backgroundColor: colorScheme.error,
             behavior: SnackBarBehavior.floating,
           ),
         );
@@ -35,14 +42,7 @@ class FavoriteMoviesScreen extends HookConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          context.l10n.favoriteList,
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
-        elevation: 0,
+        title: Text(context.l10n.favoriteList),
       ),
       body: favoritesAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),

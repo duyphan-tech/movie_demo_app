@@ -12,6 +12,7 @@ class PopularMoviesGrid extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final colorScheme = Theme.of(context).colorScheme;
     final popularState = ref.watch(
       homeProvider.select((state) => state.value?.popular),
     );
@@ -46,7 +47,7 @@ class PopularMoviesGrid extends ConsumerWidget {
                 Positioned(
                   right: 0,
                   top: 0,
-                  child: FavoriteButton(movieId: movie.id, color: Colors.red),
+                  child: FavoriteButton(movieId: movie.id, color: colorScheme.primary),
                 ),
               ],
             ),

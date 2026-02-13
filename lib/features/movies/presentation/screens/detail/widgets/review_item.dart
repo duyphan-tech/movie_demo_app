@@ -19,6 +19,8 @@ class ReviewItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
     final avatarImage = _getAvatarImage();
     final initial = (review.author?.isNotEmpty == true)
         ? review.author![0].toUpperCase()
@@ -27,17 +29,9 @@ class ReviewItem extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: colorScheme.surfaceContainerHighest,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey.shade200),
-        boxShadow: [
-          BoxShadow(
-            // ignore: deprecated_member_use
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 5,
-            offset: const Offset(0, 2),
-          ),
-        ],
+        border: Border.all(color: colorScheme.outlineVariant),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,14 +40,13 @@ class ReviewItem extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 20,
-                backgroundColor: Colors.indigo.shade100,
+                backgroundColor: colorScheme.primary.withAlpha(26),
                 backgroundImage: avatarImage,
                 child: avatarImage == null
                     ? Text(
                         initial,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.indigo,
+                        style: textTheme.titleMedium?.copyWith(
+                          color: colorScheme.primary,
                         ),
                       )
                     : null,
@@ -65,15 +58,14 @@ class ReviewItem extends StatelessWidget {
                   children: [
                     Text(
                       review.author ?? context.l10n.anonymous,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
-                      ),
+                      style: textTheme.titleSmall,
                     ),
                     const SizedBox(height: 2),
                     Text(
                       review.createdAt?.split('T')[0] ?? '',
-                      style: const TextStyle(color: Colors.grey, fontSize: 12),
+                      style: textTheme.labelSmall?.copyWith(
+                        color: colorScheme.onSurfaceVariant,
+                      ),
                     ),
                   ],
                 ),
@@ -85,20 +77,16 @@ class ReviewItem extends StatelessWidget {
                     vertical: 4,
                   ),
                   decoration: BoxDecoration(
-                    color: Colors.amber.shade100,
+                    color: colorScheme.secondary.withAlpha(26),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Row(
                     children: [
-                      const Icon(Icons.star, size: 14, color: Colors.amber),
+                      Icon(Icons.star, size: 14, color: colorScheme.secondary),
                       const SizedBox(width: 4),
                       Text(
                         '${review.authorDetails?.rating}',
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12,
-                          color: Colors.black87,
-                        ),
+                        style: textTheme.labelSmall,
                       ),
                     ],
                   ),
@@ -108,11 +96,7 @@ class ReviewItem extends StatelessWidget {
           const SizedBox(height: 10),
           Text(
             review.content ?? '',
-            style: const TextStyle(
-              fontSize: 14,
-              height: 1.4,
-              color: Colors.black87,
-            ),
+            style: textTheme.bodyMedium?.copyWith(height: 1.4),
             maxLines: 5,
             overflow: TextOverflow.ellipsis,
           ),

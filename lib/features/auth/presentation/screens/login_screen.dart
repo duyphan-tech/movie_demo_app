@@ -4,7 +4,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:gap/gap.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:movie_demo_app/core/theme/app_color.dart';
 import 'package:movie_demo_app/core/theme/app_icon.dart';
 import 'package:movie_demo_app/core/utils/extensions/l10n.dart';
 import 'package:movie_demo_app/core/utils/widgets/custom_text_field.dart';
@@ -15,6 +14,9 @@ class LoginScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     final emailController = useTextEditingController(
       text: kDebugMode ? 'emilys' : '',
     );
@@ -34,9 +36,11 @@ class LoginScreen extends HookConsumerWidget {
           SnackBar(
             content: Text(
               next.error.toString().replaceAll('Exception: ', ''),
-              style: const TextStyle(color: Colors.white),
+              style: textTheme.bodyMedium?.copyWith(
+                color: colorScheme.onError,
+              ),
             ),
-            backgroundColor: Colors.redAccent,
+            backgroundColor: colorScheme.error,
             behavior: SnackBarBehavior.floating,
           ),
         );
@@ -68,10 +72,10 @@ class LoginScreen extends HookConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const Icon(
+                  Icon(
                     AppIcon.movie_filter_rounded,
                     size: 80,
-                    color: AppColor.primaryColor,
+                    color: colorScheme.primary,
                   ),
 
                   Gap(40),
@@ -175,15 +179,20 @@ class LoginScreen extends HookConsumerWidget {
                           // shadowColor: Colors.indigo.withOpacity(0.4),
                         ),
                         child: isLoading
-                            ? const SizedBox(
+                            ? SizedBox(
                                 height: 24,
                                 width: 24,
                                 child: CircularProgressIndicator(
-                                  color: Colors.white,
+                                  color: colorScheme.onPrimary,
                                   strokeWidth: 2,
                                 ),
                               )
-                            : Text(context.l10n.signIn),
+                            : Text(
+                                context.l10n.signIn,
+                                style: textTheme.labelLarge?.copyWith(
+                                  inherit: true,
+                                ),
+                              ),
                       );
                     },
                   ),

@@ -11,6 +11,8 @@ class HomeDrawer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
     final localeAsync = ref.watch(localeProvider);
     final currentLocale = localeAsync.value ?? const Locale('en');
 
@@ -19,23 +21,30 @@ class HomeDrawer extends ConsumerWidget {
       child: Column(
         children: [
           UserAccountsDrawerHeader(
-            decoration: const BoxDecoration(color: Color(0xFF0d253f)),
+            decoration: BoxDecoration(color: colorScheme.surfaceContainerHighest),
             currentAccountPicture: CircleAvatar(
-              backgroundColor: Colors.white,
-              child: const Text(
+              backgroundColor: colorScheme.onSurfaceVariant,
+              child: Text(
                 "D",
-                style: TextStyle(
-                  fontSize: 24,
+                style: textTheme.titleLarge?.copyWith(
+                  color: colorScheme.surfaceContainerHighest,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF0d253f),
                 ),
               ),
             ),
-            accountName: const Text(
+            accountName: Text(
               "Duy Phan",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+              style: textTheme.titleLarge?.copyWith(
+                color: colorScheme.onSurfaceVariant,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-            accountEmail: const Text("duyphan@example.com"),
+            accountEmail: Text(
+              "duyphan@example.com",
+              style: textTheme.bodyMedium?.copyWith(
+                color: colorScheme.onSurfaceVariant.withAlpha(179),
+              ),
+            ),
           ),
 
           Expanded(
@@ -51,7 +60,7 @@ class HomeDrawer extends ConsumerWidget {
                 ),
 
                 ListTile(
-                  leading: const Icon(Icons.favorite, color: Colors.red),
+                  leading: Icon(Icons.favorite, color: colorScheme.primary),
                   title: Text(context.l10n.favoriteMovies),
                   onTap: () {
                     Navigator.pop(context);
@@ -65,7 +74,7 @@ class HomeDrawer extends ConsumerWidget {
                 ),
 
                 ListTile(
-                  leading: const Icon(Icons.star, color: Colors.amber),
+                  leading: Icon(Icons.star, color: colorScheme.secondary),
                   title: Text(context.l10n.ratedMovies),
                   onTap: () {
                     Navigator.pop(context);
@@ -79,11 +88,16 @@ class HomeDrawer extends ConsumerWidget {
                 ),
 
                 ExpansionTile(
-                  leading: const Icon(Icons.language, color: Colors.blue),
+                  leading: Icon(
+                    Icons.language,
+                    color: colorScheme.secondary,
+                  ),
                   title: Text(context.l10n.language),
                   subtitle: Text(
                     localeNotifier.getLanguageName(currentLocale.languageCode),
-                    style: const TextStyle(fontSize: 12, color: Colors.grey),
+                    style: textTheme.labelSmall?.copyWith(
+                      color: colorScheme.onSurfaceVariant,
+                    ),
                   ),
                   children: localeNotifier.supportedLocales.map((locale) {
                     final isSelected =
@@ -98,9 +112,9 @@ class HomeDrawer extends ConsumerWidget {
                         localeNotifier.getLanguageName(locale.languageCode),
                       ),
                       trailing: isSelected
-                          ? const Icon(
+                          ? Icon(
                               Icons.check,
-                              color: Colors.green,
+                              color: colorScheme.primary,
                               size: 20,
                             )
                           : null,
@@ -117,7 +131,7 @@ class HomeDrawer extends ConsumerWidget {
           ),
 
           ListTile(
-            leading: const Icon(Icons.logout, color: Colors.grey),
+            leading: Icon(Icons.logout, color: colorScheme.onSurfaceVariant),
             title: Text(context.l10n.logout),
             onTap: () {
               showDialog(
@@ -137,7 +151,7 @@ class HomeDrawer extends ConsumerWidget {
                       },
                       child: Text(
                         context.l10n.agree,
-                        style: TextStyle(color: Colors.red),
+                        style: TextStyle(color: colorScheme.error),
                       ),
                     ),
                   ],

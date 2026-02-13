@@ -10,6 +10,9 @@ class ErrorView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return RefreshIndicator(
       onRefresh: () async => onRetry(),
       child: LayoutBuilder(
@@ -22,16 +25,18 @@ class ErrorView extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(
+                    Icon(
                       Icons.error_outline,
                       size: 48,
-                      color: Colors.red,
+                      color: colorScheme.error,
                     ),
                     const SizedBox(height: 16),
-                    Gap(16),
+                    const Gap(16),
                     Text(
                       context.l10n.error,
-                      style: TextStyle(color: Colors.grey[600]),
+                      style: textTheme.bodyMedium?.copyWith(
+                        color: colorScheme.onSurfaceVariant,
+                      ),
                     ),
                     TextButton(
                       onPressed: onRetry,

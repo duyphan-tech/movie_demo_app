@@ -18,6 +18,7 @@ class FavoriteButton extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final colorScheme = Theme.of(context).colorScheme;
     final controller = useAnimationController(
       duration: const Duration(milliseconds: 150),
       lowerBound: 0.0,
@@ -63,8 +64,8 @@ class FavoriteButton extends HookConsumerWidget {
         icon: Icon(
           isVisibleFav ? Icons.bookmark : Icons.bookmark_border,
           color: isVisibleFav
-              ? (color ?? Colors.indigo)
-              : (color ?? Colors.black),
+              ? (color ?? colorScheme.primary)
+              : (color ?? colorScheme.onSurface),
           size: size,
         ),
       ),

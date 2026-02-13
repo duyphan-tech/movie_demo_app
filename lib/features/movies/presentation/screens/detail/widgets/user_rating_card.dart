@@ -10,6 +10,8 @@ class UserRatingCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
     final movieId = ref.watch(currentMovieIdProvider);
     final accountStateAsync = ref.watch(movieAccountStateProvider(movieId));
 
@@ -22,15 +24,13 @@ class UserRatingCard extends ConsumerWidget {
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            // ignore: deprecated_member_use
-            color: Colors.amber.withOpacity(0.1),
+            color: colorScheme.surfaceContainerHighest,
             borderRadius: BorderRadius.circular(12),
-            // ignore: deprecated_member_use
-            border: Border.all(color: Colors.amber.withOpacity(0.3)),
+            border: Border.all(color: colorScheme.outlineVariant),
           ),
           child: Row(
             children: [
-              const Icon(Icons.star, color: Colors.amber, size: 28),
+              Icon(Icons.star, color: colorScheme.secondary, size: 28),
               const SizedBox(width: 12),
               Expanded(
                 child: Column(
@@ -40,18 +40,14 @@ class UserRatingCard extends ConsumerWidget {
                       myRating != null
                           ? context.l10n.yourRating
                           : context.l10n.unrated,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF110E47),
-                      ),
+                      style: textTheme.titleSmall,
                     ),
                     if (myRating != null)
                       Text(
                         "${myRating.toStringAsFixed(1)}/10",
-                        style: const TextStyle(
-                          fontSize: 18,
+                        style: textTheme.titleLarge?.copyWith(
+                          color: colorScheme.secondary,
                           fontWeight: FontWeight.w900,
-                          color: Colors.amber,
                         ),
                       ),
                   ],
@@ -70,8 +66,8 @@ class UserRatingCard extends ConsumerWidget {
                   );
                 },
                 style: TextButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  foregroundColor: Colors.amber,
+                  backgroundColor: colorScheme.surfaceContainerLow,
+                  foregroundColor: colorScheme.secondary,
                 ),
                 child: Text(
                   myRating != null ? context.l10n.edit : context.l10n.rate,

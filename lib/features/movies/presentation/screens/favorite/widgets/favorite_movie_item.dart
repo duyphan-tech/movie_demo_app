@@ -11,6 +11,9 @@ class FavoriteMovieItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
+
     return GestureDetector(
       onTap: () {
         // context.push(RouterPath.details, extra: {'id': movie.id});
@@ -34,10 +37,7 @@ class FavoriteMovieItem extends StatelessWidget {
                   movie.title,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
-                  ),
+                  style: textTheme.titleSmall,
                 ),
               ),
             ],
@@ -48,12 +48,11 @@ class FavoriteMovieItem extends StatelessWidget {
             right: 8,
             child: Container(
               decoration: BoxDecoration(
-                // ignore: deprecated_member_use
-                color: Colors.black.withOpacity(0.5),
+                color: colorScheme.scrim.withAlpha(128),
                 shape: BoxShape.circle,
               ),
               padding: const EdgeInsets.all(4),
-              child: FavoriteButton(movieId: movie.id, color: Colors.red),
+              child: FavoriteButton(movieId: movie.id, color: colorScheme.primary),
             ),
           ),
         ],

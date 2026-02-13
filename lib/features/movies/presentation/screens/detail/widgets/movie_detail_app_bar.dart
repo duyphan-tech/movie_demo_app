@@ -17,16 +17,19 @@ class MovieDetailAppBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return SliverAppBar(
       expandedHeight: 300,
       pinned: true,
-      backgroundColor: Colors.black,
+      backgroundColor: colorScheme.surface,
+      iconTheme: IconThemeData(color: colorScheme.onSurface),
       leading: IconButton(
-        icon: const Icon(Icons.arrow_back, color: Colors.white),
+        icon: const Icon(Icons.arrow_back),
         onPressed: () => Navigator.pop(context),
       ),
       actions: [
-        AnimatedRefreshButton(color: Colors.white, onRefresh: onRefresh),
+        AnimatedRefreshButton(color: colorScheme.onSurface, onRefresh: onRefresh),
       ],
       flexibleSpace: FlexibleSpaceBar(
         background: AppBarBackground(

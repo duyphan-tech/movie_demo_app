@@ -8,26 +8,31 @@ class MovieStatsRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        _buildInfoItem(context.l10n.duration, '${movie.runtime} min'),
-        _buildInfoItem(context.l10n.language, 'English'),
-        _buildInfoItem(context.l10n.reviews, 'PG-13'),
+        _buildInfoItem(textTheme, colorScheme, context.l10n.duration, '${movie.runtime} min'),
+        _buildInfoItem(textTheme, colorScheme, context.l10n.language, 'English'),
+        _buildInfoItem(textTheme, colorScheme, context.l10n.reviews, 'PG-13'),
       ],
     );
   }
 
-  Widget _buildInfoItem(String label, String value) {
+  Widget _buildInfoItem(TextTheme textTheme, ColorScheme colorScheme, String label, String value) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: const TextStyle(color: Colors.grey, fontSize: 12)),
-        const SizedBox(height: 4),
         Text(
-          value,
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+          label,
+          style: textTheme.labelMedium?.copyWith(
+            color: colorScheme.onSurfaceVariant,
+          ),
         ),
+        const SizedBox(height: 4),
+        Text(value, style: textTheme.bodyMedium),
       ],
     );
   }

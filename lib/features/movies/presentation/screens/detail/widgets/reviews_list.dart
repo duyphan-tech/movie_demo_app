@@ -12,6 +12,8 @@ class ReviewsList extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final movieId = ref.watch(currentMovieIdProvider);
     final reviewsAsync = ref.watch(reviewProvider(movieId));
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -20,21 +22,27 @@ class ReviewsList extends ConsumerWidget {
           padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: Text(
             context.l10n.community,
-            style: TextStyle(color: Colors.grey, fontSize: 12),
+            style: textTheme.labelSmall?.copyWith(
+              color: colorScheme.onSurfaceVariant,
+            ),
           ),
         ),
         reviewsAsync.when(
-          loading: () => const Center(
+          loading: () => Center(
             child: Padding(
               padding: EdgeInsets.all(20),
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(
+                color: colorScheme.primary,
+              ),
             ),
           ),
           error: (error, _) => Padding(
             padding: const EdgeInsets.all(16),
             child: Text(
               '${context.l10n.loadReviewsError}: $error',
-              style: const TextStyle(color: Colors.red),
+              style: textTheme.bodyMedium?.copyWith(
+                color: colorScheme.error,
+              ),
             ),
           ),
           data: (reviews) {
@@ -43,8 +51,8 @@ class ReviewsList extends ConsumerWidget {
                 padding: EdgeInsets.all(16),
                 child: Text(
                   context.l10n.noReviewsMsg,
-                  style: TextStyle(
-                    color: Colors.grey,
+                  style: textTheme.bodyMedium?.copyWith(
+                    color: colorScheme.onSurfaceVariant,
                     fontStyle: FontStyle.italic,
                   ),
                 ),

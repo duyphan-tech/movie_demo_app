@@ -10,6 +10,8 @@ class RatedMoviesScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
     final ratedMoviesAsync = ref.watch(ratedMoviesProvider);
 
     final onRefresh = useCallback(() async {
@@ -20,8 +22,13 @@ class RatedMoviesScreen extends HookConsumerWidget {
       if (next.hasError && !next.isLoading) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('${context.l10n.dataLoadError}: ${next.error}'),
-            backgroundColor: Colors.red,
+            content: Text(
+              '${context.l10n.dataLoadError}: ${next.error}',
+              style: textTheme.bodyMedium?.copyWith(
+                color: colorScheme.onError,
+              ),
+            ),
+            backgroundColor: colorScheme.error,
             behavior: SnackBarBehavior.floating,
           ),
         );
@@ -30,14 +37,7 @@ class RatedMoviesScreen extends HookConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          context.l10n.ratedMovies,
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
-        elevation: 0,
+        title: Text(context.l10n.ratedMovies),
       ),
       body: ratedMoviesAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
@@ -59,15 +59,13 @@ class RatedMoviesScreen extends HookConsumerWidget {
                         Icon(
                           Icons.star_border_rounded,
                           size: 80,
-                          color: Colors.grey[300],
+                          color: colorScheme.onSurfaceVariant.withAlpha(51),
                         ),
                         const SizedBox(height: 16),
                         Text(
                           context.l10n.noRatedMoviesMsg,
-                          style: TextStyle(
-                            color: Colors.grey[600],
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
+                          style: textTheme.bodyLarge?.copyWith(
+                            color: colorScheme.onSurfaceVariant,
                           ),
                         ),
                       ],

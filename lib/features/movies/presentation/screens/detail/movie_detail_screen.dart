@@ -21,6 +21,8 @@ class MovieDetailScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
     final asyncValue = ref.watch(movieDetailProvider(movieId));
 
     final refreshData = useCallback(() async {
@@ -44,23 +46,32 @@ class MovieDetailScreen extends HookConsumerWidget {
       if (next.hasError && !next.isLoading) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('${context.l10n.dataLoadError}: ${next.error}'),
-            backgroundColor: Colors.red,
+            content: Text(
+              '${context.l10n.dataLoadError}: ${next.error}',
+              style: textTheme.bodyMedium?.copyWith(
+                color: colorScheme.onError,
+              ),
+            ),
+            backgroundColor: colorScheme.error,
           ),
         );
       }
     });
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: colorScheme.surface,
       body: asyncValue.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
+        loading: () => Center(
+          child: CircularProgressIndicator(
+            color: colorScheme.primary,
+          ),
+        ),
         error: (err, stack) => ErrorView(error: err, onRetry: refreshData),
         data: (movie) {
           return RefreshIndicator(
             onRefresh: refreshData,
-            color: Colors.black,
-            backgroundColor: Colors.white,
+            color: colorScheme.onSurface,
+            backgroundColor: colorScheme.surface,
             child: CustomScrollView(
               physics: const AlwaysScrollableScrollPhysics(
                 parent: BouncingScrollPhysics(),

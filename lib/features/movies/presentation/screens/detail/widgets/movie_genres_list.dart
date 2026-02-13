@@ -7,6 +7,9 @@ class MovieGenresList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return Wrap(
       spacing: 8,
       runSpacing: 8,
@@ -14,15 +17,13 @@ class MovieGenresList extends StatelessWidget {
         return Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
           decoration: BoxDecoration(
-            // ignore: deprecated_member_use
-            color: Colors.blue.withOpacity(0.1),
+            color: colorScheme.secondary.withAlpha(26),
             borderRadius: BorderRadius.circular(20),
           ),
           child: Text(
             genre.name.toUpperCase(),
-            style: const TextStyle(
-              fontSize: 10,
-              color: Colors.blue,
+            style: textTheme.labelSmall?.copyWith(
+              color: colorScheme.secondary,
               fontWeight: FontWeight.bold,
             ),
           ),

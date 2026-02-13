@@ -9,6 +9,9 @@ class MovieInfoHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -19,10 +22,7 @@ class MovieInfoHeader extends StatelessWidget {
             Expanded(
               child: Text(
                 movie.title,
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: textTheme.headlineSmall,
               ),
             ),
             FavoriteButton(movieId: movie.id),
@@ -31,13 +31,12 @@ class MovieInfoHeader extends StatelessWidget {
         const SizedBox(height: 8),
         Row(
           children: [
-            const Icon(Icons.star, color: Colors.amber, size: 20),
+            Icon(Icons.star, color: colorScheme.secondary, size: 20),
             const SizedBox(width: 4),
             Text(
               '${movie.voteAverage.toStringAsFixed(1)}/10 IMDb',
-              style: const TextStyle(
-                color: Colors.grey,
-                fontWeight: FontWeight.w500,
+              style: textTheme.bodyMedium?.copyWith(
+                color: colorScheme.onSurfaceVariant,
               ),
             ),
           ],

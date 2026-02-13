@@ -16,6 +16,8 @@ class HomeScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
     final scrollController = useScrollController();
 
     final isInitialLoading = ref.watch(
@@ -42,8 +44,13 @@ class HomeScreen extends HookConsumerWidget {
       if (next.hasError && !next.isLoading && next.hasValue) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('${context.l10n.error}: ${next.error}'),
-            backgroundColor: Colors.red,
+            content: Text(
+              '${context.l10n.error}: ${next.error}',
+              style: textTheme.bodyMedium?.copyWith(
+                color: colorScheme.onError,
+              ),
+            ),
+            backgroundColor: colorScheme.error,
           ),
         );
       }
@@ -66,8 +73,8 @@ class HomeScreen extends HookConsumerWidget {
           ? const Center(child: CircularProgressIndicator())
           : RefreshIndicator(
               onRefresh: onRefresh,
-              color: Colors.black,
-              backgroundColor: Colors.white,
+              color: colorScheme.onSurface,
+              backgroundColor: colorScheme.surface,
               edgeOffset: 0,
               child: CustomScrollView(
                 controller: scrollController,
@@ -99,10 +106,7 @@ class HomeScreen extends HookConsumerWidget {
                             alignment: Alignment.centerLeft,
                             child: Text(
                               context.l10n.popular,
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
+                              style: textTheme.titleLarge,
                             ),
                           ),
                         ),

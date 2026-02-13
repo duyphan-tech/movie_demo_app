@@ -81,11 +81,11 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: RouterPath.details,
         name: RouterName.details,
         builder: (context, state) {
-          // final args = state.extra as Map<String, dynamic>;
-          // final int id = args['id'] as int;
+          final args = state.extra as Map<String, dynamic>;
+          final int id = args['id'] as int;
 
-          final idString = state.pathParameters['id'];
-          final int id = int.tryParse(idString ?? '') ?? 0;
+          // final idString = state.pathParameters['id'];
+          // final int id = int.tryParse(idString ?? '') ?? 0;
           return MovieDetailScreen(movieId: id);
         },
       ),

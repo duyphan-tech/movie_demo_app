@@ -10,6 +10,9 @@ class RatedMovieItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
+
     return GestureDetector(
       onTap: () {
         // context.push(RouterPath.details, extra: {'id': movie.id});
@@ -37,19 +40,18 @@ class RatedMovieItem extends StatelessWidget {
                       vertical: 4,
                     ),
                     decoration: BoxDecoration(
-                      color: Colors.black54,
+                      color: colorScheme.scrim.withAlpha(179),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Icon(Icons.star, color: Colors.amber, size: 12),
+                        Icon(Icons.star, color: colorScheme.secondary, size: 12),
                         const SizedBox(width: 4),
                         Text(
                           '${movie.rating}',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 12,
+                          style: textTheme.labelSmall?.copyWith(
+                            color: colorScheme.onPrimary,
                           ),
                         ),
                       ],
@@ -66,7 +68,7 @@ class RatedMovieItem extends StatelessWidget {
             movie.title,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+            style: textTheme.titleSmall,
           ),
         ],
       ),

@@ -12,6 +12,8 @@ class RatingDialog extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
     final movieId = ref.read(currentMovieIdProvider);
     final currentRating = useState(initialRating);
 
@@ -22,10 +24,9 @@ class RatingDialog extends HookConsumerWidget {
         children: [
           Text(
             '${currentRating.value.toStringAsFixed(1)} / 10',
-            style: const TextStyle(
-              fontSize: 24,
+            style: textTheme.headlineMedium?.copyWith(
+              color: colorScheme.secondary,
               fontWeight: FontWeight.bold,
-              color: Colors.amber,
             ),
           ),
           const SizedBox(height: 10),
@@ -35,7 +36,7 @@ class RatingDialog extends HookConsumerWidget {
             max: 10.0,
             divisions: 18,
             label: currentRating.value.toString(),
-            activeColor: Colors.amber,
+            activeColor: colorScheme.secondary,
             onChanged: (value) => currentRating.value = value,
           ),
         ],
@@ -72,14 +73,14 @@ class RatingDialog extends HookConsumerWidget {
               );
             }
           },
-          style: TextButton.styleFrom(foregroundColor: Colors.red),
+          style: TextButton.styleFrom(foregroundColor: colorScheme.error),
           child: Text(context.l10n.delete),
         ),
         TextButton(
           onPressed: () => Navigator.pop(context),
           child: Text(
             context.l10n.cancel,
-            style: TextStyle(color: Colors.grey),
+            style: TextStyle(color: colorScheme.onSurfaceVariant),
           ),
         ),
         TextButton(
@@ -94,7 +95,7 @@ class RatingDialog extends HookConsumerWidget {
           },
           child: Text(
             context.l10n.send,
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: textTheme.labelLarge?.copyWith(inherit: true),
           ),
         ),
       ],

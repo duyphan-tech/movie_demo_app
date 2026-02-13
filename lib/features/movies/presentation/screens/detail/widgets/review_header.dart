@@ -16,11 +16,7 @@ class ReviewHeader extends ConsumerWidget {
         children: [
           Text(
             context.l10n.reviews,
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFF110E47),
-            ),
+            style: Theme.of(context).textTheme.titleLarge,
           ),
           // IconButton(
           //   icon: const Icon(Icons.refresh, size: 20, color: Colors.grey),

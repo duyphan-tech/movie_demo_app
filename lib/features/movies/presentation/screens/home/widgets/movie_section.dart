@@ -15,6 +15,8 @@ class MovieSection extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
     final moviesValue = ref.watch(
       homeProvider.select((asyncState) {
         return asyncState.whenData((state) {
@@ -33,7 +35,7 @@ class MovieSection extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildHeader(context),
+        _buildHeader(context, textTheme, colorScheme),
         SizedBox(
           height: 200,
           child: moviesValue.when(
@@ -42,10 +44,10 @@ class MovieSection extends ConsumerWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.error_outline, color: Colors.red),
+                  Icon(Icons.error_outline, color: colorScheme.error),
                   Text(
                     context.l10n.loadingError,
-                    style: TextStyle(fontSize: 12),
+                    style: textTheme.bodySmall,
                   ),
                 ],
               ),
@@ -57,17 +59,19 @@ class MovieSection extends ConsumerWidget {
     );
   }
 
-  Widget _buildHeader(BuildContext context) {
+  Widget _buildHeader(BuildContext context, TextTheme textTheme, ColorScheme colorScheme) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+          Text(title, style: textTheme.titleLarge),
           Text(
-            title,
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            context.l10n.seeAll,
+            style: textTheme.bodyMedium?.copyWith(
+              color: colorScheme.secondary,
+            ),
           ),
-          Text(context.l10n.seeAll, style: TextStyle(color: Colors.blue)),
         ],
       ),
     );

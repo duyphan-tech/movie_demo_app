@@ -12,6 +12,9 @@ class MovieItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
+
     return GestureDetector(
       onTap: () => context.push(RouterPath.details, extra: {'id': movie.id}),
       child: Stack(
@@ -35,7 +38,7 @@ class MovieItem extends StatelessWidget {
                   movie.title,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(fontWeight: FontWeight.w500),
+                  style: textTheme.bodyMedium,
                 ),
               ],
             ),
@@ -43,7 +46,7 @@ class MovieItem extends StatelessWidget {
           Positioned(
             right: 0,
             top: 0,
-            child: FavoriteButton(movieId: movie.id, color: Colors.red),
+            child: FavoriteButton(movieId: movie.id, color: colorScheme.primary),
           ),
         ],
       ),
