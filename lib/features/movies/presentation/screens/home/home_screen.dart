@@ -9,7 +9,7 @@ import 'package:movie_demo_app/features/movies/presentation/providers/home_provi
 import 'package:movie_demo_app/features/movies/presentation/screens/home/widgets/home_drawer.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/home/widgets/movie_section.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/home/widgets/popular_movies_grid.dart';
-import 'package:movie_demo_app/features/movies/presentation/screens/widgets/animated_refresh_button.dart';
+// import 'package:movie_demo_app/features/movies/presentation/screens/widgets/animated_refresh_button.dart';
 
 class HomeScreen extends HookConsumerWidget {
   const HomeScreen({super.key});
@@ -46,9 +46,7 @@ class HomeScreen extends HookConsumerWidget {
           SnackBar(
             content: Text(
               '${context.l10n.error}: ${next.error}',
-              style: textTheme.bodyMedium?.copyWith(
-                color: colorScheme.onError,
-              ),
+              style: textTheme.bodyMedium?.copyWith(color: colorScheme.onError),
             ),
             backgroundColor: colorScheme.error,
           ),
@@ -67,7 +65,7 @@ class HomeScreen extends HookConsumerWidget {
       drawer: const HomeDrawer(),
       appBar: AppBar(
         title: Text(context.l10n.movieOverviewTitle),
-        actions: [AnimatedRefreshButton(onRefresh: onRefresh)],
+        // actions: [AnimatedRefreshButton(onRefresh: onRefresh)],
       ),
       body: isInitialLoading
           ? const Center(child: CircularProgressIndicator())

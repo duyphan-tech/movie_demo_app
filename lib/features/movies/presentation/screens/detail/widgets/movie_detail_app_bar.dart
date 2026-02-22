@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_demo_app/core/constants/app_constants.dart';
 import 'package:movie_demo_app/features/movies/domain/entities/movie_detail.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/detail/widgets/app_bar_background.dart';
-import 'package:movie_demo_app/features/movies/presentation/screens/widgets/animated_refresh_button.dart';
+// import 'package:movie_demo_app/features/movies/presentation/screens/widgets/animated_refresh_button.dart';
 
 class MovieDetailAppBar extends ConsumerWidget {
   final MovieDetail movie;
@@ -29,7 +29,10 @@ class MovieDetailAppBar extends ConsumerWidget {
         onPressed: () => Navigator.pop(context),
       ),
       actions: [
-        AnimatedRefreshButton(color: colorScheme.onSurface, onRefresh: onRefresh),
+        // AnimatedRefreshButton(
+        //   color: colorScheme.onSurface,
+        //   onRefresh: onRefresh,
+        // ),
       ],
       flexibleSpace: FlexibleSpaceBar(
         background: AppBarBackground(
