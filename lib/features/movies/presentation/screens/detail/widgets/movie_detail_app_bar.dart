@@ -23,10 +23,17 @@ class MovieDetailAppBar extends ConsumerWidget {
       expandedHeight: 300,
       pinned: true,
       backgroundColor: colorScheme.surface,
-      iconTheme: IconThemeData(color: colorScheme.onSurface),
-      leading: IconButton(
-        icon: const Icon(Icons.arrow_back),
-        onPressed: () => Navigator.pop(context),
+      iconTheme: const IconThemeData(color: Colors.white),
+      leading: Container(
+        margin: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          color: Colors.black.withAlpha(77),
+          shape: BoxShape.circle,
+        ),
+        child: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => Navigator.pop(context),
+        ),
       ),
       actions: [
         // AnimatedRefreshButton(

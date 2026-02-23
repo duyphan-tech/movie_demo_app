@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:movie_demo_app/core/utils/extensions/l10n.dart';
+import 'package:movie_demo_app/core/utils/widgets/skeleton.dart';
 import 'package:movie_demo_app/features/movies/presentation/providers/movie_provider.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/rated/widgets/rated_movies_grid.dart';
 
@@ -20,16 +21,6 @@ class RatedMoviesScreen extends HookConsumerWidget {
       return ref.refresh(ratedMoviesProvider.future);
     }, []);
 
-    // Show/hide EasyLoading based on loading state
-    useEffect(() {
-      if (ratedMoviesAsync.isLoading && !ratedMoviesAsync.hasValue) {
-        EasyLoading.show(status: context.l10n.loading);
-      } else {
-        EasyLoading.dismiss();
-      }
-      return null;
-    }, [ratedMoviesAsync.isLoading, ratedMoviesAsync.hasValue]);
-
     ref.listen(ratedMoviesProvider, (previous, next) {
       if (next.hasError && !next.isLoading) {
         EasyLoading.showError(
@@ -44,7 +35,10 @@ class RatedMoviesScreen extends HookConsumerWidget {
         title: Text(context.l10n.ratedMovies),
       ),
       body: ratedMoviesAsync.when(
-        loading: () => const SizedBox.shrink(),
+        loading: () => const Padding(
+          padding: EdgeInsets.all(16),
+          child: MovieGridSkeleton(itemCount: 8),
+        ),
 
         error: (err, stack) => ErrorWidget(err),
 

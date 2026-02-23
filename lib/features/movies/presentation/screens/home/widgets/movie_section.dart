@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:movie_demo_app/core/utils/extensions/l10n.dart';
+import 'package:movie_demo_app/core/utils/widgets/skeleton.dart';
 import 'package:movie_demo_app/features/movies/domain/entities/movie.dart';
 import 'package:movie_demo_app/features/movies/presentation/providers/home_provider.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/home/widgets/movie_item.dart';
@@ -40,7 +41,7 @@ class MovieSection extends ConsumerWidget {
         SizedBox(
           height: 200,
           child: moviesValue.when(
-            loading: () => const Center(child: CircularProgressIndicator()),
+            loading: () => const MovieSectionSkeleton(),
             error: (err, stack) => Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,

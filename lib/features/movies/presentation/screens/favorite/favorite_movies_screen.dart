@@ -3,6 +3,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:movie_demo_app/core/utils/extensions/l10n.dart';
+import 'package:movie_demo_app/core/utils/widgets/skeleton.dart';
 import 'package:movie_demo_app/features/common/error_view.dart';
 import 'package:movie_demo_app/features/movies/presentation/providers/favorite_provider.dart';
 import 'package:movie_demo_app/features/movies/presentation/providers/movie_provider.dart';
@@ -17,16 +18,6 @@ class FavoriteMoviesScreen extends HookConsumerWidget {
     final favoritesAsync = ref.watch(favoriteMoviesListProvider);
 
     final favoriteIds = ref.watch(favoritesProvider);
-
-    // Show/hide EasyLoading based on loading state
-    useEffect(() {
-      if (favoritesAsync.isLoading && !favoritesAsync.hasValue) {
-        EasyLoading.show(status: context.l10n.loading);
-      } else {
-        EasyLoading.dismiss();
-      }
-      return null;
-    }, [favoritesAsync.isLoading, favoritesAsync.hasValue]);
 
     ref.listen(favoriteMoviesListProvider, (previous, next) {
       if (next.hasError && !next.isLoading) {
@@ -47,7 +38,10 @@ class FavoriteMoviesScreen extends HookConsumerWidget {
         title: Text(context.l10n.favoriteList),
       ),
       body: favoritesAsync.when(
-        loading: () => const SizedBox.shrink(),
+        loading: () => const Padding(
+          padding: EdgeInsets.all(16),
+          child: MovieGridSkeleton(itemCount: 8),
+        ),
 
         error: (err, stack) => ErrorView(error: err, onRetry: onRefresh),
 

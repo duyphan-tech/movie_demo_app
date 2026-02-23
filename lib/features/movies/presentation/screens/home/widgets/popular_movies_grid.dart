@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:movie_demo_app/core/constants/app_constants.dart';
 import 'package:movie_demo_app/core/router/router_path.dart';
 import 'package:movie_demo_app/core/utils/widgets/custom_network_image.dart';
+import 'package:movie_demo_app/core/utils/widgets/skeleton.dart';
 import 'package:movie_demo_app/features/movies/presentation/providers/home_provider.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/widgets/favorite_button.dart';
 
@@ -13,12 +14,20 @@ class PopularMoviesGrid extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final colorScheme = Theme.of(context).colorScheme;
+    final isLoading = ref.watch(
+      homeProvider.select((state) => state.isLoading && !state.hasValue),
+    );
     final popularState = ref.watch(
       homeProvider.select((state) => state.value?.popular),
     );
 
-    if (popularState == null) {
-      return const SliverToBoxAdapter(child: SizedBox());
+    if (isLoading || popularState == null) {
+      return const SliverToBoxAdapter(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16),
+          child: MovieGridSkeleton(itemCount: 6),
+        ),
+      );
     }
 
     return SliverPadding(

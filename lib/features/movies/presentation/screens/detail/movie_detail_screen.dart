@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:movie_demo_app/core/utils/extensions/l10n.dart';
+import 'package:movie_demo_app/core/utils/widgets/skeleton.dart';
 import 'package:movie_demo_app/features/common/error_view.dart';
 import 'package:movie_demo_app/features/movies/presentation/providers/favorite_provider.dart';
 import 'package:movie_demo_app/features/movies/presentation/providers/movie_account_state_provider.dart';
@@ -60,20 +60,10 @@ class MovieDetailScreen extends HookConsumerWidget {
       }
     });
 
-    // Show/hide EasyLoading based on loading state
-    useEffect(() {
-      if (asyncValue.isLoading) {
-        EasyLoading.show(status: context.l10n.loading);
-      } else {
-        EasyLoading.dismiss();
-      }
-      return null;
-    }, [asyncValue.isLoading]);
-
     return Scaffold(
       backgroundColor: colorScheme.surface,
       body: asyncValue.when(
-        loading: () => const SizedBox.shrink(),
+        loading: () => const MovieDetailSkeleton(),
         error: (err, stack) => ErrorView(error: err, onRetry: refreshData),
         data: (movie) {
           return RefreshIndicator(

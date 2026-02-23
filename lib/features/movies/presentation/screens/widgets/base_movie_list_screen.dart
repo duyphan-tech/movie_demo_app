@@ -3,6 +3,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:movie_demo_app/core/utils/extensions/l10n.dart';
+import 'package:movie_demo_app/core/utils/widgets/skeleton.dart';
 import 'package:movie_demo_app/features/movies/domain/entities/movie.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -29,16 +30,9 @@ class BaseMovieListScreen extends HookConsumerWidget {
     final asyncValue = ref.watch(provider);
 
     ref.listen(provider, (previous, next) {
-      final nextAsync = next;
-      if (nextAsync.isLoading && !nextAsync.hasValue) {
-        EasyLoading.show(status: context.l10n.loading);
-      } else {
-        EasyLoading.dismiss();
-      }
-
-      if (nextAsync.hasError && !nextAsync.isLoading) {
+      if (next.hasError && !next.isLoading) {
         EasyLoading.showError(
-          '${context.l10n.error}: ${nextAsync.error}',
+          '${context.l10n.error}: ${next.error}',
           duration: const Duration(seconds: 3),
         );
       }
@@ -53,7 +47,10 @@ class BaseMovieListScreen extends HookConsumerWidget {
         elevation: 0,
       ),
       body: asyncValue.when(
-        loading: () => const SizedBox.shrink(),
+        loading: () => const Padding(
+          padding: EdgeInsets.all(16),
+          child: MovieGridSkeleton(itemCount: 8),
+        ),
         error: (err, stack) => Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

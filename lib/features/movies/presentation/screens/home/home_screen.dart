@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -20,20 +19,6 @@ class HomeScreen extends HookConsumerWidget {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     final scrollController = useScrollController();
-
-    final isInitialLoading = ref.watch(
-      homeProvider.select((value) => value.isLoading && !value.hasValue),
-    );
-
-    // Show/hide EasyLoading based on initial loading state
-    useEffect(() {
-      if (isInitialLoading) {
-        EasyLoading.show(status: context.l10n.loading);
-      } else {
-        EasyLoading.dismiss();
-      }
-      return null;
-    }, [isInitialLoading]);
 
     // useEffect(() {
     //   void onScroll() {
