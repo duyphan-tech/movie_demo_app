@@ -2,13 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:movie_demo_app/core/providers/locale_provider.dart';
-import 'package:movie_demo_app/core/providers/theme_provider.dart';
-import 'package:movie_demo_app/core/router/app_router.dart';
-import 'package:movie_demo_app/core/theme/app_theme.dart';
+import 'package:movie_demo_app/core/core.dart';
 import 'package:movie_demo_app/l10n/arb/app_localizations.dart';
-
-import 'core/configs/app_config.dart';
 
 class MyApp extends ConsumerWidget {
   final AppConfig config;

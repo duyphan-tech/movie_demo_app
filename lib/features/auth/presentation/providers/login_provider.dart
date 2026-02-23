@@ -3,7 +3,7 @@ import 'package:movie_demo_app/features/auth/presentation/providers/auth_provide
 import 'package:movie_demo_app/features/auth/providers/auth_providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'generated/login_provider.g.dart';
+part 'login_provider.g.dart';
 
 @riverpod
 class LoginNotifier extends _$LoginNotifier {

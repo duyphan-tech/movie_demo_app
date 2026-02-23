@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'generated/theme_provider.g.dart';
+part 'theme_provider.g.dart';
 
 @riverpod
 class ThemeNotifier extends _$ThemeNotifier {

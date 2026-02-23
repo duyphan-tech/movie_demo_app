@@ -1,17 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:movie_demo_app/core/router/router_name.dart';
-import 'package:movie_demo_app/core/router/router_path.dart';
-import 'package:movie_demo_app/features/auth/presentation/providers/auth_provider.dart';
-import 'package:movie_demo_app/features/auth/presentation/screens/login_screen.dart';
-import 'package:movie_demo_app/features/core/presentation/screens/not_found_screen.dart';
-import 'package:movie_demo_app/features/core/presentation/screens/splash_screen.dart';
-import 'package:movie_demo_app/features/movies/presentation/screens/detail/movie_detail_screen.dart';
-import 'package:movie_demo_app/features/movies/presentation/screens/home/home_screen.dart';
-import 'package:movie_demo_app/features/movies/presentation/screens/rated/rated_movies_screen_screen.dart';
-
 import 'package:go_router/go_router.dart';
+
+import 'package:movie_demo_app/features/auth/auth.dart';
+import 'package:movie_demo_app/features/core/core.dart';
+import 'package:movie_demo_app/features/movies/movies.dart';
+
+import 'router_name.dart';
+import 'router_path.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
   debugPrint(' 🔥🔥🔥 ROUTER PROVIDER BUILT! (Time: ${DateTime.now()})');

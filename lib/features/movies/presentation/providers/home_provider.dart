@@ -1,10 +1,22 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:movie_demo_app/core/providers/locale_provider.dart';
 import 'package:movie_demo_app/features/movies/domain/entities/movie.dart';
 import 'package:movie_demo_app/features/movies/domain/repositories/movie_repository.dart';
 import 'package:movie_demo_app/features/movies/providers/movie_providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'generated/home_provider.g.dart';
+part 'home_provider.g.dart';
+part 'home_provider.freezed.dart';
+
+@freezed
+abstract class HomeState with _$HomeState {
+  const factory HomeState({
+    required List<Movie> nowPlaying,
+    required List<Movie> topRated,
+    required List<Movie> upcoming,
+    required List<Movie> popular,
+  }) = _HomeState;
+}
 
 @riverpod
 class HomeNotifier extends _$HomeNotifier {

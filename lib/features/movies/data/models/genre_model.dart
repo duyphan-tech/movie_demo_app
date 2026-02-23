@@ -1,9 +1,25 @@
-import '../../domain/entities/genre.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:movie_demo_app/features/movies/domain/entities/genre.dart';
 
-class GenreModel extends Genre {
-  const GenreModel({required super.id, required super.name});
+part 'genre_model.freezed.dart';
+part 'genre_model.g.dart';
 
-  factory GenreModel.fromJson(Map<String, dynamic> json) {
-    return GenreModel(id: json['id'] ?? 0, name: json['name'] ?? '');
+@freezed
+abstract class GenreModel with _$GenreModel {
+  const factory GenreModel({
+    required int id,
+    required String name,
+  }) = _GenreModel;
+
+  factory GenreModel.fromJson(Map<String, dynamic> json) =>
+      _$GenreModelFromJson(json);
+}
+
+extension GenreModelX on GenreModel {
+  Genre toDomain() {
+    return Genre(
+      id: id,
+      name: name,
+    );
   }
 }

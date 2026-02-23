@@ -1,11 +1,17 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:movie_demo_app/features/movies/domain/entities/account_state.dart';
 
-class AccountStateModel extends AccountState {
-  AccountStateModel({
-    required super.id,
-    required super.favorite,
-    required super.rating,
-  });
+part 'account_state_model.freezed.dart';
+
+@freezed
+abstract class AccountStateModel with _$AccountStateModel {
+  const AccountStateModel._();
+
+  const factory AccountStateModel({
+    required int id,
+    required bool favorite,
+    double? rating,
+  }) = _AccountStateModel;
 
   factory AccountStateModel.fromJson(Map<String, dynamic> json) {
     double? ratingValue;
@@ -14,9 +20,19 @@ class AccountStateModel extends AccountState {
     }
 
     return AccountStateModel(
-      id: json['id'],
-      favorite: json['favorite'] ?? false,
+      id: json['id'] as int,
+      favorite: json['favorite'] as bool? ?? false,
       rating: ratingValue,
+    );
+  }
+}
+
+extension AccountStateModelX on AccountStateModel {
+  AccountState toDomain() {
+    return AccountState(
+      id: id,
+      favorite: favorite,
+      rating: rating,
     );
   }
 }

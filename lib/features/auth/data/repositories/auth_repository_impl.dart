@@ -2,6 +2,7 @@ import 'package:fpdart/fpdart.dart';
 import 'package:movie_demo_app/core/errors/failures.dart';
 import 'package:movie_demo_app/features/auth/data/datasources/local/auth_local_data_source.dart';
 import 'package:movie_demo_app/features/auth/data/datasources/remote/auth_remote_data_source.dart';
+import 'package:movie_demo_app/features/auth/data/models/user_model.dart';
 import 'package:movie_demo_app/features/auth/domain/entities/user.dart';
 import 'package:movie_demo_app/features/auth/domain/repositories/auth_repository.dart';
 
@@ -14,7 +15,7 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<Either<Failure, User>> login(String username, String password) async {
     final result = await remoteDataSource.login(username, password);
-    return result;
+    return result.map((model) => model.toDomain());
   }
 
   @override

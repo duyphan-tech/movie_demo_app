@@ -1,21 +1,15 @@
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:movie_demo_app/features/movies/domain/entities/review.dart';
 
-class ReviewResponse extends Equatable {
-  final int? id;
-  final int? page;
-  final List<Review>? results;
-  final int? totalPages;
-  final int? totalResults;
+part 'review_response.freezed.dart';
 
-  const ReviewResponse({
-    this.id,
-    this.page,
-    this.results,
-    this.totalPages,
-    this.totalResults,
-  });
-
-  @override
-  List<Object?> get props => [id, page, results, totalPages, totalResults];
+@freezed
+abstract class ReviewResponse with _$ReviewResponse {
+  const factory ReviewResponse({
+    int? id,
+    int? page,
+    List<Review>? results,
+    @JsonKey(name: 'total_pages') int? totalPages,
+    @JsonKey(name: 'total_results') int? totalResults,
+  }) = _ReviewResponse;
 }

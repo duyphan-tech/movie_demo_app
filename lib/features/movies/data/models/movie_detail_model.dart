@@ -1,44 +1,52 @@
-import '../../domain/entities/movie_detail.dart';
-import 'genre_model.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:movie_demo_app/features/movies/data/models/genre_model.dart';
+import 'package:movie_demo_app/features/movies/domain/entities/movie_detail.dart';
 
-class MovieDetailModel extends MovieDetail {
-  const MovieDetailModel({
-    required super.id,
-    required super.title,
-    super.originalTitle,
-    required super.overview,
-    super.posterPath,
-    super.backdropPath,
-    required super.releaseDate,
-    required super.voteAverage,
-    required super.voteCount,
-    required super.status,
-    super.tagline,
-    required super.runtime,
-    required super.budget,
-    required super.revenue,
-    required super.genres,
-  });
+part 'movie_detail_model.freezed.dart';
+part 'movie_detail_model.g.dart';
 
-  factory MovieDetailModel.fromJson(Map<String, dynamic> json) {
-    return MovieDetailModel(
-      id: json['id'] ?? 0,
-      title: json['title'] ?? '',
-      originalTitle: json['original_title'],
-      overview: json['overview'] ?? '',
-      posterPath: json['poster_path'],
-      backdropPath: json['backdrop_path'],
-      releaseDate: json['release_date'] ?? '',
-      voteAverage: (json['vote_average'] as num?)?.toDouble() ?? 0.0,
-      voteCount: json['vote_count'] ?? 0,
-      status: json['status'] ?? '',
-      tagline: json['tagline'],
-      runtime: json['runtime'] ?? 0,
-      budget: json['budget'] ?? 0,
-      revenue: json['revenue'] ?? 0,
-      genres: json['genres'] != null
-          ? (json['genres'] as List).map((e) => GenreModel.fromJson(e)).toList()
-          : [],
+@freezed
+abstract class MovieDetailModel with _$MovieDetailModel {
+  const factory MovieDetailModel({
+    required int id,
+    required String title,
+    @JsonKey(name: 'original_title') String? originalTitle,
+    required String overview,
+    @JsonKey(name: 'poster_path') String? posterPath,
+    @JsonKey(name: 'backdrop_path') String? backdropPath,
+    @JsonKey(name: 'release_date') required String releaseDate,
+    @JsonKey(name: 'vote_average') required double voteAverage,
+    @JsonKey(name: 'vote_count') required int voteCount,
+    required String status,
+    String? tagline,
+    required int runtime,
+    required int budget,
+    required int revenue,
+    required List<GenreModel> genres,
+  }) = _MovieDetailModel;
+
+  factory MovieDetailModel.fromJson(Map<String, dynamic> json) =>
+      _$MovieDetailModelFromJson(json);
+}
+
+extension MovieDetailModelX on MovieDetailModel {
+  MovieDetail toDomain() {
+    return MovieDetail(
+      id: id,
+      title: title,
+      originalTitle: originalTitle,
+      overview: overview,
+      posterPath: posterPath,
+      backdropPath: backdropPath,
+      releaseDate: releaseDate,
+      voteAverage: voteAverage,
+      voteCount: voteCount,
+      status: status,
+      tagline: tagline,
+      runtime: runtime,
+      budget: budget,
+      revenue: revenue,
+      genres: genres.map((g) => g.toDomain()).toList(),
     );
   }
 }

@@ -1,25 +1,17 @@
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:movie_demo_app/features/movies/domain/entities/author_details.dart';
 
-class Review extends Equatable {
-  final String? author;
-  final AuthorDetails? authorDetails;
-  final String? content;
-  final String? createdAt;
-  final String? id;
-  final String? updatedAt;
-  final String? url;
+part 'review.freezed.dart';
 
-  const Review({
-    this.author,
-    this.authorDetails,
-    this.content,
-    this.createdAt,
-    this.id,
-    this.updatedAt,
-    this.url,
-  });
-
-  @override
-  List<Object?> get props => [author, authorDetails, content, createdAt, id, updatedAt, url];
+@freezed
+abstract class Review with _$Review {
+  const factory Review({
+    String? author,
+    AuthorDetails? authorDetails,
+    String? content,
+    String? createdAt,
+    String? id,
+    String? updatedAt,
+    String? url,
+  }) = _Review;
 }

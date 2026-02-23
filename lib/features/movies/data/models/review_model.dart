@@ -1,28 +1,36 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:movie_demo_app/features/movies/data/models/author_details_model.dart';
 import 'package:movie_demo_app/features/movies/domain/entities/review.dart';
 
-class ReviewModel extends Review {
-  const ReviewModel({
-    super.author,
-    super.authorDetails,
-    super.content,
-    super.createdAt,
-    super.id,
-    super.updatedAt,
-    super.url,
-  });
+part 'review_model.freezed.dart';
+part 'review_model.g.dart';
 
-  factory ReviewModel.fromJson(Map<String, dynamic> json) {
-    return ReviewModel(
-      author: json['author'],
-      authorDetails: json['author_details'] != null
-          ? AuthorDetailsModel.fromJson(json['author_details'])
-          : null,
-      content: json['content'],
-      createdAt: json['created_at'],
-      id: json['id'],
-      updatedAt: json['updated_at'],
-      url: json['url'],
+@freezed
+abstract class ReviewModel with _$ReviewModel {
+  const factory ReviewModel({
+    String? author,
+    @JsonKey(name: 'author_details') AuthorDetailsModel? authorDetails,
+    String? content,
+    @JsonKey(name: 'created_at') String? createdAt,
+    String? id,
+    @JsonKey(name: 'updated_at') String? updatedAt,
+    String? url,
+  }) = _ReviewModel;
+
+  factory ReviewModel.fromJson(Map<String, dynamic> json) =>
+      _$ReviewModelFromJson(json);
+}
+
+extension ReviewModelX on ReviewModel {
+  Review toDomain() {
+    return Review(
+      author: author,
+      authorDetails: authorDetails?.toDomain(),
+      content: content,
+      createdAt: createdAt,
+      id: id,
+      updatedAt: updatedAt,
+      url: url,
     );
   }
 }

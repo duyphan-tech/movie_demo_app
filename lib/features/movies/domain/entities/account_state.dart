@@ -1,7 +1,12 @@
-class AccountState {
-  final int id;
-  final bool favorite;
-  final double? rating;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  AccountState({required this.id, required this.favorite, this.rating});
+part 'account_state.freezed.dart';
+
+@freezed
+abstract class AccountState with _$AccountState {
+  const factory AccountState({
+    required int id,
+    required bool favorite,
+    double? rating,
+  }) = _AccountState;
 }

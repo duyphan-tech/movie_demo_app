@@ -2,7 +2,10 @@ import 'package:dio/dio.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:movie_demo_app/core/errors/failures.dart';
 import 'package:movie_demo_app/features/movies/data/datasources/movie_remote_data_source.dart';
+import 'package:movie_demo_app/features/movies/data/models/account_state_model.dart';
+import 'package:movie_demo_app/features/movies/data/models/movie_detail_model.dart';
 import 'package:movie_demo_app/features/movies/data/models/movie_model.dart';
+import 'package:movie_demo_app/features/movies/data/models/review_model.dart';
 import 'package:movie_demo_app/features/movies/domain/entities/account_state.dart';
 import 'package:movie_demo_app/features/movies/domain/entities/movie.dart';
 import 'package:movie_demo_app/features/movies/domain/entities/movie_detail.dart';
@@ -18,7 +21,9 @@ class MovieRepositoryImpl implements MovieRepository {
     Future<Either<Failure, List<MovieModel>>> Function() callDataSource,
   ) async {
     final result = await callDataSource();
-    return result;
+    return result.map(
+      (movieModels) => movieModels.map((model) => model.toDomain()).toList(),
+    );
   }
 
   @override
@@ -39,12 +44,16 @@ class MovieRepositoryImpl implements MovieRepository {
 
   @override
   Future<Either<Failure, MovieDetail>> getMovieDetail(int id) async {
-    return dataSource.getMovieDetail(id);
+    final result = await dataSource.getMovieDetail(id);
+    return result.map((model) => model.toDomain());
   }
 
   @override
   Future<Either<Failure, List<Review>>> getMovieReviews(int movieId) async {
-    return dataSource.getMovieReviews(movieId);
+    final result = await dataSource.getMovieReviews(movieId);
+    return result.map(
+      (models) => models.map((model) => model.toDomain()).toList(),
+    );
   }
 
   @override
@@ -74,7 +83,8 @@ class MovieRepositoryImpl implements MovieRepository {
   Future<Either<Failure, AccountState>> getMovieAccountState(
     int movieId,
   ) async {
-    return dataSource.getMovieAccountState(movieId);
+    final result = await dataSource.getMovieAccountState(movieId);
+    return result.map((model) => model.toDomain());
   }
 
   @override
