@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 
 class MovieCastList extends StatelessWidget {
   const MovieCastList({super.key});
@@ -17,13 +18,13 @@ class MovieCastList extends StatelessWidget {
             Text('See more', style: TextStyle(color: Colors.grey)),
           ],
         ),
-        const SizedBox(height: 10),
+        const Gap(10),
         SizedBox(
           height: 100,
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
             itemCount: 5,
-            separatorBuilder: (_, __) => const SizedBox(width: 16),
+            separatorBuilder: (_, __) => const Gap(16),
             itemBuilder: (context, index) {
               return const Column(
                 children: [
@@ -31,7 +32,7 @@ class MovieCastList extends StatelessWidget {
                     radius: 30,
                     backgroundColor: Colors.grey,
                   ),
-                  SizedBox(height: 4),
+                  Gap(4),
                   Text(
                     'Actor Name',
                     style: TextStyle(fontSize: 12),

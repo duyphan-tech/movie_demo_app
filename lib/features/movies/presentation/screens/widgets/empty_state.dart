@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:movie_demo_app/core/utils/extensions/l10n.dart';
 
 class EmptyState extends StatelessWidget {
@@ -18,7 +19,7 @@ class EmptyState extends StatelessWidget {
             size: 80,
             color: colorScheme.onSurfaceVariant.withAlpha(51),
           ),
-          const SizedBox(height: 16),
+          const Gap(16),
           Text(
             context.l10n.emptyList,
             style: textTheme.bodyLarge?.copyWith(

@@ -151,4 +151,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get emptyList => 'Empty list';
+
+  @override
+  String get loading => 'Loading...';
 }

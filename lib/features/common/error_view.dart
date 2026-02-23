@@ -30,7 +30,6 @@ class ErrorView extends StatelessWidget {
                       size: 48,
                       color: colorScheme.error,
                     ),
-                    const SizedBox(height: 16),
                     const Gap(16),
                     Text(
                       context.l10n.error,

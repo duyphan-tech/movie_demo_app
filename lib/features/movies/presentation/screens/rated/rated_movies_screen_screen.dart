@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:movie_demo_app/core/utils/extensions/l10n.dart';
 import 'package:movie_demo_app/features/movies/presentation/providers/movie_provider.dart';
@@ -18,19 +20,21 @@ class RatedMoviesScreen extends HookConsumerWidget {
       return ref.refresh(ratedMoviesProvider.future);
     }, []);
 
+    // Show/hide EasyLoading based on loading state
+    useEffect(() {
+      if (ratedMoviesAsync.isLoading && !ratedMoviesAsync.hasValue) {
+        EasyLoading.show(status: context.l10n.loading);
+      } else {
+        EasyLoading.dismiss();
+      }
+      return null;
+    }, [ratedMoviesAsync.isLoading, ratedMoviesAsync.hasValue]);
+
     ref.listen(ratedMoviesProvider, (previous, next) {
       if (next.hasError && !next.isLoading) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              '${context.l10n.dataLoadError}: ${next.error}',
-              style: textTheme.bodyMedium?.copyWith(
-                color: colorScheme.onError,
-              ),
-            ),
-            backgroundColor: colorScheme.error,
-            behavior: SnackBarBehavior.floating,
-          ),
+        EasyLoading.showError(
+          '${context.l10n.dataLoadError}: ${next.error}',
+          duration: const Duration(seconds: 3),
         );
       }
     });
@@ -40,7 +44,7 @@ class RatedMoviesScreen extends HookConsumerWidget {
         title: Text(context.l10n.ratedMovies),
       ),
       body: ratedMoviesAsync.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
+        loading: () => const SizedBox.shrink(),
 
         error: (err, stack) => ErrorWidget(err),
 
@@ -61,7 +65,7 @@ class RatedMoviesScreen extends HookConsumerWidget {
                           size: 80,
                           color: colorScheme.onSurfaceVariant.withAlpha(51),
                         ),
-                        const SizedBox(height: 16),
+                        const Gap(16),
                         Text(
                           context.l10n.noRatedMoviesMsg,
                           style: textTheme.bodyLarge?.copyWith(

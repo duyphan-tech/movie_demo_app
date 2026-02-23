@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:movie_demo_app/core/constants/app_constants.dart';
 import 'package:movie_demo_app/core/utils/widgets/custom_network_image.dart';
 import 'package:movie_demo_app/features/movies/domain/entities/movie.dart';
@@ -47,7 +48,7 @@ class RatedMovieItem extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Icon(Icons.star, color: colorScheme.secondary, size: 12),
-                        const SizedBox(width: 4),
+                        const Gap(4),
                         Text(
                           '${movie.rating}',
                           style: textTheme.labelSmall?.copyWith(
@@ -62,7 +63,7 @@ class RatedMovieItem extends StatelessWidget {
             ),
           ),
 
-          const SizedBox(height: 8),
+          const Gap(8),
 
           Text(
             movie.title,

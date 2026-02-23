@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:gap/gap.dart';
 
@@ -31,18 +32,16 @@ class LoginScreen extends HookConsumerWidget {
     debugPrint('inside build');
 
     ref.listen<AsyncValue<void>>(loginProvider, (previous, next) {
+      if (next.isLoading) {
+        EasyLoading.show(status: context.l10n.loading);
+      } else {
+        EasyLoading.dismiss();
+      }
+
       if (next.hasError && !next.isLoading) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              next.error.toString().replaceAll('Exception: ', ''),
-              style: textTheme.bodyMedium?.copyWith(
-                color: colorScheme.onError,
-              ),
-            ),
-            backgroundColor: colorScheme.error,
-            behavior: SnackBarBehavior.floating,
-          ),
+        EasyLoading.showError(
+          next.error.toString().replaceAll('Exception: ', ''),
+          duration: const Duration(seconds: 3),
         );
       }
     });
@@ -78,7 +77,7 @@ class LoginScreen extends HookConsumerWidget {
                     color: colorScheme.primary,
                   ),
 
-                  Gap(40),
+                  const Gap(40),
 
                   Consumer(
                     builder: (context, ref, child) {
@@ -99,7 +98,7 @@ class LoginScreen extends HookConsumerWidget {
                       );
                     },
                   ),
-                  const SizedBox(height: 16),
+                  const Gap(16),
 
                   ValueListenableBuilder<bool>(
                     valueListenable: isPasswordVisible,
@@ -130,40 +129,7 @@ class LoginScreen extends HookConsumerWidget {
                     },
                   ),
 
-                  // HookConsumer(
-                  //   builder: (context, ref, child) {
-                  //     final isLoading = ref.watch(authProvider).isLoading;
-
-                  //     final isPasswordVisible = useState(false);
-
-                  //     debugPrint('inside HookConsumer - Password');
-
-                  //     return CustomTextField(
-                  //       controller: passwordController,
-                  //       label: 'Password',
-                  //       focusNode: passwordFocusNode,
-                  //       obscureText: !isPasswordVisible.value,
-                  //       enabled: !isLoading,
-                  //       textInputAction: TextInputAction.done,
-                  //       prefixIcon: Icons.lock_outline,
-                  //       validator: (value) =>
-                  //           (value == null || value.length < 3)
-                  //           ? context.l10n.passwordTooShortError
-                  //           : null,
-                  //       onFieldSubmitted: (_) => onSubmit(),
-                  //       suffixIcon: IconButton(
-                  //         icon: Icon(
-                  //           isPasswordVisible.value
-                  //               ? Icons.visibility
-                  //               : Icons.visibility_off,
-                  //         ),
-                  //         onPressed: () => isPasswordVisible.value =
-                  //             !isPasswordVisible.value,
-                  //       ),
-                  //     );
-                  //   },
-                  // ),
-                  Gap(24),
+                  const Gap(24),
 
                   Consumer(
                     builder: (context, ref, child) {
@@ -175,29 +141,18 @@ class LoginScreen extends HookConsumerWidget {
                             borderRadius: BorderRadius.circular(8),
                           ),
                           elevation: 4,
-                          // ignore: deprecated_member_use
-                          // shadowColor: Colors.indigo.withOpacity(0.4),
                         ),
-                        child: isLoading
-                            ? SizedBox(
-                                height: 24,
-                                width: 24,
-                                child: CircularProgressIndicator(
-                                  color: colorScheme.onPrimary,
-                                  strokeWidth: 2,
-                                ),
-                              )
-                            : Text(
-                                context.l10n.signIn,
-                                style: textTheme.labelLarge?.copyWith(
-                                  inherit: true,
-                                ),
-                              ),
+                        child: Text(
+                          context.l10n.signIn,
+                          style: textTheme.labelLarge?.copyWith(
+                            inherit: true,
+                          ),
+                        ),
                       );
                     },
                   ),
 
-                  Gap(16),
+                  const Gap(16),
                 ],
               ),
             ),

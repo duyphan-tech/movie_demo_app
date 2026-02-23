@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:movie_demo_app/core/constants/app_constants.dart';
 import 'package:movie_demo_app/core/router/router_path.dart';
@@ -33,7 +34,7 @@ class MovieItem extends StatelessWidget {
                     fit: BoxFit.cover,
                   ),
                 ),
-                const SizedBox(height: 4),
+                const Gap(4),
                 Text(
                   movie.title,
                   maxLines: 1,

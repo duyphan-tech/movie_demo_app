@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:movie_demo_app/core/utils/extensions/l10n.dart';
 import 'package:movie_demo_app/features/movies/domain/entities/movie_detail.dart';
 
@@ -31,7 +32,7 @@ class MovieStatsRow extends StatelessWidget {
             color: colorScheme.onSurfaceVariant,
           ),
         ),
-        const SizedBox(height: 4),
+        const Gap(4),
         Text(value, style: textTheme.bodyMedium),
       ],
     );

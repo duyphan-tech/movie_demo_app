@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:movie_demo_app/core/utils/extensions/l10n.dart';
 
 class MovieOverview extends StatelessWidget {
@@ -17,7 +18,7 @@ class MovieOverview extends StatelessWidget {
           context.l10n.description,
           style: textTheme.titleLarge,
         ),
-        const SizedBox(height: 8),
+        const Gap(8),
         Text(
           overview,
           style: textTheme.bodyMedium?.copyWith(

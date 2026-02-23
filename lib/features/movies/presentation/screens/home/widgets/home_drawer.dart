@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gap/gap.dart';
 import 'package:movie_demo_app/core/providers/locale_provider.dart';
 import 'package:movie_demo_app/core/utils/extensions/l10n.dart';
 import 'package:movie_demo_app/features/auth/presentation/providers/auth_provider.dart';
@@ -159,7 +160,7 @@ class HomeDrawer extends ConsumerWidget {
               );
             },
           ),
-          const SizedBox(height: 16),
+          const Gap(16),
         ],
       ),
     );

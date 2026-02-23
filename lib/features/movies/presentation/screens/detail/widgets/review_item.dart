@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:movie_demo_app/core/constants/app_constants.dart';
 import 'package:movie_demo_app/core/utils/extensions/l10n.dart';
 import 'package:movie_demo_app/features/movies/domain/entities/review.dart';
@@ -51,7 +52,7 @@ class ReviewItem extends StatelessWidget {
                       )
                     : null,
               ),
-              const SizedBox(width: 10),
+              const Gap(10),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,7 +61,7 @@ class ReviewItem extends StatelessWidget {
                       review.author ?? context.l10n.anonymous,
                       style: textTheme.titleSmall,
                     ),
-                    const SizedBox(height: 2),
+                    const Gap(2),
                     Text(
                       review.createdAt?.split('T')[0] ?? '',
                       style: textTheme.labelSmall?.copyWith(
@@ -83,7 +84,7 @@ class ReviewItem extends StatelessWidget {
                   child: Row(
                     children: [
                       Icon(Icons.star, size: 14, color: colorScheme.secondary),
-                      const SizedBox(width: 4),
+                      const Gap(4),
                       Text(
                         '${review.authorDetails?.rating}',
                         style: textTheme.labelSmall,
@@ -93,7 +94,7 @@ class ReviewItem extends StatelessWidget {
                 ),
             ],
           ),
-          const SizedBox(height: 10),
+          const Gap(10),
           Text(
             review.content ?? '',
             style: textTheme.bodyMedium?.copyWith(height: 1.4),

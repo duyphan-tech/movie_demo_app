@@ -151,4 +151,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get emptyList => 'Danh sách trống';
+
+  @override
+  String get loading => 'Đang tải...';
 }

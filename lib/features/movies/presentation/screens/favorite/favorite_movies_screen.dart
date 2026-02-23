@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:movie_demo_app/core/utils/extensions/l10n.dart';
@@ -13,39 +14,40 @@ class FavoriteMoviesScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
     final favoritesAsync = ref.watch(favoriteMoviesListProvider);
 
     final favoriteIds = ref.watch(favoritesProvider);
+
+    // Show/hide EasyLoading based on loading state
+    useEffect(() {
+      if (favoritesAsync.isLoading && !favoritesAsync.hasValue) {
+        EasyLoading.show(status: context.l10n.loading);
+      } else {
+        EasyLoading.dismiss();
+      }
+      return null;
+    }, [favoritesAsync.isLoading, favoritesAsync.hasValue]);
+
+    ref.listen(favoriteMoviesListProvider, (previous, next) {
+      if (next.hasError && !next.isLoading) {
+        EasyLoading.showError(
+          '${context.l10n.error}: ${next.error}',
+          duration: const Duration(seconds: 3),
+        );
+      }
+    });
 
     final onRefresh = useCallback(() async {
       return ref.refresh(favoriteMoviesListProvider.future);
     }, []);
 
-    ref.listen(favoriteMoviesListProvider, (previous, next) {
-      if (next.hasError && !next.isLoading) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              '${context.l10n.error}: ${next.error}',
-              style: textTheme.bodyMedium?.copyWith(
-                color: colorScheme.onError,
-              ),
-            ),
-            backgroundColor: colorScheme.error,
-            behavior: SnackBarBehavior.floating,
-          ),
-        );
-      }
-    });
 
     return Scaffold(
       appBar: AppBar(
         title: Text(context.l10n.favoriteList),
       ),
       body: favoritesAsync.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
+        loading: () => const SizedBox.shrink(),
 
         error: (err, stack) => ErrorView(error: err, onRetry: onRefresh),
 

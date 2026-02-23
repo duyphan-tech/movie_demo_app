@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:movie_demo_app/features/movies/domain/entities/movie_detail.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/widgets/favorite_button.dart';
 
@@ -28,11 +29,11 @@ class MovieInfoHeader extends StatelessWidget {
             FavoriteButton(movieId: movie.id),
           ],
         ),
-        const SizedBox(height: 8),
+        const Gap(8),
         Row(
           children: [
             Icon(Icons.star, color: colorScheme.secondary, size: 20),
-            const SizedBox(width: 4),
+            const Gap(4),
             Text(
               '${movie.voteAverage.toStringAsFixed(1)}/10 IMDb',
               style: textTheme.bodyMedium?.copyWith(

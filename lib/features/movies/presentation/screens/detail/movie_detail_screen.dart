@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:movie_demo_app/core/utils/extensions/l10n.dart';
 import 'package:movie_demo_app/features/common/error_view.dart';
@@ -58,14 +60,20 @@ class MovieDetailScreen extends HookConsumerWidget {
       }
     });
 
+    // Show/hide EasyLoading based on loading state
+    useEffect(() {
+      if (asyncValue.isLoading) {
+        EasyLoading.show(status: context.l10n.loading);
+      } else {
+        EasyLoading.dismiss();
+      }
+      return null;
+    }, [asyncValue.isLoading]);
+
     return Scaffold(
       backgroundColor: colorScheme.surface,
       body: asyncValue.when(
-        loading: () => Center(
-          child: CircularProgressIndicator(
-            color: colorScheme.primary,
-          ),
-        ),
+        loading: () => const SizedBox.shrink(),
         error: (err, stack) => ErrorView(error: err, onRetry: refreshData),
         data: (movie) {
           return RefreshIndicator(
@@ -86,19 +94,19 @@ class MovieDetailScreen extends HookConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         MovieInfoHeader(movie: movie),
-                        const SizedBox(height: 16),
+                        const Gap(16),
 
                         MovieGenresList(genres: movie.genres),
-                        const SizedBox(height: 16),
+                        const Gap(16),
 
                         MovieStatsRow(movie: movie),
-                        const SizedBox(height: 24),
+                        const Gap(24),
 
                         MovieOverview(overview: movie.overview),
-                        const SizedBox(height: 24),
+                        const Gap(24),
 
                         MovieReviewsSection(movieId: movieId),
-                        const SizedBox(height: 24),
+                        const Gap(24),
                       ],
                     ),
                   ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gap/gap.dart';
 import 'package:movie_demo_app/core/utils/extensions/l10n.dart';
 import 'package:movie_demo_app/features/movies/presentation/providers/movie_account_state_provider.dart';
 import 'package:movie_demo_app/features/movies/presentation/providers/movie_provider.dart';
@@ -31,7 +32,7 @@ class UserRatingCard extends ConsumerWidget {
           child: Row(
             children: [
               Icon(Icons.star, color: colorScheme.secondary, size: 28),
-              const SizedBox(width: 12),
+              const Gap(12),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

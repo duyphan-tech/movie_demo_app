@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gap/gap.dart';
 import 'package:movie_demo_app/core/utils/extensions/l10n.dart';
 import 'package:movie_demo_app/features/movies/presentation/providers/movie_provider.dart';
 import 'package:movie_demo_app/features/movies/presentation/providers/review_provider.dart';
@@ -63,7 +64,7 @@ class ReviewsList extends ConsumerWidget {
               physics: const NeverScrollableScrollPhysics(),
               padding: const EdgeInsets.symmetric(horizontal: 16),
               itemCount: reviews.length,
-              separatorBuilder: (_, __) => const SizedBox(height: 16),
+              separatorBuilder: (_, __) => const Gap(16),
               itemBuilder: (_, index) => ReviewItem(review: reviews[index]),
             );
           },

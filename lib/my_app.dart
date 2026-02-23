@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:movie_demo_app/core/providers/locale_provider.dart';
@@ -22,8 +23,12 @@ class MyApp extends ConsumerWidget {
     final themeMode = ref.watch(themeProvider);
 
     return localeAsync.when(
-      loading: () => const MaterialApp(
-        home: Scaffold(body: Center(child: CircularProgressIndicator())),
+      loading: () => MaterialApp(
+        debugShowCheckedModeBanner: config.flavor == Flavor.dev,
+        home: const Scaffold(
+          body: Center(child: CircularProgressIndicator()),
+        ),
+        builder: EasyLoading.init(),
       ),
 
       error: (err, stack) => _buildMaterialApp(
@@ -55,6 +60,7 @@ class MyApp extends ConsumerWidget {
       darkTheme: AppTheme.darkTheme,
       themeMode: themeMode,
       routerConfig: router,
+      builder: EasyLoading.init(),
     );
   }
 }

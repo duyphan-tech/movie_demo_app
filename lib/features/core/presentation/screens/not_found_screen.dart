@@ -23,7 +23,7 @@ class NotFoundScreen extends StatelessWidget {
                 size: 100,
                 color: Colors.grey.shade300,
               ),
-              Gap(24),
+              const Gap(24),
 
               const Text(
                 "404",
@@ -34,7 +34,7 @@ class NotFoundScreen extends StatelessWidget {
                   height: 1,
                 ),
               ),
-              Gap(8),
+              const Gap(8),
 
               const Text(
                 "Không tìm thấy trang!",
@@ -45,7 +45,7 @@ class NotFoundScreen extends StatelessWidget {
                 ),
               ),
 
-              Gap(12),
+              const Gap(12),
 
               Text(
                 "Đường dẫn '${path ?? 'này'}' không tồn tại hoặc đã bị xóa.",
@@ -53,7 +53,7 @@ class NotFoundScreen extends StatelessWidget {
                 style: const TextStyle(color: Colors.grey, fontSize: 14),
               ),
 
-              Gap(40),
+              const Gap(40),
 
               SizedBox(
                 width: double.infinity,

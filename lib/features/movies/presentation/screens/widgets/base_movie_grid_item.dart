@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:movie_demo_app/core/constants/app_constants.dart';
 import 'package:movie_demo_app/core/utils/widgets/custom_network_image.dart';
 import 'package:movie_demo_app/features/movies/domain/entities/movie.dart';
@@ -38,7 +39,7 @@ class BaseMovieGridItem extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 8),
+          const Gap(8),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 4),
             child: Text(

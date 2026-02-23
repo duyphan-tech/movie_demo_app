@@ -53,7 +53,7 @@ class SplashScreen extends HookWidget {
                         color: Colors.white,
                       ),
                     ),
-                    Gap(16),
+                    const Gap(16),
                     const Text(
                       "Movie App",
                       style: TextStyle(
@@ -68,7 +68,7 @@ class SplashScreen extends HookWidget {
               ),
             ),
 
-            Gap(46),
+            const Gap(46),
 
             const SizedBox(
               width: 24,

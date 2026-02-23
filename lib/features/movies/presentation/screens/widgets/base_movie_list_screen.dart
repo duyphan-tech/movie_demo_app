@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:movie_demo_app/core/utils/extensions/l10n.dart';
 import 'package:movie_demo_app/features/movies/domain/entities/movie.dart';
@@ -28,13 +30,16 @@ class BaseMovieListScreen extends HookConsumerWidget {
 
     ref.listen(provider, (previous, next) {
       final nextAsync = next;
+      if (nextAsync.isLoading && !nextAsync.hasValue) {
+        EasyLoading.show(status: context.l10n.loading);
+      } else {
+        EasyLoading.dismiss();
+      }
+
       if (nextAsync.hasError && !nextAsync.isLoading) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('${context.l10n.error}: ${nextAsync.error}'),
-            backgroundColor: Colors.red,
-            behavior: SnackBarBehavior.floating,
-          ),
+        EasyLoading.showError(
+          '${context.l10n.error}: ${nextAsync.error}',
+          duration: const Duration(seconds: 3),
         );
       }
     });
@@ -48,13 +53,13 @@ class BaseMovieListScreen extends HookConsumerWidget {
         elevation: 0,
       ),
       body: asyncValue.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
+        loading: () => const SizedBox.shrink(),
         error: (err, stack) => Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Icon(Icons.error_outline, size: 48, color: Colors.red),
-              const SizedBox(height: 16),
+              const Gap(16),
               Text(
                 context.l10n.dataLoadError,
                 style: TextStyle(color: Colors.grey[600]),
@@ -69,7 +74,7 @@ class BaseMovieListScreen extends HookConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(emptyIcon, size: 80, color: Colors.grey[300]),
-                  const SizedBox(height: 16),
+                  const Gap(16),
                   Text(
                     emptyMessage,
                     style: TextStyle(

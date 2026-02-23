@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -23,6 +24,16 @@ class HomeScreen extends HookConsumerWidget {
     final isInitialLoading = ref.watch(
       homeProvider.select((value) => value.isLoading && !value.hasValue),
     );
+
+    // Show/hide EasyLoading based on initial loading state
+    useEffect(() {
+      if (isInitialLoading) {
+        EasyLoading.show(status: context.l10n.loading);
+      } else {
+        EasyLoading.dismiss();
+      }
+      return null;
+    }, [isInitialLoading]);
 
     // useEffect(() {
     //   void onScroll() {
@@ -67,19 +78,17 @@ class HomeScreen extends HookConsumerWidget {
         title: Text(context.l10n.movieOverviewTitle),
         // actions: [AnimatedRefreshButton(onRefresh: onRefresh)],
       ),
-      body: isInitialLoading
-          ? const Center(child: CircularProgressIndicator())
-          : RefreshIndicator(
-              onRefresh: onRefresh,
-              color: colorScheme.onSurface,
-              backgroundColor: colorScheme.surface,
-              edgeOffset: 0,
-              child: CustomScrollView(
-                controller: scrollController,
-                physics: const AlwaysScrollableScrollPhysics(
-                  parent: BouncingScrollPhysics(),
-                ),
-                slivers: [
+      body: RefreshIndicator(
+        onRefresh: onRefresh,
+        color: colorScheme.onSurface,
+        backgroundColor: colorScheme.surface,
+        edgeOffset: 0,
+        child: CustomScrollView(
+          controller: scrollController,
+          physics: const AlwaysScrollableScrollPhysics(
+            parent: BouncingScrollPhysics(),
+          ),
+          slivers: [
                   SliverToBoxAdapter(
                     child: Column(
                       children: [
