@@ -391,6 +391,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Loading...'**
   String get loading;
+
+  /// No description provided for @pageNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Page Not Found'**
+  String get pageNotFound;
+
+  /// No description provided for @pageNotFoundMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'The page you are looking for does not exist or has been moved.'**
+  String get pageNotFoundMessage;
+
+  /// No description provided for @pathNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Path \'{path}\' not found'**
+  String pathNotFound(String path);
+
+  /// No description provided for @goBackHome.
+  ///
+  /// In en, this message translates to:
+  /// **'Go Back Home'**
+  String get goBackHome;
+
+  /// No description provided for @error404.
+  ///
+  /// In en, this message translates to:
+  /// **'404'**
+  String get error404;
 }
 
 class _AppLocalizationsDelegate

@@ -48,5 +48,17 @@
   "logoutConfirmation": "Bạn có chắc chắn muốn đăng xuất không?",
   "agree": "Đồng ý",
   "emptyList": "Danh sách trống",
-  "loading": "Đang tải..."
+  "loading": "Đang tải...",
+  "pageNotFound": "Không tìm thấy trang",
+  "pageNotFoundMessage": "Trang bạn đang tìm không tồn tại hoặc đã bị di chuyển.",
+  "pathNotFound": "Đường dẫn '{path}' không tìm thấy",
+  "@pathNotFound": {
+    "placeholders": {
+      "path": {
+        "type": "String"
+      }
+    }
+  },
+  "goBackHome": "Quay về trang chủ",
+  "error404": "404"
 }

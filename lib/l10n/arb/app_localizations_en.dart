@@ -154,4 +154,22 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get loading => 'Loading...';
+
+  @override
+  String get pageNotFound => 'Page Not Found';
+
+  @override
+  String get pageNotFoundMessage =>
+      'The page you are looking for does not exist or has been moved.';
+
+  @override
+  String pathNotFound(String path) {
+    return 'Path \'$path\' not found';
+  }
+
+  @override
+  String get goBackHome => 'Go Back Home';
+
+  @override
+  String get error404 => '404';
 }

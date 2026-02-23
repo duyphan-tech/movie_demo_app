@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:movie_demo_app/core/constants/app_constants.dart';
+import 'package:movie_demo_app/core/router/router_path.dart';
 import 'package:movie_demo_app/features/movies/domain/entities/movie_detail.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/detail/widgets/app_bar_background.dart';
 // import 'package:movie_demo_app/features/movies/presentation/screens/widgets/animated_refresh_button.dart';
@@ -32,7 +34,13 @@ class MovieDetailAppBar extends ConsumerWidget {
         ),
         child: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () {
+            if (Navigator.canPop(context)) {
+              Navigator.pop(context);
+            } else {
+              context.go(RouterPath.home);
+            }
+          },
         ),
       ),
       actions: [

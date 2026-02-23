@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:movie_demo_app/core/router/router_path.dart';
+import 'package:movie_demo_app/core/utils/extensions/l10n.dart';
 
 class NotFoundScreen extends StatelessWidget {
   final String? path;
@@ -10,8 +11,11 @@ class NotFoundScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: colorScheme.surface,
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(32.0),
@@ -21,36 +25,38 @@ class NotFoundScreen extends StatelessWidget {
               Icon(
                 Icons.error_outline_rounded,
                 size: 100,
-                color: Colors.grey.shade300,
+                color: colorScheme.outlineVariant,
               ),
               const Gap(24),
 
-              const Text(
-                "404",
-                style: TextStyle(
-                  fontSize: 60,
+              Text(
+                context.l10n.error404,
+                style: textTheme.displayLarge?.copyWith(
                   fontWeight: FontWeight.w900,
-                  color: Color(0xFF0d253f),
+                  color: colorScheme.primary,
                   height: 1,
                 ),
               ),
               const Gap(8),
 
-              const Text(
-                "Không tìm thấy trang!",
-                style: TextStyle(
-                  fontSize: 20,
+              Text(
+                context.l10n.pageNotFound,
+                style: textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.bold,
-                  color: Colors.black87,
+                  color: colorScheme.onSurface,
                 ),
               ),
 
               const Gap(12),
 
               Text(
-                "Đường dẫn '${path ?? 'này'}' không tồn tại hoặc đã bị xóa.",
+                path != null
+                    ? context.l10n.pathNotFound(path!)
+                    : context.l10n.pageNotFoundMessage,
                 textAlign: TextAlign.center,
-                style: const TextStyle(color: Colors.grey, fontSize: 14),
+                style: textTheme.bodyMedium?.copyWith(
+                  color: colorScheme.onSurfaceVariant,
+                ),
               ),
 
               const Gap(40),
@@ -63,13 +69,15 @@ class NotFoundScreen extends StatelessWidget {
                     context.go(RouterPath.home);
                   },
                   icon: const Icon(Icons.home_rounded),
-                  label: const Text(
-                    "Quay về Trang chủ",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  label: Text(
+                    context.l10n.goBackHome,
+                    style: textTheme.labelLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF0d253f),
-                    foregroundColor: Colors.white,
+                    backgroundColor: colorScheme.primary,
+                    foregroundColor: colorScheme.onPrimary,
                     elevation: 0,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),

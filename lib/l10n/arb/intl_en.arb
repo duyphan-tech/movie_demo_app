@@ -48,5 +48,17 @@
   "logoutConfirmation": "Are you sure you want to log out?",
   "agree": "Agree",
   "emptyList": "Empty list",
-  "loading": "Loading..."
+  "loading": "Loading...",
+  "pageNotFound": "Page Not Found",
+  "pageNotFoundMessage": "The page you are looking for does not exist or has been moved.",
+  "pathNotFound": "Path '{path}' not found",
+  "@pathNotFound": {
+    "placeholders": {
+      "path": {
+        "type": "String"
+      }
+    }
+  },
+  "goBackHome": "Go Back Home",
+  "error404": "404"
 }

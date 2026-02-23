@@ -154,4 +154,22 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get loading => 'Đang tải...';
+
+  @override
+  String get pageNotFound => 'Không tìm thấy trang';
+
+  @override
+  String get pageNotFoundMessage =>
+      'Trang bạn đang tìm không tồn tại hoặc đã bị di chuyển.';
+
+  @override
+  String pathNotFound(String path) {
+    return 'Đường dẫn \'$path\' không tìm thấy';
+  }
+
+  @override
+  String get goBackHome => 'Quay về trang chủ';
+
+  @override
+  String get error404 => '404';
 }

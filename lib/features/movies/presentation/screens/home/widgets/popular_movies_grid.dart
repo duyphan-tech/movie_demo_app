@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:movie_demo_app/core/constants/app_constants.dart';
-import 'package:movie_demo_app/core/router/router_path.dart';
 import 'package:movie_demo_app/core/utils/widgets/custom_network_image.dart';
 import 'package:movie_demo_app/core/utils/widgets/skeleton.dart';
 import 'package:movie_demo_app/features/movies/presentation/providers/home_provider.dart';
@@ -43,7 +42,7 @@ class PopularMoviesGrid extends ConsumerWidget {
           final movie = popularState[index];
           return GestureDetector(
             onTap: () =>
-                context.push(RouterPath.details, extra: {'id': movie.id}),
+                context.push('/details/${movie.id}'),
             child: Stack(
               children: [
                 Positioned.fill(

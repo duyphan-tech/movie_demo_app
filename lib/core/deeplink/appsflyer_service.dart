@@ -54,9 +54,15 @@ class AppsFlyerService {
   }
 
   void _handleNavigation(String deepLinkValue) {
+    // Chỉ xử lý deep link từ AppsFlyer (onelink), không xử lý custom scheme
+    // Custom scheme moviedemo:// sẽ được GoRouter xử lý trực tiếp
+    if (deepLinkValue.startsWith('moviedemo')) {
+      logger.printLog('i', "AppsFlyer: Ignoring custom scheme, let GoRouter handle it");
+      return;
+    }
+
     // deepLinkValue nhận được từ dashboard là "product/123"
     // GoRouter cần path bắt đầu bằng "/" -> "/product/123"
-
     final targetPath = deepLinkValue.startsWith('/')
         ? deepLinkValue
         : '/$deepLinkValue';
