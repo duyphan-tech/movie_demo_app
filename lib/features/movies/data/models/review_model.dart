@@ -1,3 +1,5 @@
+// ignore_for_file: invalid_annotation_target
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:movie_demo_app/features/movies/data/models/author_details_model.dart';
 import 'package:movie_demo_app/features/movies/domain/entities/review.dart';

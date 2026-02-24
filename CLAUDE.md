@@ -81,6 +81,12 @@ flutter analyze
 flutter fix --apply
 ```
 
+## Personal Preferences
+
+> **Note:** Khi làm việc với project này, hãy đọc file `.claude/memory/MEMORY.md` để biết chi tiết về preferences, commit checklist và các ghi chú cá nhân.
+>
+> Nếu file chưa tồn tại, hãy tạo mới với template có sẵn.
+
 ## Architecture
 
 ### Project Structure
