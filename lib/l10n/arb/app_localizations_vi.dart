@@ -172,4 +172,16 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get error404 => '404';
+
+  @override
+  String get searchMoviesHint => 'Tìm kiếm phim...';
+
+  @override
+  String get searchHint => 'Tìm kiếm phim';
+
+  @override
+  String get tryDifferentKeyword => 'Thử từ khóa khác';
+
+  @override
+  String get searchError => 'Lỗi tìm kiếm';
 }

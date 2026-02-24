@@ -60,5 +60,9 @@
     }
   },
   "goBackHome": "Quay về trang chủ",
-  "error404": "404"
+  "error404": "404",
+  "searchMoviesHint": "Tìm kiếm phim...",
+  "searchHint": "Tìm kiếm phim",
+  "tryDifferentKeyword": "Thử từ khóa khác",
+  "searchError": "Lỗi tìm kiếm"
 }

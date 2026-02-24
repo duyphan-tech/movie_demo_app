@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:movie_demo_app/features/auth/auth.dart';
 import 'package:movie_demo_app/features/core/core.dart';
 import 'package:movie_demo_app/features/movies/movies.dart';
+import 'package:movie_demo_app/features/movies/presentation/screens/search/search_screen.dart';
 
 import 'router_name.dart';
 import 'router_path.dart';
@@ -31,20 +32,25 @@ final routerProvider = Provider<GoRouter>((ref) {
       final authState = authNotifier.value;
       final uri = state.uri;
 
-      // Check if this is a deep link (custom scheme)
       final isDeepLink = uri.scheme == 'moviedemo';
-      final isFromDeepLinkRoute = state.matchedLocation.startsWith('/') &&
-                                  state.matchedLocation.length > 1 &&
-                                  int.tryParse(state.matchedLocation.substring(1)) == null;
+      final isFromDeepLinkRoute =
+          state.matchedLocation.startsWith('/') &&
+          state.matchedLocation.length > 1 &&
+          int.tryParse(state.matchedLocation.substring(1)) == null;
 
       debugPrint('🔀 Redirect - URI: $uri');
-      debugPrint('🔀 Redirect - Scheme: ${uri.scheme}, Host: ${uri.host}, Path: ${uri.path}');
+      debugPrint(
+        '🔀 Redirect - Scheme: ${uri.scheme}, Host: ${uri.host}, Path: ${uri.path}',
+      );
       debugPrint('🔀 Redirect - Matched: ${state.matchedLocation}');
-      debugPrint('🔀 AuthState: loading=${authState.isLoading}, hasError=${authState.hasError}, isLoggedIn=${authState.value}');
-      debugPrint('🔀 isDeepLink: $isDeepLink, isFromDeepLinkRoute: $isFromDeepLinkRoute');
+      debugPrint(
+        '🔀 AuthState: loading=${authState.isLoading}, hasError=${authState.hasError}, isLoggedIn=${authState.value}',
+      );
+      debugPrint(
+        '🔀 isDeepLink: $isDeepLink, isFromDeepLinkRoute: $isFromDeepLinkRoute',
+      );
 
       if (authState.isLoading) {
-        // Don't redirect if coming from deep link - let it show NotFoundScreen
         if (isDeepLink && state.matchedLocation != RouterPath.initial) {
           debugPrint('🔀 Deep link detected while loading, no redirect');
           return null;
@@ -67,11 +73,10 @@ final routerProvider = Provider<GoRouter>((ref) {
 
       if (isLoggedIn) {
         if (isLoginRoute || isInitialRoute) {
-          // Check if we came from a deep link (path is numeric like /123)
           final pathId = int.tryParse(state.matchedLocation.substring(1));
           if (pathId != null) {
             debugPrint('🔀 Redirect to deep link: ${state.matchedLocation}');
-            return null; // Stay on current route to show NotFoundScreen or MovieDetail
+            return null;
           }
           debugPrint('🔀 Redirect to home');
           return RouterPath.home;
@@ -103,6 +108,11 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (context, state) => const HomeScreen(),
       ),
       GoRoute(
+        path: RouterPath.search,
+        name: RouterName.search,
+        builder: (context, state) => const SearchScreen(),
+      ),
+      GoRoute(
         path: RouterPath.details,
         name: RouterName.details,
         builder: (context, state) {
@@ -116,21 +126,17 @@ final routerProvider = Provider<GoRouter>((ref) {
         name: RouterName.rated,
         builder: (context, state) => const RatedMoviesScreen(),
       ),
-      // Handle custom scheme deep link: moviedemo://details/123
-      // Must be last as it has generic pattern
       GoRoute(
         path: '/:id',
         builder: (context, state) {
           final uri = state.uri;
           final id = state.pathParameters['id'];
-          // Only handle if this is from custom scheme with host=details and id is numeric
           if (uri.scheme == 'moviedemo' &&
               uri.host == 'details' &&
               id != null &&
               int.tryParse(id) != null) {
             return MovieDetailScreen(movieId: int.parse(id));
           }
-          // Not a valid deep link
           return NotFoundScreen(path: uri.path);
         },
       ),

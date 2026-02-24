@@ -5,4 +5,5 @@ class RouterName {
   static const String login = 'login';
   static const String details = 'details';
   static const String rated = 'rated';
+  static const String search = 'search';
 }

@@ -172,4 +172,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get error404 => '404';
+
+  @override
+  String get searchMoviesHint => 'Search movies...';
+
+  @override
+  String get searchHint => 'Search for movies';
+
+  @override
+  String get tryDifferentKeyword => 'Try a different keyword';
+
+  @override
+  String get searchError => 'Search error';
 }

@@ -30,6 +30,7 @@ export 'presentation/providers/movie_detail_provider.dart';
 export 'presentation/providers/movie_provider.dart';
 export 'presentation/providers/rating_provider.dart';
 export 'presentation/providers/review_provider.dart';
+export 'presentation/providers/search_provider.dart';
 
 // Presentation - Screens
 export 'presentation/screens/detail/movie_detail_screen.dart';

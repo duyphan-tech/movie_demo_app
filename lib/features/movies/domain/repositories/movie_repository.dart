@@ -28,4 +28,10 @@ abstract class MovieRepository {
   Future<Either<Failure, List<Movie>>> getFavoriteMovies();
   Future<Either<Failure, AccountState>> getMovieAccountState(int movieId);
   Future<Either<Failure, bool>> deleteRating({required int movieId});
+
+  Future<Either<Failure, List<Movie>>> searchMovies({
+    required String query,
+    int page = 1,
+    CancelToken? cancelToken,
+  });
 }

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:movie_demo_app/core/utils/extensions/l10n.dart';
-import 'package:movie_demo_app/core/utils/hooks/use_infinite_scroll.dart';
-import 'package:movie_demo_app/core/utils/widgets/load_more_indicator.dart';
+import 'package:movie_demo_app/core/core.dart';
 import 'package:movie_demo_app/features/movies/presentation/providers/home_provider.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/home/widgets/home_drawer.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/home/widgets/movie_section.dart';
@@ -61,7 +60,16 @@ class HomeScreen extends HookConsumerWidget {
       drawer: const HomeDrawer(),
       appBar: AppBar(
         title: Text(context.l10n.movieOverviewTitle),
-        // actions: [AnimatedRefreshButton(onRefresh: onRefresh)],
+        actions: [
+          // AnimatedRefreshButton(onRefresh: onRefresh),
+          GestureDetector(
+            onTap: () => context.pushNamed(RouterName.search),
+            child: Padding(
+              padding: EdgeInsets.only(right: 10),
+              child: Icon(AppIcon.icon_search),
+            ),
+          ),
+        ],
       ),
       body: RefreshIndicator(
         onRefresh: onRefresh,
@@ -74,46 +82,46 @@ class HomeScreen extends HookConsumerWidget {
             parent: BouncingScrollPhysics(),
           ),
           slivers: [
-                  SliverToBoxAdapter(
-                    child: Column(
-                      children: [
-                        MovieSection(
-                          title: context.l10n.nowPlaying,
-                          category: MovieCategory.nowPlaying,
-                        ),
-                        Gap(10),
-                        MovieSection(
-                          title: context.l10n.topRated,
-                          category: MovieCategory.topRated,
-                        ),
-                        Gap(10),
-                        MovieSection(
-                          title: context.l10n.upcoming,
-                          category: MovieCategory.upcoming,
-                        ),
-                        Gap(10),
-                        Padding(
-                          padding: EdgeInsets.all(16.0),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              context.l10n.popular,
-                              style: textTheme.titleLarge,
-                            ),
-                          ),
-                        ),
-                      ],
+            SliverToBoxAdapter(
+              child: Column(
+                children: [
+                  MovieSection(
+                    title: context.l10n.nowPlaying,
+                    category: MovieCategory.nowPlaying,
+                  ),
+                  const Gap(10),
+                  MovieSection(
+                    title: context.l10n.topRated,
+                    category: MovieCategory.topRated,
+                  ),
+                  const Gap(10),
+                  MovieSection(
+                    title: context.l10n.upcoming,
+                    category: MovieCategory.upcoming,
+                  ),
+                  const Gap(10),
+                  Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        context.l10n.popular,
+                        style: textTheme.titleLarge,
+                      ),
                     ),
                   ),
-
-                  const PopularMoviesGrid(),
-
-                  const SliverToBoxAdapter(child: LoadMoreIndicator()),
-
-                  const SliverToBoxAdapter(child: Gap(20)),
                 ],
               ),
             ),
+
+            const PopularMoviesGrid(),
+
+            const SliverToBoxAdapter(child: LoadMoreIndicator()),
+
+            const SliverToBoxAdapter(child: Gap(20)),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -38,6 +38,12 @@ abstract class MovieRemoteDataSource {
   Future<Either<Failure, List<MovieModel>>> getFavoriteMovies({int page = 1});
   Future<Either<Failure, AccountStateModel>> getMovieAccountState(int movieId);
   Future<Either<Failure, bool>> deleteRating({required int movieId});
+
+  Future<Either<Failure, List<MovieModel>>> searchMovies({
+    required String query,
+    int page = 1,
+    CancelToken? cancelToken,
+  });
 }
 
 class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
@@ -186,5 +192,26 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
       queryParameters: {'session_id': sessionId},
     );
     return result.map((data) => true);
+  }
+
+  @override
+  Future<Either<Failure, List<MovieModel>>> searchMovies({
+    required String query,
+    int page = 1,
+    CancelToken? cancelToken,
+  }) async {
+    final result = await apiClient.get(
+      Endpoints.searchMovie,
+      queryParameters: {
+        'query': query,
+        'page': page,
+      },
+      cancelToken: cancelToken,
+    );
+
+    return result.map((data) {
+      final List results = data['results'];
+      return results.map((e) => MovieModel.fromJson(e)).toList();
+    });
   }
 }

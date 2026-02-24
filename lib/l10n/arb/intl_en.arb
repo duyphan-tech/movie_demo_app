@@ -60,5 +60,9 @@
     }
   },
   "goBackHome": "Go Back Home",
-  "error404": "404"
+  "error404": "404",
+  "searchMoviesHint": "Search movies...",
+  "searchHint": "Search for movies",
+  "tryDifferentKeyword": "Try a different keyword",
+  "searchError": "Search error"
 }

@@ -9,6 +9,8 @@ class Endpoints {
   static const String login = '/auth/login';
   static const String register = '/register';
   static const String logout = '/logout';
+  static const String search = '/search';
+  static const String searchMovie = '/search/movie';
 
   static String movieReviews(int movieId) => '/movie/$movieId/reviews';
   static String movieAccountState(int movieId) =>

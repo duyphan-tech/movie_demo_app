@@ -421,6 +421,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'404'**
   String get error404;
+
+  /// No description provided for @searchMoviesHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search movies...'**
+  String get searchMoviesHint;
+
+  /// No description provided for @searchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search for movies'**
+  String get searchHint;
+
+  /// No description provided for @tryDifferentKeyword.
+  ///
+  /// In en, this message translates to:
+  /// **'Try a different keyword'**
+  String get tryDifferentKeyword;
+
+  /// No description provided for @searchError.
+  ///
+  /// In en, this message translates to:
+  /// **'Search error'**
+  String get searchError;
 }
 
 class _AppLocalizationsDelegate

@@ -91,4 +91,13 @@ class MovieRepositoryImpl implements MovieRepository {
   Future<Either<Failure, bool>> deleteRating({required int movieId}) {
     return dataSource.deleteRating(movieId: movieId);
   }
+
+  @override
+  Future<Either<Failure, List<Movie>>> searchMovies({
+    required String query,
+    int page = 1,
+    CancelToken? cancelToken,
+  }) => _getMoviesFromSource(
+    () => dataSource.searchMovies(query: query, page: page, cancelToken: cancelToken),
+  );
 }
