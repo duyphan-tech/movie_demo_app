@@ -10,6 +10,7 @@ export 'data/models/movie_detail_model.dart';
 export 'data/models/movie_model.dart';
 export 'data/models/response/review_response_model.dart';
 export 'data/models/review_model.dart';
+export 'data/models/video_model.dart';
 export 'data/repositories/movie_repository_impl.dart';
 
 // Domain
@@ -20,6 +21,7 @@ export 'domain/entities/movie.dart';
 export 'domain/entities/movie_detail.dart';
 export 'domain/entities/review.dart';
 export 'domain/entities/review_response.dart';
+export 'domain/entities/video.dart';
 export 'domain/repositories/movie_repository.dart';
 
 // Presentation - Providers
@@ -31,6 +33,13 @@ export 'presentation/providers/movie_provider.dart';
 export 'presentation/providers/rating_provider.dart';
 export 'presentation/providers/review_provider.dart';
 export 'presentation/providers/search_provider.dart';
+export 'presentation/providers/video_player_provider.dart';
+export 'presentation/providers/video_provider.dart';
+
+// Presentation - Widgets
+export 'presentation/screens/detail/widgets/video/video_widgets.dart';
+export 'presentation/screens/detail/widgets/video_list_bottom_sheet.dart';
+export 'presentation/screens/detail/widgets/movie_videos_section.dart';
 
 // Presentation - Screens
 export 'presentation/screens/detail/movie_detail_screen.dart';

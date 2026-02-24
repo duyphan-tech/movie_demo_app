@@ -6,10 +6,12 @@ import 'package:movie_demo_app/features/movies/data/models/account_state_model.d
 import 'package:movie_demo_app/features/movies/data/models/movie_detail_model.dart';
 import 'package:movie_demo_app/features/movies/data/models/movie_model.dart';
 import 'package:movie_demo_app/features/movies/data/models/review_model.dart';
+import 'package:movie_demo_app/features/movies/data/models/video_model.dart';
 import 'package:movie_demo_app/features/movies/domain/entities/account_state.dart';
 import 'package:movie_demo_app/features/movies/domain/entities/movie.dart';
 import 'package:movie_demo_app/features/movies/domain/entities/movie_detail.dart';
 import 'package:movie_demo_app/features/movies/domain/entities/review.dart';
+import 'package:movie_demo_app/features/movies/domain/entities/video.dart';
 import 'package:movie_demo_app/features/movies/domain/repositories/movie_repository.dart';
 
 class MovieRepositoryImpl implements MovieRepository {
@@ -100,4 +102,10 @@ class MovieRepositoryImpl implements MovieRepository {
   }) => _getMoviesFromSource(
     () => dataSource.searchMovies(query: query, page: page, cancelToken: cancelToken),
   );
+
+  @override
+  Future<Either<Failure, VideoResponse>> getMovieVideos(int movieId) async {
+    final result = await dataSource.getMovieVideos(movieId);
+    return result.map((model) => model.toDomain());
+  }
 }

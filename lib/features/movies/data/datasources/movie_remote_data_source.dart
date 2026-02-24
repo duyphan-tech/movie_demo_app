@@ -8,6 +8,7 @@ import 'package:movie_demo_app/features/movies/data/models/account_state_model.d
 import 'package:movie_demo_app/features/movies/data/models/movie_detail_model.dart';
 import 'package:movie_demo_app/features/movies/data/models/movie_model.dart';
 import 'package:movie_demo_app/features/movies/data/models/review_model.dart';
+import 'package:movie_demo_app/features/movies/data/models/video_model.dart';
 
 abstract class MovieRemoteDataSource {
   Future<Either<Failure, List<MovieModel>>> getPopularMovies({int page = 1});
@@ -44,6 +45,8 @@ abstract class MovieRemoteDataSource {
     int page = 1,
     CancelToken? cancelToken,
   });
+
+  Future<Either<Failure, VideoResponseModel>> getMovieVideos(int movieId);
 }
 
 class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
@@ -213,5 +216,12 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
       final List results = data['results'];
       return results.map((e) => MovieModel.fromJson(e)).toList();
     });
+  }
+
+  @override
+  Future<Either<Failure, VideoResponseModel>> getMovieVideos(int movieId) async {
+    final result = await apiClient.get(Endpoints.movieVideos(movieId));
+
+    return result.map((data) => VideoResponseModel.fromJson(data));
   }
 }

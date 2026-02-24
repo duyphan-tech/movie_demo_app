@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:movie_demo_app/features/movies/domain/entities/account_state.dart';
 import 'package:movie_demo_app/features/movies/domain/entities/review.dart';
+import 'package:movie_demo_app/features/movies/domain/entities/video.dart';
 
 import '../../../../core/errors/failures.dart';
 import '../entities/movie.dart';
@@ -34,4 +35,6 @@ abstract class MovieRepository {
     int page = 1,
     CancelToken? cancelToken,
   });
+
+  Future<Either<Failure, VideoResponse>> getMovieVideos(int movieId);
 }

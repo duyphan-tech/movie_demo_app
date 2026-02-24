@@ -13,4 +13,7 @@ class AppIcon {
   static const IconData icon_refresh = Icons.refresh;
   static const IconData icon_movie = Icons.movie;
   static const IconData icon_movie_filter_outlined = Icons.movie_filter_outlined;
+  static const IconData icon_play_circle = Icons.play_circle_fill;
+  static const IconData icon_playlist = Icons.playlist_add_check;
+  static const IconData icon_play_arrow = Icons.play_arrow;
 }

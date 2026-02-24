@@ -445,6 +445,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Search error'**
   String get searchError;
+
+  /// No description provided for @trailers.
+  ///
+  /// In en, this message translates to:
+  /// **'Trailers & Videos'**
+  String get trailers;
+
+  /// No description provided for @viewAllVideos.
+  ///
+  /// In en, this message translates to:
+  /// **'View all'**
+  String get viewAllVideos;
+
+  /// No description provided for @allVideos.
+  ///
+  /// In en, this message translates to:
+  /// **'All videos ({count})'**
+  String allVideos(int count);
+
+  /// No description provided for @openInYouTube.
+  ///
+  /// In en, this message translates to:
+  /// **'Open in YouTube'**
+  String get openInYouTube;
 }
 
 class _AppLocalizationsDelegate

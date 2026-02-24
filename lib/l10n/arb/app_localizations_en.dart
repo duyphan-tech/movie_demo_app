@@ -184,4 +184,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get searchError => 'Search error';
+
+  @override
+  String get trailers => 'Trailers & Videos';
+
+  @override
+  String get viewAllVideos => 'View all';
+
+  @override
+  String allVideos(int count) {
+    return 'All videos ($count)';
+  }
+
+  @override
+  String get openInYouTube => 'Open in YouTube';
 }

@@ -184,4 +184,18 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get searchError => 'Lỗi tìm kiếm';
+
+  @override
+  String get trailers => 'Trailer & Video';
+
+  @override
+  String get viewAllVideos => 'Xem tất cả';
+
+  @override
+  String allVideos(int count) {
+    return 'Tất cả video ($count)';
+  }
+
+  @override
+  String get openInYouTube => 'Mở trong YouTube';
 }

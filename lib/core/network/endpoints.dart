@@ -22,4 +22,5 @@ class Endpoints {
   static String ratedMovies(String accountId) =>
       '/account/$accountId/rated/movies';
   static String deleteRating(int movieId) => '/movie/$movieId/rating';
+  static String movieVideos(int movieId) => '/movie/$movieId/videos';
 }

@@ -19,7 +19,6 @@ class AppBarBackground extends StatelessWidget {
 
         const DecoratedBox(decoration: BoxDecoration(color: Colors.black38)),
 
-        // Gradient phía trên cho icon back nổi bật
         Positioned(
           top: 0,
           left: 0,
@@ -30,22 +29,19 @@ class AppBarBackground extends StatelessWidget {
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                colors: [
-                  Colors.black.withAlpha(128),
-                  Colors.transparent,
-                ],
+                colors: [Colors.black.withAlpha(128), Colors.transparent],
               ),
             ),
           ),
         ),
 
-        Center(
-          child: IconButton(
-            iconSize: 64,
-            icon: const Icon(Icons.play_circle_fill, color: Colors.white),
-            onPressed: () {},
-          ),
-        ),
+        // Center(
+        //   child: IconButton(
+        //     iconSize: 64,
+        //     icon: const Icon(Icons.play_circle_fill, color: Colors.white),
+        //     onPressed: () {},
+        //   ),
+        // ),
       ],
     );
   }

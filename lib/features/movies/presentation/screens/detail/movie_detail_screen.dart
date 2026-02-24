@@ -9,12 +9,14 @@ import 'package:movie_demo_app/features/movies/presentation/providers/favorite_p
 import 'package:movie_demo_app/features/movies/presentation/providers/movie_account_state_provider.dart';
 import 'package:movie_demo_app/features/movies/presentation/providers/movie_detail_provider.dart';
 import 'package:movie_demo_app/features/movies/presentation/providers/review_provider.dart';
+import 'package:movie_demo_app/features/movies/presentation/providers/video_provider.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/detail/widgets/movie_detail_app_bar.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/detail/widgets/movie_genres_list.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/detail/widgets/movie_info_header.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/detail/widgets/movie_overview.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/detail/widgets/movie_reviews_section.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/detail/widgets/movie_stats_row.dart';
+import 'package:movie_demo_app/features/movies/presentation/screens/detail/widgets/movie_videos_section.dart';
 
 class MovieDetailScreen extends HookConsumerWidget {
   final int movieId;
@@ -32,6 +34,7 @@ class MovieDetailScreen extends HookConsumerWidget {
         Future.delayed(const Duration(seconds: 1)),
         ref.refresh(movieDetailProvider(movieId).future),
         ref.refresh(reviewProvider(movieId).future),
+        ref.refresh(movieVideosProvider(movieId).future),
         ref.refresh(movieAccountStateProvider(movieId).future),
         ref.read(favoritesProvider.notifier).checkFavoriteStatus(movieId),
       ]);
@@ -50,9 +53,7 @@ class MovieDetailScreen extends HookConsumerWidget {
           SnackBar(
             content: Text(
               '${context.l10n.dataLoadError}: ${next.error}',
-              style: textTheme.bodyMedium?.copyWith(
-                color: colorScheme.onError,
-              ),
+              style: textTheme.bodyMedium?.copyWith(color: colorScheme.onError),
             ),
             backgroundColor: colorScheme.error,
           ),
@@ -90,6 +91,9 @@ class MovieDetailScreen extends HookConsumerWidget {
                         const Gap(16),
 
                         MovieStatsRow(movie: movie),
+                        const Gap(24),
+
+                        MovieVideosSection(movieId: movieId),
                         const Gap(24),
 
                         MovieOverview(overview: movie.overview),

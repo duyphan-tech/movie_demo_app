@@ -64,5 +64,16 @@
   "searchMoviesHint": "Search movies...",
   "searchHint": "Search for movies",
   "tryDifferentKeyword": "Try a different keyword",
-  "searchError": "Search error"
+  "searchError": "Search error",
+  "trailers": "Trailers & Videos",
+  "viewAllVideos": "View all",
+  "allVideos": "All videos ({count})",
+  "@allVideos": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "openInYouTube": "Open in YouTube"
 }

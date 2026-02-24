@@ -64,5 +64,16 @@
   "searchMoviesHint": "Tìm kiếm phim...",
   "searchHint": "Tìm kiếm phim",
   "tryDifferentKeyword": "Thử từ khóa khác",
-  "searchError": "Lỗi tìm kiếm"
+  "searchError": "Lỗi tìm kiếm",
+  "trailers": "Trailer & Video",
+  "viewAllVideos": "Xem tất cả",
+  "allVideos": "Tất cả video ({count})",
+  "@allVideos": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "openInYouTube": "Mở trong YouTube"
 }
