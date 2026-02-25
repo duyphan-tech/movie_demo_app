@@ -4,9 +4,9 @@ import 'package:movie_demo_app/features/movies/providers/movie_providers.dart';
 
 part 'video_provider.g.dart';
 
-/// Provider trả về danh sách video đã được sắp xếp ưu tiên
-/// - Official trailers lên đầu
-/// - Sau đó đến Teaser và các loại khác
+/// Provider returns prioritized video list
+/// - Official trailers first
+/// - Then Teaser and others
 @riverpod
 Future<VideoList> movieVideos(Ref ref, int movieId) async {
   final movieRepo = ref.read(movieRepositoryProvider);
@@ -19,19 +19,19 @@ Future<VideoList> movieVideos(Ref ref, int movieId) async {
   );
 }
 
-/// Xử lý và sắp xếp danh sách video
+/// Process and sort video list
 VideoList _processVideos(List<Video> videos) {
-  // Lọc chỉ lấy video YouTube
+  // Filter only YouTube videos
   final youtubeVideos = videos.where((v) => v.site == 'YouTube').toList();
 
   if (youtubeVideos.isEmpty) {
     return const VideoList();
   }
 
-  // Sắp xếp: Official trailers trước, sau đó đến các loại khác
+  // Sort: Official trailers first, then others
   final sortedVideos = _sortVideosByPriority(youtubeVideos);
 
-  // Lấy video chính (official trailer đầu tiên, hoặc trailer đầu tiên)
+  // Get main video (first official trailer, or first trailer)
   final mainVideo = sortedVideos.firstWhere(
     (v) => v.type == 'Trailer' && v.official,
     orElse: () => sortedVideos.firstWhere(
@@ -40,11 +40,11 @@ VideoList _processVideos(List<Video> videos) {
     ),
   );
 
-  // Các video còn lại (tối đa 2 cái để hiển thị ngay)
+  // Remaining videos (max 2 to display immediately)
   final otherVideos = sortedVideos.where((v) => v.id != mainVideo.id).toList();
   final displayVideos = otherVideos.take(2).toList();
 
-  // Có nhiều hơn 3 video không?
+  // More than 3 videos?
   final hasMoreVideos = sortedVideos.length > 3;
 
   return VideoList(
@@ -55,22 +55,22 @@ VideoList _processVideos(List<Video> videos) {
   );
 }
 
-/// Sắp xếp video theo thứ tự ưu tiên:
+/// Sort videos by priority:
 /// 1. Official Trailer
-/// 2. Trailer (không official)
+/// 2. Trailer (not official)
 /// 3. Official Teaser
-/// 4. Teaser (không official)
-/// 5. Các loại khác
+/// 4. Teaser (not official)
+/// 5. Others
 List<Video> _sortVideosByPriority(List<Video> videos) {
   final sorted = List<Video>.from(videos);
 
   sorted.sort((a, b) {
-    // Ưu tiên official trước
+    // Prioritize official first
     if (a.official != b.official) {
       return a.official ? -1 : 1;
     }
 
-    // Ưu tiên Trailer trước Teaser
+    // Prioritize Trailer over Teaser
     final aType = _getTypePriority(a.type);
     final bType = _getTypePriority(b.type);
 
@@ -78,14 +78,14 @@ List<Video> _sortVideosByPriority(List<Video> videos) {
       return aType.compareTo(bType);
     }
 
-    // Cùng priority thì xếp theo published_at mới nhất
+    // Same priority, sort by newest published_at
     return b.publishedAt.compareTo(a.publishedAt);
   });
 
   return sorted;
 }
 
-/// Đánh giá độ ưu tiên của type (số nhỏ = ưu tiên cao)
+/// Get type priority (smaller = higher priority)
 int _getTypePriority(String type) {
   switch (type) {
     case 'Trailer':

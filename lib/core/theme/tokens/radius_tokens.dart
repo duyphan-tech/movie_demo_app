@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// Border radius tokens - sync với Figma
-
 class RadiusTokens {
   RadiusTokens._();
 
@@ -58,7 +56,6 @@ class RadiusTokens {
   );
 }
 
-/// Extension cho BuildContext
 extension RadiusTokensExtension on BuildContext {
   BorderRadius get radiusNone => RadiusTokens.circularNone;
   BorderRadius get radiusXs => RadiusTokens.circularXs;

@@ -1,13 +1,9 @@
-/// Spacing and sizing constants
-/// @deprecated Sử dụng SpacingTokens từ theme/tokens/spacing_tokens.dart
+library;
 
 export '../theme/tokens/spacing_tokens.dart';
 
 class AppSizes {
   AppSizes._();
-
-  // Legacy constants - giữ lại cho backward compatibility
-  // Nhưng nên chuyển sang dùng SpacingTokens
 
   static const double paddingSmall = 8.0;
   static const double paddingMedium = 16.0;

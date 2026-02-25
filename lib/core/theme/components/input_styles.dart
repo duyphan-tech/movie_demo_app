@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movie_demo_app/core/theme/tokens/tokens.dart';
 
-/// Input styles - sync với Figma Input components
-
 class InputStyles {
   InputStyles._();
 

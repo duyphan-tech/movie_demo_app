@@ -21,11 +21,10 @@ class SearchMovieGridItem extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Poster - fixed height để tránh overflow
           ClipRRect(
             borderRadius: context.radiusSm,
             child: SizedBox(
-              height: 160, // Fixed height thay vì AspectRatio
+              height: 160,
               child: Stack(
                 fit: StackFit.expand,
                 children: [
@@ -104,7 +103,6 @@ class SearchMovieGridItem extends StatelessWidget {
               ),
             ),
           ),
-          // Year - dùng textPrimary để dễ nhìn trên background
           if (movie.releaseDate.isNotEmpty)
             Text(
               movie.releaseDate.substring(0, 4),

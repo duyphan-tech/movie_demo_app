@@ -35,7 +35,7 @@ class VideoThumbnailCard extends HookWidget {
                 fit: BoxFit.cover,
                 errorBuilder: (_, __, ___) => Container(
                   color: colorScheme.surfaceContainerHighest,
-                  child: Icon(AppIcon.icon_movie),
+                  child: Icon(AppIcon.movie),
                 ),
               ),
             ),
@@ -43,7 +43,7 @@ class VideoThumbnailCard extends HookWidget {
               child: Container(
                 color: Colors.black38,
                 child: Icon(
-                  AppIcon.icon_play_circle,
+                  AppIcon.playCircle,
                   color: Colors.white,
                   size: 40,
                 ),

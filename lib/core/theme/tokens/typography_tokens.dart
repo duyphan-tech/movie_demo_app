@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-/// Typography tokens - sync với Figma
-/// Dễ dàng thay đổi font family khi có design mới
-
 class TypographyTokens {
   TypographyTokens._();
 
@@ -11,7 +8,7 @@ class TypographyTokens {
   // Font Families
   // ====================
   static const String primaryFont = 'Roboto';
-  static const String secondaryFont = 'Roboto'; // Có thể đổi thành font khác
+  static const String secondaryFont = 'Roboto';
 
   // ====================
   // Font Sizes
@@ -45,7 +42,7 @@ class TypographyTokens {
   static const FontWeight weightBold = FontWeight.w700;
 
   // ====================
-  // Line Heights (tính theo tỷ lệ)
+  // Line Heights
   // ====================
   static const double lineHeightTight = 1.2;
   static const double lineHeightNormal = 1.5;
@@ -188,7 +185,6 @@ class TypographyTokens {
       );
 }
 
-/// Extension để dùng nhanh
 extension TypographyTokensExtension on BuildContext {
   TextStyle get displayLg => TypographyTokens.displayLg;
   TextStyle get displayMd => TypographyTokens.displayMd;

@@ -81,7 +81,7 @@ class LazyYouTubePlayer extends HookConsumerWidget {
                 fit: BoxFit.cover,
                 errorBuilder: (_, __, ___) => Container(
                   color: colorScheme.surfaceContainerHighest,
-                  child: Icon(AppIcon.icon_movie, size: 64),
+                  child: Icon(AppIcon.movie, size: 64),
                 ),
               ),
               ColoredBox(color: Colors.black38),
@@ -101,7 +101,7 @@ class LazyYouTubePlayer extends HookConsumerWidget {
                     ],
                   ),
                   child: Icon(
-                    AppIcon.icon_play_arrow,
+                    AppIcon.playArrow,
                     color: Colors.white,
                     size: 40,
                   ),

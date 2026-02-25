@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// Design tokens cho colors - sync với Figma
-/// Cấu trúc này cho phép dễ dàng thay đổi khi export từ Figma
-
 class ColorTokens {
   ColorTokens._();
 
@@ -79,7 +76,6 @@ class ColorTokens {
   static const Color darkTextDisabled = Color(0xFF616161);
 }
 
-/// Extension để lấy color theo theme brightness
 extension ColorTokensExtension on BuildContext {
   bool get _isDark => Theme.of(this).brightness == Brightness.dark;
 

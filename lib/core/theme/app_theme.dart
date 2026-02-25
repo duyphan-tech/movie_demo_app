@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:movie_demo_app/core/theme/tokens/tokens.dart';
 import 'package:movie_demo_app/core/theme/components/components.dart';
 
-/// AppTheme với Design Tokens
-/// Dễ dàng sync với Figma design system
 class AppTheme {
   // Helper cho outlined button trong theme
   static ButtonStyle get _outlineButtonStyle {

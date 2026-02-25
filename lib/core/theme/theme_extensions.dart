@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'tokens/tokens.dart';
 import 'components/components.dart';
 
-/// Extension tổng hợp cho BuildContext
-/// Import file này để dùng tất cả theme tokens và components
 extension ThemeExtensions on BuildContext {
   bool get _isDark => Theme.of(this).brightness == Brightness.dark;
 

@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movie_demo_app/core/theme/tokens/tokens.dart';
 
-/// Button styles - sync với Figma Button components
-/// Có thể dễ dàng update khi design thay đổi
-
 class ButtonStyles {
   ButtonStyles._();
 
@@ -141,7 +138,7 @@ class ButtonStyles {
   }
 
   // ====================
-  // Small Primary Button (Instance method - cần context)
+  // Small Primary Button
   // ====================
   static ButtonStyle smallPrimary(BuildContext context) {
     return ButtonStyle(

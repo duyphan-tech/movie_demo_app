@@ -4,7 +4,6 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:movie_demo_app/core/theme/app_icon.dart';
 import 'package:movie_demo_app/core/theme/theme.dart';
 import 'package:movie_demo_app/core/utils/extensions/l10n.dart';
 import 'package:movie_demo_app/core/utils/widgets/custom_text_field.dart';
@@ -69,7 +68,7 @@ class LoginScreen extends HookConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Icon(
-                    AppIcon.movie_filter_rounded,
+                    AppIcon.movieFilterRounded,
                     size: 80,
                     color: context.brandPrimary,
                   ),

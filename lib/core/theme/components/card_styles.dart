@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movie_demo_app/core/theme/tokens/tokens.dart';
 
-/// Card styles - sync với Figma Card components
-
 class CardStyles {
   CardStyles._();
 
@@ -87,7 +85,6 @@ class CardStyles {
   }
 }
 
-/// Extension cho dễ dùng
 extension CardStylesExtension on BuildContext {
   BoxDecoration get cardElevated => CardStyles.elevated(this);
   BoxDecoration get cardOutlined => CardStyles.outlined(this);

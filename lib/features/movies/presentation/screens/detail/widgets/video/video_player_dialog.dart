@@ -93,7 +93,7 @@ class VideoPlayerDialog extends HookWidget {
                 ),
                 IconButton(
                   onPressed: () => Navigator.of(context).pop(),
-                  icon: Icon(AppIcon.icon_clear, color: colorScheme.onSurface),
+                  icon: Icon(AppIcon.clear, color: colorScheme.onSurface),
                 ),
               ],
             ),

@@ -19,7 +19,6 @@ class SearchContent extends ConsumerWidget {
       searchProvider.select((s) => s.value?.query ?? ''),
     );
 
-    // Initial state - chưa search
     if (searchQuery.isEmpty && !hasValue) {
       return const SearchInitialState();
     }
@@ -33,12 +32,10 @@ class SearchContent extends ConsumerWidget {
       );
     }
 
-    // Loading state - không có data
     if (isLoading && !hasValue) {
       return const SearchLoadingGrid();
     }
 
-    // Có data - xử lý hiển thị
     return const SearchDataContent();
   }
 }

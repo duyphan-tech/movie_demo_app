@@ -99,7 +99,6 @@ class LocalStorageService {
 
   Future<dynamic> getObject(String key) async {
     try {
-      // Phải await ở đây
       final String? jsonString = await _prefs.getString(key);
       if (jsonString == null) return null;
       return json.decode(jsonString);

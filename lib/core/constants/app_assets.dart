@@ -1,5 +1,4 @@
-/// Asset paths - định nghĩa tất cả assets trong app
-/// Dễ dàng quản lý và sync với Figma export
+library;
 
 class AppAssets {
   AppAssets._();

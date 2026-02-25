@@ -18,7 +18,7 @@ class ViewMoreButton extends HookWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
 
-    // Sử dụng useCallback để tối ưu callback
+    // Optimize callback with useCallback
     final handleTap = useCallback(
       () => onTap(),
       [onTap],
@@ -37,7 +37,7 @@ class ViewMoreButton extends HookWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(AppIcon.icon_playlist, size: 40, color: colorScheme.primary),
+            Icon(AppIcon.playlist, size: 40, color: colorScheme.primary),
             const Gap(4),
             Text(
               '+$remainingCount',

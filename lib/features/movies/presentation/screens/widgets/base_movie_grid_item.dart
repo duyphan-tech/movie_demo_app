@@ -26,7 +26,6 @@ class BaseMovieGridItem extends StatelessWidget {
           Expanded(
             child: Stack(
               children: [
-                // Hình nền
                 Positioned.fill(
                   child: CustomNetworkImage(
                     imageUrl: '${AppConstants.imageUrl500}${movie.posterPath}',

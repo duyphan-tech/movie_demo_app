@@ -14,7 +14,7 @@ class BottomSheetHeader extends HookWidget {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
-    // Sử dụng useCallback để tối ưu callback
+    // Optimize callback with useCallback
     final onClose = useCallback(() => Navigator.of(context).pop(), []);
 
     return Container(
@@ -41,7 +41,7 @@ class BottomSheetHeader extends HookWidget {
                   style: textTheme.titleLarge,
                 ),
               ),
-              IconButton(onPressed: onClose, icon: Icon(AppIcon.icon_clear)),
+              IconButton(onPressed: onClose, icon: Icon(AppIcon.clear)),
             ],
           ),
         ],

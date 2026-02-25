@@ -19,7 +19,6 @@ class SearchResultsList extends HookConsumerWidget {
       searchProvider.select((s) => s.value?.hasMore ?? false),
     );
 
-    // Guard để tránh gọi loadMore nhiều lần
     final isLoadingMore = useRef(false);
 
     return SliverPadding(
@@ -29,13 +28,13 @@ class SearchResultsList extends HookConsumerWidget {
           crossAxisCount: 3,
           mainAxisSpacing: 16,
           crossAxisSpacing: 12,
-          mainAxisExtent: 240, // Chiều cao cố định cho mỗi item
+          mainAxisExtent: 240,
         ),
         delegate: SliverChildBuilderDelegate(
           (context, index) {
             if (index >= movies.length) {
-              // Chỉ gọi loadMore khi đang loading và còn data
-              // Và chưa có request nào đang chạy (isLoadingMore == false)
+              // Only call loadMore when loading and has more data
+              // And no request is currently running
               if (isLoading && hasMore && !isLoadingMore.value) {
                 isLoadingMore.value = true;
                 WidgetsBinding.instance.addPostFrameCallback((_) async {

@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// Spacing tokens - sync với Figma spacing system
-/// Sử dụng 8-point grid system
-
 class SpacingTokens {
   SpacingTokens._();
 
@@ -39,9 +36,7 @@ class SpacingTokens {
   static const double gridSpacing = 16.0;
 }
 
-/// Extension cho dễ dùng
 extension SpacingTokensExtension on BuildContext {
-  // Horizontal padding cho screen
   EdgeInsets get screenPadding => const EdgeInsets.symmetric(
         horizontal: SpacingTokens.screenPaddingHorizontal,
         vertical: SpacingTokens.screenPaddingVertical,
@@ -51,7 +46,6 @@ extension SpacingTokensExtension on BuildContext {
         horizontal: SpacingTokens.screenPaddingHorizontal,
       );
 
-  // Gap helpers
   Widget get gapNone => const SizedBox.shrink();
   Widget get gapXs => const SizedBox(width: SpacingTokens.xs, height: SpacingTokens.xs);
   Widget get gapSm => const SizedBox(width: SpacingTokens.sm, height: SpacingTokens.sm);
@@ -61,7 +55,6 @@ extension SpacingTokensExtension on BuildContext {
   Widget get gapXxl => const SizedBox(width: SpacingTokens.xxl, height: SpacingTokens.xxl);
 }
 
-/// EdgeInsets helpers
 class Insets {
   Insets._();
 

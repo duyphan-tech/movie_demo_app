@@ -66,7 +66,7 @@ class HomeScreen extends HookConsumerWidget {
             onTap: () => context.pushNamed(RouterName.search),
             child: Padding(
               padding: EdgeInsets.only(right: 10),
-              child: Icon(AppIcon.icon_search),
+              child: Icon(AppIcon.search),
             ),
           ),
         ],

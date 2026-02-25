@@ -25,7 +25,7 @@ class VideoThumbnail extends HookWidget {
         width: width,
         height: height,
         color: colorScheme.surfaceContainerHighest,
-        child: Icon(AppIcon.icon_movie),
+        child: Icon(AppIcon.movie),
       ),
       [width, height, colorScheme],
     );
@@ -45,7 +45,7 @@ class VideoThumbnail extends HookWidget {
             child: Container(
               color: Colors.black38,
               child: Icon(
-                AppIcon.icon_play_circle,
+                AppIcon.playCircle,
                 color: Colors.white,
                 size: iconSize,
               ),

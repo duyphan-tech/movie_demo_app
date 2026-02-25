@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// Shadow/Elevation tokens - sync với Figma
-
 class ShadowTokens {
   ShadowTokens._();
 
@@ -51,7 +49,7 @@ class ShadowTokens {
   ];
 
   // ====================
-  // Dark Theme Shadows (subtle hơn)
+  // Dark Theme Shadows
   // ====================
   static const List<BoxShadow> darkXs = [
     BoxShadow(
@@ -89,7 +87,6 @@ class ShadowTokens {
   static const List<BoxShadow> floatingButton = lg;
 }
 
-/// Extension cho BuildContext
 extension ShadowTokensExtension on BuildContext {
   bool get _isDark => Theme.of(this).brightness == Brightness.dark;
 

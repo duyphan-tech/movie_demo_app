@@ -6,7 +6,6 @@ class AppTypography {
 
   static TextTheme get textTheme {
     return TextTheme(
-      // --- DISPLAY (Dùng cho số lớn, intro ngắn) ---
       displayLarge: GoogleFonts.roboto(
         fontSize: 57,
         fontWeight: FontWeight.w400,
@@ -22,8 +21,6 @@ class AppTypography {
         fontWeight: FontWeight.w400,
         letterSpacing: 0,
       ),
-
-      // --- HEADLINE (Tiêu đề chính của màn hình) ---
       headlineLarge: GoogleFonts.roboto(
         fontSize: 32,
         fontWeight: FontWeight.w400,
@@ -39,11 +36,9 @@ class AppTypography {
         fontWeight: FontWeight.w400,
         letterSpacing: 0,
       ),
-
-      // --- TITLE (Tiêu đề phụ, AppBar, Dialog) ---
       titleLarge: GoogleFonts.roboto(
         fontSize: 22,
-        fontWeight: FontWeight.w500, // Medium weight
+        fontWeight: FontWeight.w500,
         letterSpacing: 0,
       ),
       titleMedium: GoogleFonts.roboto(
@@ -56,8 +51,6 @@ class AppTypography {
         fontWeight: FontWeight.w500,
         letterSpacing: 0.1,
       ),
-
-      // --- BODY (Nội dung chính, đoạn văn) ---
       bodyLarge: GoogleFonts.roboto(
         fontSize: 16,
         fontWeight: FontWeight.w400,
@@ -73,8 +66,6 @@ class AppTypography {
         fontWeight: FontWeight.w400,
         letterSpacing: 0.4,
       ),
-
-      // --- LABEL (Nút bấm, caption, chú thích nhỏ) ---
       labelLarge: GoogleFonts.roboto(
         fontSize: 14,
         fontWeight: FontWeight.w500,
