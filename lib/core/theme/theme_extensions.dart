@@ -7,18 +7,27 @@ extension ThemeExtensions on BuildContext {
 
   // ===== Colors =====
   // Backgrounds
-  Color get bgPrimary => _isDark ? ColorTokens.darkBackground : ColorTokens.lightBackground;
-  Color get bgSurface => _isDark ? ColorTokens.darkSurface : ColorTokens.lightSurface;
-  Color get bgSurfaceVariant => _isDark ? ColorTokens.darkSurfaceVariant : ColorTokens.lightSurfaceVariant;
+  Color get bgPrimary =>
+      _isDark ? ColorTokens.darkBackground : ColorTokens.lightBackground;
+  Color get bgSurface =>
+      _isDark ? ColorTokens.darkSurface : ColorTokens.lightSurface;
+  Color get bgSurfaceVariant => _isDark
+      ? ColorTokens.darkSurfaceVariant
+      : ColorTokens.lightSurfaceVariant;
 
   // Text
-  Color get textPrimary => _isDark ? ColorTokens.darkTextPrimary : ColorTokens.lightTextPrimary;
-  Color get textSecondary => _isDark ? ColorTokens.darkTextSecondary : ColorTokens.lightTextSecondary;
-  Color get textTertiary => _isDark ? ColorTokens.darkTextTertiary : ColorTokens.lightTextTertiary;
-  Color get textDisabled => _isDark ? ColorTokens.darkTextDisabled : ColorTokens.lightTextDisabled;
+  Color get textPrimary =>
+      _isDark ? ColorTokens.darkTextPrimary : ColorTokens.lightTextPrimary;
+  Color get textSecondary =>
+      _isDark ? ColorTokens.darkTextSecondary : ColorTokens.lightTextSecondary;
+  Color get textTertiary =>
+      _isDark ? ColorTokens.darkTextTertiary : ColorTokens.lightTextTertiary;
+  Color get textDisabled =>
+      _isDark ? ColorTokens.darkTextDisabled : ColorTokens.lightTextDisabled;
 
   // Border
-  Color get borderColor => _isDark ? ColorTokens.darkBorder : ColorTokens.lightBorder;
+  Color get borderColor =>
+      _isDark ? ColorTokens.darkBorder : ColorTokens.lightBorder;
 
   // Brand
   Color get brandPrimary => ColorTokens.brandPrimary;
@@ -50,15 +59,22 @@ extension ThemeExtensions on BuildContext {
 
   // ===== Spacing =====
   Widget get gapNone => const SizedBox.shrink();
-  Widget get gapXs => const SizedBox(width: SpacingTokens.xs, height: SpacingTokens.xs);
-  Widget get gapSm => const SizedBox(width: SpacingTokens.sm, height: SpacingTokens.sm);
-  Widget get gapMd => const SizedBox(width: SpacingTokens.md, height: SpacingTokens.md);
-  Widget get gapLg => const SizedBox(width: SpacingTokens.lg, height: SpacingTokens.lg);
-  Widget get gapXl => const SizedBox(width: SpacingTokens.xl, height: SpacingTokens.xl);
-  Widget get gapXxl => const SizedBox(width: SpacingTokens.xxl, height: SpacingTokens.xxl);
+  Widget get gapXs =>
+      const SizedBox(width: SpacingTokens.xs, height: SpacingTokens.xs);
+  Widget get gapSm =>
+      const SizedBox(width: SpacingTokens.sm, height: SpacingTokens.sm);
+  Widget get gapMd =>
+      const SizedBox(width: SpacingTokens.md, height: SpacingTokens.md);
+  Widget get gapLg =>
+      const SizedBox(width: SpacingTokens.lg, height: SpacingTokens.lg);
+  Widget get gapXl =>
+      const SizedBox(width: SpacingTokens.xl, height: SpacingTokens.xl);
+  Widget get gapXxl =>
+      const SizedBox(width: SpacingTokens.xxl, height: SpacingTokens.xxl);
 
   EdgeInsets get screenPadding => SpacingTokensExtension(this).screenPadding;
-  EdgeInsets get screenPaddingHorizontal => SpacingTokensExtension(this).screenPaddingHorizontal;
+  EdgeInsets get screenPaddingHorizontal =>
+      SpacingTokensExtension(this).screenPaddingHorizontal;
 
   // ===== Radius =====
   BorderRadius get radiusNone => RadiusTokens.circularNone;
@@ -109,14 +125,12 @@ extension ThemeExtensions on BuildContext {
     enabled: enabled,
   );
 
-  InputDecoration inputSearch({
-    String? hintText,
-    Widget? suffixIcon,
-  }) => InputStyles.searchDecoration(
-    this,
-    hintText: hintText,
-    suffixIcon: suffixIcon,
-  );
+  InputDecoration inputSearch({String? hintText, Widget? suffixIcon}) =>
+      InputStyles.searchDecoration(
+        this,
+        hintText: hintText,
+        suffixIcon: suffixIcon,
+      );
 
   // ===== Theme Data =====
   ThemeData get theme => Theme.of(this);

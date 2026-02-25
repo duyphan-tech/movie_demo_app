@@ -13,16 +13,14 @@ class AppTheme {
           vertical: SpacingTokens.buttonPaddingVertical,
         ),
       ),
-      side: WidgetStateProperty.all(const BorderSide(color: ColorTokens.lightBorder)),
+      side: WidgetStateProperty.all(
+        const BorderSide(color: ColorTokens.lightBorder),
+      ),
       shape: WidgetStateProperty.all(
-        RoundedRectangleBorder(
-          borderRadius: RadiusTokens.buttonRadius,
-        ),
+        RoundedRectangleBorder(borderRadius: RadiusTokens.buttonRadius),
       ),
       textStyle: WidgetStateProperty.all(
-        TypographyTokens.labelLg.copyWith(
-          fontWeight: FontWeight.w600,
-        ),
+        TypographyTokens.labelLg.copyWith(fontWeight: FontWeight.w600),
       ),
     );
   }
@@ -37,19 +35,18 @@ class AppTheme {
           vertical: SpacingTokens.buttonPaddingVertical,
         ),
       ),
-      side: WidgetStateProperty.all(const BorderSide(color: ColorTokens.darkBorder)),
+      side: WidgetStateProperty.all(
+        const BorderSide(color: ColorTokens.darkBorder),
+      ),
       shape: WidgetStateProperty.all(
-        RoundedRectangleBorder(
-          borderRadius: RadiusTokens.buttonRadius,
-        ),
+        RoundedRectangleBorder(borderRadius: RadiusTokens.buttonRadius),
       ),
       textStyle: WidgetStateProperty.all(
-        TypographyTokens.labelLg.copyWith(
-          fontWeight: FontWeight.w600,
-        ),
+        TypographyTokens.labelLg.copyWith(fontWeight: FontWeight.w600),
       ),
     );
   }
+
   // ====================
   // Light Theme
   // ====================
@@ -98,9 +95,7 @@ class AppTheme {
     cardTheme: CardThemeData(
       color: ColorTokens.lightSurface,
       elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: RadiusTokens.cardRadius,
-      ),
+      shape: RoundedRectangleBorder(borderRadius: RadiusTokens.cardRadius),
       margin: EdgeInsets.zero,
     ),
     // Bottom Navigation
@@ -114,15 +109,9 @@ class AppTheme {
       unselectedLabelStyle: TextStyle(fontSize: 12),
     ),
     // Buttons
-    elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ButtonStyles.primary,
-    ),
-    outlinedButtonTheme: OutlinedButtonThemeData(
-      style: _outlineButtonStyle,
-    ),
-    textButtonTheme: TextButtonThemeData(
-      style: ButtonStyles.ghost,
-    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(style: ButtonStyles.primary),
+    outlinedButtonTheme: OutlinedButtonThemeData(style: _outlineButtonStyle),
+    textButtonTheme: TextButtonThemeData(style: ButtonStyles.ghost),
     // Input
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
@@ -172,9 +161,7 @@ class AppTheme {
     dialogTheme: DialogThemeData(
       backgroundColor: ColorTokens.lightSurface,
       elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: RadiusTokens.dialogRadius,
-      ),
+      shape: RoundedRectangleBorder(borderRadius: RadiusTokens.dialogRadius),
     ),
     // Bottom Sheet
     bottomSheetTheme: BottomSheetThemeData(
@@ -193,9 +180,7 @@ class AppTheme {
         horizontal: SpacingTokens.md,
         vertical: SpacingTokens.xs,
       ),
-      shape: RoundedRectangleBorder(
-        borderRadius: RadiusTokens.chipRadius,
-      ),
+      shape: RoundedRectangleBorder(borderRadius: RadiusTokens.chipRadius),
     ),
   );
 
@@ -247,9 +232,7 @@ class AppTheme {
     cardTheme: CardThemeData(
       color: ColorTokens.darkSurface,
       elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: RadiusTokens.cardRadius,
-      ),
+      shape: RoundedRectangleBorder(borderRadius: RadiusTokens.cardRadius),
       margin: EdgeInsets.zero,
     ),
     // Bottom Navigation
@@ -263,15 +246,11 @@ class AppTheme {
       unselectedLabelStyle: TextStyle(fontSize: 12),
     ),
     // Buttons
-    elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ButtonStyles.primary,
-    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(style: ButtonStyles.primary),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: _outlineButtonStyleDark,
     ),
-    textButtonTheme: TextButtonThemeData(
-      style: ButtonStyles.ghost,
-    ),
+    textButtonTheme: TextButtonThemeData(style: ButtonStyles.ghost),
     // Input
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
@@ -321,9 +300,7 @@ class AppTheme {
     dialogTheme: DialogThemeData(
       backgroundColor: ColorTokens.darkSurface,
       elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: RadiusTokens.dialogRadius,
-      ),
+      shape: RoundedRectangleBorder(borderRadius: RadiusTokens.dialogRadius),
     ),
     // Bottom Sheet
     bottomSheetTheme: BottomSheetThemeData(
@@ -342,9 +319,7 @@ class AppTheme {
         horizontal: SpacingTokens.md,
         vertical: SpacingTokens.xs,
       ),
-      shape: RoundedRectangleBorder(
-        borderRadius: RadiusTokens.chipRadius,
-      ),
+      shape: RoundedRectangleBorder(borderRadius: RadiusTokens.chipRadius),
     ),
   );
 
