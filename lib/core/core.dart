@@ -45,10 +45,8 @@ export 'router/router_name.dart';
 export 'router/router_path.dart';
 
 // Theme
-export 'theme/app_color.dart';
 export 'theme/app_icon.dart';
 export 'theme/app_theme.dart';
-export 'theme/app_typography.dart';
 
 // Utils - Extensions
 export 'utils/extensions/l10n.dart';

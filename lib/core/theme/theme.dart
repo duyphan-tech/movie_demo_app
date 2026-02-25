@@ -1,7 +1,5 @@
-export 'app_color.dart';
 export 'app_icon.dart';
 export 'app_theme.dart';
-export 'app_typography.dart';
 export 'theme_extensions.dart';
 
 export 'tokens/color_tokens.dart' show ColorTokens;
