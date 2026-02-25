@@ -80,16 +80,25 @@ extension ColorTokensExtension on BuildContext {
   bool get _isDark => Theme.of(this).brightness == Brightness.dark;
 
   // Background
-  Color get bgPrimary => _isDark ? ColorTokens.darkBackground : ColorTokens.lightBackground;
-  Color get bgSurface => _isDark ? ColorTokens.darkSurface : ColorTokens.lightSurface;
-  Color get bgSurfaceVariant => _isDark ? ColorTokens.darkSurfaceVariant : ColorTokens.lightSurfaceVariant;
+  Color get bgPrimary =>
+      _isDark ? ColorTokens.darkBackground : ColorTokens.lightBackground;
+  Color get bgSurface =>
+      _isDark ? ColorTokens.darkSurface : ColorTokens.lightSurface;
+  Color get bgSurfaceVariant => _isDark
+      ? ColorTokens.darkSurfaceVariant
+      : ColorTokens.lightSurfaceVariant;
 
   // Text
-  Color get textPrimary => _isDark ? ColorTokens.darkTextPrimary : ColorTokens.lightTextPrimary;
-  Color get textSecondary => _isDark ? ColorTokens.darkTextSecondary : ColorTokens.lightTextSecondary;
-  Color get textTertiary => _isDark ? ColorTokens.darkTextTertiary : ColorTokens.lightTextTertiary;
-  Color get textDisabled => _isDark ? ColorTokens.darkTextDisabled : ColorTokens.lightTextDisabled;
+  Color get textPrimary =>
+      _isDark ? ColorTokens.darkTextPrimary : ColorTokens.lightTextPrimary;
+  Color get textSecondary =>
+      _isDark ? ColorTokens.darkTextSecondary : ColorTokens.lightTextSecondary;
+  Color get textTertiary =>
+      _isDark ? ColorTokens.darkTextTertiary : ColorTokens.lightTextTertiary;
+  Color get textDisabled =>
+      _isDark ? ColorTokens.darkTextDisabled : ColorTokens.lightTextDisabled;
 
   // Border
-  Color get borderColor => _isDark ? ColorTokens.darkBorder : ColorTokens.lightBorder;
+  Color get borderColor =>
+      _isDark ? ColorTokens.darkBorder : ColorTokens.lightBorder;
 }

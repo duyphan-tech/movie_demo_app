@@ -59,130 +59,130 @@ class TypographyTokens {
   // Text Styles
   // ====================
   static TextStyle get displayLg => GoogleFonts.roboto(
-        fontSize: sizeDisplayLg,
-        fontWeight: weightRegular,
-        letterSpacing: letterSpacingTight,
-        height: lineHeightTight,
-      );
+    fontSize: sizeDisplayLg,
+    fontWeight: weightRegular,
+    letterSpacing: letterSpacingTight,
+    height: lineHeightTight,
+  );
 
   static TextStyle get displayMd => GoogleFonts.roboto(
-        fontSize: sizeDisplayMd,
-        fontWeight: weightRegular,
-        letterSpacing: letterSpacingNormal,
-        height: lineHeightTight,
-      );
+    fontSize: sizeDisplayMd,
+    fontWeight: weightRegular,
+    letterSpacing: letterSpacingNormal,
+    height: lineHeightTight,
+  );
 
   static TextStyle get displaySm => GoogleFonts.roboto(
-        fontSize: sizeDisplaySm,
-        fontWeight: weightRegular,
-        letterSpacing: letterSpacingNormal,
-        height: lineHeightTight,
-      );
+    fontSize: sizeDisplaySm,
+    fontWeight: weightRegular,
+    letterSpacing: letterSpacingNormal,
+    height: lineHeightTight,
+  );
 
   static TextStyle get headingLg => GoogleFonts.roboto(
-        fontSize: sizeHeadingLg,
-        fontWeight: weightRegular,
-        letterSpacing: letterSpacingNormal,
-        height: lineHeightTight,
-      );
+    fontSize: sizeHeadingLg,
+    fontWeight: weightRegular,
+    letterSpacing: letterSpacingNormal,
+    height: lineHeightTight,
+  );
 
   static TextStyle get headingMd => GoogleFonts.roboto(
-        fontSize: sizeHeadingMd,
-        fontWeight: weightRegular,
-        letterSpacing: letterSpacingNormal,
-        height: lineHeightTight,
-      );
+    fontSize: sizeHeadingMd,
+    fontWeight: weightRegular,
+    letterSpacing: letterSpacingNormal,
+    height: lineHeightTight,
+  );
 
   static TextStyle get headingSm => GoogleFonts.roboto(
-        fontSize: sizeHeadingSm,
-        fontWeight: weightRegular,
-        letterSpacing: letterSpacingNormal,
-        height: lineHeightTight,
-      );
+    fontSize: sizeHeadingSm,
+    fontWeight: weightRegular,
+    letterSpacing: letterSpacingNormal,
+    height: lineHeightTight,
+  );
 
   static TextStyle get titleLg => GoogleFonts.roboto(
-        fontSize: sizeTitleLg,
-        fontWeight: weightMedium,
-        letterSpacing: letterSpacingNormal,
-        height: lineHeightNormal,
-      );
+    fontSize: sizeTitleLg,
+    fontWeight: weightMedium,
+    letterSpacing: letterSpacingNormal,
+    height: lineHeightNormal,
+  );
 
   static TextStyle get titleMd => GoogleFonts.roboto(
-        fontSize: sizeTitleMd,
-        fontWeight: weightMedium,
-        letterSpacing: 0.15,
-        height: lineHeightNormal,
-      );
+    fontSize: sizeTitleMd,
+    fontWeight: weightMedium,
+    letterSpacing: 0.15,
+    height: lineHeightNormal,
+  );
 
   static TextStyle get titleSm => GoogleFonts.roboto(
-        fontSize: sizeTitleSm,
-        fontWeight: weightMedium,
-        letterSpacing: 0.1,
-        height: lineHeightNormal,
-      );
+    fontSize: sizeTitleSm,
+    fontWeight: weightMedium,
+    letterSpacing: 0.1,
+    height: lineHeightNormal,
+  );
 
   static TextStyle get bodyLg => GoogleFonts.roboto(
-        fontSize: sizeBodyLg,
-        fontWeight: weightRegular,
-        letterSpacing: 0.5,
-        height: lineHeightRelaxed,
-      );
+    fontSize: sizeBodyLg,
+    fontWeight: weightRegular,
+    letterSpacing: 0.5,
+    height: lineHeightRelaxed,
+  );
 
   static TextStyle get bodyMd => GoogleFonts.roboto(
-        fontSize: sizeBodyMd,
-        fontWeight: weightRegular,
-        letterSpacing: 0.25,
-        height: lineHeightRelaxed,
-      );
+    fontSize: sizeBodyMd,
+    fontWeight: weightRegular,
+    letterSpacing: 0.25,
+    height: lineHeightRelaxed,
+  );
 
   static TextStyle get bodySm => GoogleFonts.roboto(
-        fontSize: sizeBodySm,
-        fontWeight: weightRegular,
-        letterSpacing: 0.4,
-        height: lineHeightNormal,
-      );
+    fontSize: sizeBodySm,
+    fontWeight: weightRegular,
+    letterSpacing: 0.4,
+    height: lineHeightNormal,
+  );
 
   static TextStyle get labelLg => GoogleFonts.roboto(
-        fontSize: sizeLabelLg,
-        fontWeight: weightMedium,
-        letterSpacing: 0.1,
-        height: lineHeightNormal,
-      );
+    fontSize: sizeLabelLg,
+    fontWeight: weightMedium,
+    letterSpacing: 0.1,
+    height: lineHeightNormal,
+  );
 
   static TextStyle get labelMd => GoogleFonts.roboto(
-        fontSize: sizeLabelMd,
-        fontWeight: weightMedium,
-        letterSpacing: letterSpacingWide,
-        height: lineHeightNormal,
-      );
+    fontSize: sizeLabelMd,
+    fontWeight: weightMedium,
+    letterSpacing: letterSpacingWide,
+    height: lineHeightNormal,
+  );
 
   static TextStyle get labelSm => GoogleFonts.roboto(
-        fontSize: sizeLabelSm,
-        fontWeight: weightMedium,
-        letterSpacing: letterSpacingWide,
-        height: lineHeightNormal,
-      );
+    fontSize: sizeLabelSm,
+    fontWeight: weightMedium,
+    letterSpacing: letterSpacingWide,
+    height: lineHeightNormal,
+  );
 
   // ====================
   // Full TextTheme
   // ====================
   static TextTheme get textTheme => TextTheme(
-        displayLarge: displayLg,
-        displayMedium: displayMd,
-        displaySmall: displaySm,
-        headlineLarge: headingLg,
-        headlineMedium: headingMd,
-        headlineSmall: headingSm,
-        titleLarge: titleLg,
-        titleMedium: titleMd,
-        titleSmall: titleSm,
-        bodyLarge: bodyLg,
-        bodyMedium: bodyMd,
-        bodySmall: bodySm,
-        labelLarge: labelLg,
-        labelMedium: labelMd,
-        labelSmall: labelSm,
-      );
+    displayLarge: displayLg,
+    displayMedium: displayMd,
+    displaySmall: displaySm,
+    headlineLarge: headingLg,
+    headlineMedium: headingMd,
+    headlineSmall: headingSm,
+    titleLarge: titleLg,
+    titleMedium: titleMd,
+    titleSmall: titleSm,
+    bodyLarge: bodyLg,
+    bodyMedium: bodyMd,
+    bodySmall: bodySm,
+    labelLarge: labelLg,
+    labelMedium: labelMd,
+    labelSmall: labelSm,
+  );
 }
 
 extension TypographyTokensExtension on BuildContext {

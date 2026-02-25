@@ -45,12 +45,24 @@ class RadiusTokens {
   static const BorderRadius circularXxl = BorderRadius.all(radiusXxl);
 
   // Component specific BorderRadius
-  static const BorderRadius buttonRadius = BorderRadius.all(Radius.circular(button));
-  static const BorderRadius inputRadius = BorderRadius.all(Radius.circular(input));
-  static const BorderRadius cardRadius = BorderRadius.all(Radius.circular(card));
-  static const BorderRadius cardLargeRadius = BorderRadius.all(Radius.circular(cardLarge));
-  static const BorderRadius chipRadius = BorderRadius.all(Radius.circular(chip));
-  static const BorderRadius dialogRadius = BorderRadius.all(Radius.circular(dialog));
+  static const BorderRadius buttonRadius = BorderRadius.all(
+    Radius.circular(button),
+  );
+  static const BorderRadius inputRadius = BorderRadius.all(
+    Radius.circular(input),
+  );
+  static const BorderRadius cardRadius = BorderRadius.all(
+    Radius.circular(card),
+  );
+  static const BorderRadius cardLargeRadius = BorderRadius.all(
+    Radius.circular(cardLarge),
+  );
+  static const BorderRadius chipRadius = BorderRadius.all(
+    Radius.circular(chip),
+  );
+  static const BorderRadius dialogRadius = BorderRadius.all(
+    Radius.circular(dialog),
+  );
   static const BorderRadius bottomSheetRadius = BorderRadius.vertical(
     top: Radius.circular(bottomSheet),
   );

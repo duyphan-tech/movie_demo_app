@@ -90,9 +90,12 @@ class ShadowTokens {
 extension ShadowTokensExtension on BuildContext {
   bool get _isDark => Theme.of(this).brightness == Brightness.dark;
 
-  List<BoxShadow> get shadowXs => _isDark ? ShadowTokens.darkXs : ShadowTokens.xs;
-  List<BoxShadow> get shadowSm => _isDark ? ShadowTokens.darkSm : ShadowTokens.sm;
-  List<BoxShadow> get shadowMd => _isDark ? ShadowTokens.darkMd : ShadowTokens.md;
+  List<BoxShadow> get shadowXs =>
+      _isDark ? ShadowTokens.darkXs : ShadowTokens.xs;
+  List<BoxShadow> get shadowSm =>
+      _isDark ? ShadowTokens.darkSm : ShadowTokens.sm;
+  List<BoxShadow> get shadowMd =>
+      _isDark ? ShadowTokens.darkMd : ShadowTokens.md;
   List<BoxShadow> get shadowLg => ShadowTokens.lg;
   List<BoxShadow> get shadowXl => ShadowTokens.xl;
   List<BoxShadow> get shadowNone => ShadowTokens.none;

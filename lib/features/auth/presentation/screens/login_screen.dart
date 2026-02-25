@@ -51,8 +51,7 @@ class LoginScreen extends HookConsumerWidget {
       }
     }
 
-    final loginState = ref.watch(loginProvider);
-    final isLoading = loginState.isLoading;
+    final isLoading = ref.watch(loginProvider.select((s) => s.isLoading));
 
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
@@ -75,24 +74,18 @@ class LoginScreen extends HookConsumerWidget {
 
                   context.gapXxl,
 
-                  Consumer(
-                    builder: (context, ref, child) {
-                      return CustomTextField(
-                        controller: emailController,
-                        onFieldSubmitted: (_) {
-                          FocusScope.of(
-                            context,
-                          ).requestFocus(passwordFocusNode);
-                        },
-                        label: 'Username / Email',
-                        textInputAction: TextInputAction.next,
-                        enabled: !isLoading,
-                        prefixIcon: Icons.person_outline,
-                        validator: (value) => (value == null || value.isEmpty)
-                            ? context.l10n.enterAccountError
-                            : null,
-                      );
+                  CustomTextField(
+                    controller: emailController,
+                    onFieldSubmitted: (_) {
+                      FocusScope.of(context).requestFocus(passwordFocusNode);
                     },
+                    label: 'Username / Email',
+                    textInputAction: TextInputAction.next,
+                    enabled: !isLoading,
+                    prefixIcon: Icons.person_outline,
+                    validator: (value) => (value == null || value.isEmpty)
+                        ? context.l10n.enterAccountError
+                        : null,
                   ),
                   context.gapLg,
 
@@ -127,23 +120,19 @@ class LoginScreen extends HookConsumerWidget {
 
                   context.gapXl,
 
-                  Consumer(
-                    builder: (context, ref, child) {
-                      return ElevatedButton(
-                        onPressed: isLoading ? null : onSubmit,
-                        style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(vertical: 16),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: RadiusTokens.buttonRadius,
-                          ),
-                          elevation: 4,
-                        ),
-                        child: Text(
-                          context.l10n.signIn,
-                          style: context.labelLg,
-                        ),
-                      );
-                    },
+                  ElevatedButton(
+                    onPressed: isLoading ? null : onSubmit,
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: RadiusTokens.buttonRadius,
+                      ),
+                      elevation: 4,
+                    ),
+                    child: Text(
+                      context.l10n.signIn,
+                      style: context.labelLg,
+                    ),
                   ),
 
                   context.gapLg,
