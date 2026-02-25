@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
+import 'package:movie_demo_app/core/theme/theme.dart';
 import 'package:movie_demo_app/core/utils/extensions/l10n.dart';
 
 class EmptyState extends StatelessWidget {
@@ -7,9 +7,6 @@ class EmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
-
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -17,13 +14,13 @@ class EmptyState extends StatelessWidget {
           Icon(
             Icons.favorite_border,
             size: 80,
-            color: colorScheme.onSurfaceVariant.withAlpha(51),
+            color: context.textTertiary.withValues(alpha: 0.2),
           ),
-          const Gap(16),
+          context.gapLg,
           Text(
             context.l10n.emptyList,
-            style: textTheme.bodyLarge?.copyWith(
-              color: colorScheme.onSurfaceVariant,
+            style: context.bodyLg.copyWith(
+              color: context.textSecondary,
             ),
           ),
         ],

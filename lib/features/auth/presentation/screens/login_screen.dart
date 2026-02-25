@@ -2,10 +2,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:gap/gap.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:movie_demo_app/core/theme/app_icon.dart';
+import 'package:movie_demo_app/core/theme/theme.dart';
 import 'package:movie_demo_app/core/utils/extensions/l10n.dart';
 import 'package:movie_demo_app/core/utils/widgets/custom_text_field.dart';
 import 'package:movie_demo_app/features/auth/presentation/providers/login_provider.dart';
@@ -15,9 +15,6 @@ class LoginScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
-
     final emailController = useTextEditingController(
       text: kDebugMode ? 'emilys' : '',
     );
@@ -74,10 +71,10 @@ class LoginScreen extends HookConsumerWidget {
                   Icon(
                     AppIcon.movie_filter_rounded,
                     size: 80,
-                    color: colorScheme.primary,
+                    color: context.brandPrimary,
                   ),
 
-                  const Gap(40),
+                  context.gapXxl,
 
                   Consumer(
                     builder: (context, ref, child) {
@@ -98,7 +95,7 @@ class LoginScreen extends HookConsumerWidget {
                       );
                     },
                   ),
-                  const Gap(16),
+                  context.gapLg,
 
                   ValueListenableBuilder<bool>(
                     valueListenable: isPasswordVisible,
@@ -129,7 +126,7 @@ class LoginScreen extends HookConsumerWidget {
                     },
                   ),
 
-                  const Gap(24),
+                  context.gapXl,
 
                   Consumer(
                     builder: (context, ref, child) {
@@ -138,21 +135,19 @@ class LoginScreen extends HookConsumerWidget {
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 16),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: RadiusTokens.buttonRadius,
                           ),
                           elevation: 4,
                         ),
                         child: Text(
                           context.l10n.signIn,
-                          style: textTheme.labelLarge?.copyWith(
-                            inherit: true,
-                          ),
+                          style: context.labelLg,
                         ),
                       );
                     },
                   ),
 
-                  const Gap(16),
+                  context.gapLg,
                 ],
               ),
             ),

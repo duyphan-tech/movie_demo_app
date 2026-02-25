@@ -8,18 +8,16 @@ import 'search_initial_state.dart';
 import 'search_loading_grid.dart';
 
 class SearchContent extends ConsumerWidget {
-  final String searchQuery;
-
-  const SearchContent({
-    super.key,
-    required this.searchQuery,
-  });
+  const SearchContent({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final hasError = ref.watch(searchProvider.select((s) => s.hasError));
     final isLoading = ref.watch(searchProvider.select((s) => s.isLoading));
     final hasValue = ref.watch(searchProvider.select((s) => s.hasValue));
+    final searchQuery = ref.watch(
+      searchProvider.select((s) => s.value?.query ?? ''),
+    );
 
     // Initial state - chưa search
     if (searchQuery.isEmpty && !hasValue) {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:movie_demo_app/core/theme/theme.dart';
 import 'package:movie_demo_app/core/utils/extensions/l10n.dart';
 import 'package:movie_demo_app/features/movies/presentation/providers/search_provider.dart';
 
@@ -16,9 +16,6 @@ class SearchErrorState extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
-
     return SliverFillRemaining(
       hasScrollBody: false,
       child: Center(
@@ -28,25 +25,25 @@ class SearchErrorState extends ConsumerWidget {
             Icon(
               Icons.error_outline,
               size: 64,
-              color: colorScheme.error,
+              color: context.colorError,
             ),
-            const Gap(16),
+            context.gapLg,
             Text(
               context.l10n.searchError,
-              style: textTheme.bodyLarge?.copyWith(color: colorScheme.error),
+              style: context.bodyLg.copyWith(color: context.colorError),
             ),
-            const Gap(8),
+            context.gapSm,
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 32),
               child: Text(
                 message,
-                style: textTheme.bodySmall?.copyWith(
-                  color: colorScheme.onSurfaceVariant,
+                style: context.bodySm.copyWith(
+                  color: context.textSecondary,
                 ),
                 textAlign: TextAlign.center,
               ),
             ),
-            const Gap(24),
+            context.gapXl,
             ElevatedButton.icon(
               onPressed: () {
                 ref.read(searchProvider.notifier).search(query);

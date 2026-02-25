@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:movie_demo_app/features/movies/presentation/providers/search_provider.dart';
 
 import 'search_movie_grid_item.dart';
 import 'search_shimmer_item.dart';
 
-class SearchResultsList extends ConsumerWidget {
+class SearchResultsList extends HookConsumerWidget {
   const SearchResultsList({super.key});
 
   @override
@@ -18,6 +19,9 @@ class SearchResultsList extends ConsumerWidget {
       searchProvider.select((s) => s.value?.hasMore ?? false),
     );
 
+    // Guard để tránh gọi loadMore nhiều lần
+    final isLoadingMore = useRef(false);
+
     return SliverPadding(
       padding: const EdgeInsets.all(16),
       sliver: SliverGrid(
@@ -25,14 +29,18 @@ class SearchResultsList extends ConsumerWidget {
           crossAxisCount: 3,
           mainAxisSpacing: 16,
           crossAxisSpacing: 12,
-          childAspectRatio: 0.50,
+          mainAxisExtent: 240, // Chiều cao cố định cho mỗi item
         ),
         delegate: SliverChildBuilderDelegate(
           (context, index) {
             if (index >= movies.length) {
-              if (isLoading && hasMore) {
-                WidgetsBinding.instance.addPostFrameCallback((_) {
-                  ref.read(searchProvider.notifier).loadMore();
+              // Chỉ gọi loadMore khi đang loading và còn data
+              // Và chưa có request nào đang chạy (isLoadingMore == false)
+              if (isLoading && hasMore && !isLoadingMore.value) {
+                isLoadingMore.value = true;
+                WidgetsBinding.instance.addPostFrameCallback((_) async {
+                  await ref.read(searchProvider.notifier).loadMore();
+                  isLoadingMore.value = false;
                 });
               }
               return const SearchShimmerItem();

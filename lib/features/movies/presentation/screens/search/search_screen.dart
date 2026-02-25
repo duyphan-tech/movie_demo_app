@@ -49,10 +49,7 @@ class SearchScreen extends HookConsumerWidget {
             onChanged: onSearchChanged,
             onClear: clearSearch,
           ),
-          SearchQueryBuilder(
-            controller: searchController,
-            builder: (context, query) => SearchContent(searchQuery: query),
-          ),
+          const SearchContent(),
         ],
       ),
     );

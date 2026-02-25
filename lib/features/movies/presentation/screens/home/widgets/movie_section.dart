@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
+import 'package:movie_demo_app/core/theme/theme.dart';
 import 'package:movie_demo_app/core/utils/extensions/l10n.dart';
 import 'package:movie_demo_app/core/utils/widgets/skeleton.dart';
 import 'package:movie_demo_app/features/movies/domain/entities/movie.dart';
@@ -17,8 +17,6 @@ class MovieSection extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
     final moviesValue = ref.watch(
       homeProvider.select((asyncState) {
         return asyncState.whenData((state) {
@@ -37,7 +35,7 @@ class MovieSection extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildHeader(context, textTheme, colorScheme),
+        _buildHeader(context),
         SizedBox(
           height: 200,
           child: moviesValue.when(
@@ -46,10 +44,10 @@ class MovieSection extends ConsumerWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.error_outline, color: colorScheme.error),
+                  Icon(Icons.error_outline, color: context.colorError),
                   Text(
                     context.l10n.loadingError,
-                    style: textTheme.bodySmall,
+                    style: context.bodySm,
                   ),
                 ],
               ),
@@ -61,17 +59,17 @@ class MovieSection extends ConsumerWidget {
     );
   }
 
-  Widget _buildHeader(BuildContext context, TextTheme textTheme, ColorScheme colorScheme) {
+  Widget _buildHeader(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(title, style: textTheme.titleLarge),
+          Text(title, style: context.titleLg),
           Text(
             context.l10n.seeAll,
-            style: textTheme.bodyMedium?.copyWith(
-              color: colorScheme.secondary,
+            style: context.bodyMd.copyWith(
+              color: context.brandSecondary,
             ),
           ),
         ],
@@ -85,7 +83,7 @@ class MovieSection extends ConsumerWidget {
       scrollDirection: Axis.horizontal,
       padding: const EdgeInsets.symmetric(horizontal: 16),
       itemCount: movies.length,
-      separatorBuilder: (_, __) => const Gap(12),
+      separatorBuilder: (_, __) => context.gapMd,
       itemBuilder: (context, index) => MovieItem(movie: movies[index]),
     );
   }

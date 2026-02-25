@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
+import 'package:movie_demo_app/core/theme/theme.dart';
 import 'package:movie_demo_app/core/utils/extensions/l10n.dart';
 import 'package:movie_demo_app/core/utils/widgets/custom_search_field.dart';
 
@@ -20,18 +21,19 @@ class SearchAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-
     return SliverAppBar(
       pinned: true,
       floating: true,
       snap: true,
-      backgroundColor: colorScheme.surface,
-      foregroundColor: colorScheme.onSurface,
+      backgroundColor: context.bgSurface,
+      foregroundColor: context.textPrimary,
       elevation: 0,
       scrolledUnderElevation: 0,
       leading: IconButton(
-        icon: const Icon(Icons.arrow_back),
+        icon: Icon(
+          Icons.arrow_back,
+          color: context.textPrimary,
+        ),
         onPressed: () => context.pop(),
       ),
       title: CustomSearchField(
@@ -53,7 +55,7 @@ class SearchAppBar extends StatelessWidget {
             return IconButton(
               icon: Icon(
                 Icons.clear,
-                color: colorScheme.onSurfaceVariant,
+                color: context.textSecondary,
               ),
               onPressed: onClear,
             );
@@ -64,7 +66,7 @@ class SearchAppBar extends StatelessWidget {
         preferredSize: const Size.fromHeight(1),
         child: Container(
           height: 1,
-          color: colorScheme.outlineVariant.withAlpha(51),
+          color: context.borderColor.withValues(alpha: 0.2),
         ),
       ),
     );

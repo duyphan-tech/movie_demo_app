@@ -17,12 +17,8 @@ abstract class SearchState with _$SearchState {
     required int currentPage,
   }) = _SearchState;
 
-  factory SearchState.initial() => const SearchState(
-    movies: [],
-    query: '',
-    hasMore: false,
-    currentPage: 1,
-  );
+  factory SearchState.initial() =>
+      const SearchState(movies: [], query: '', hasMore: false, currentPage: 1);
 }
 
 @riverpod
@@ -32,11 +28,9 @@ class SearchNotifier extends _$SearchNotifier {
 
   @override
   Future<SearchState> build() async {
-    // Cleanup khi provider dispose
     ref.onDispose(() {
       _cancelToken?.cancel();
     });
-    // ignore: invalid_use_of_internal_member
     return SearchState.initial();
   }
 
@@ -46,7 +40,6 @@ class SearchNotifier extends _$SearchNotifier {
       return;
     }
 
-    // Hủy request cũ nếu đang chạy
     _cancelToken?.cancel();
     _cancelToken = CancelToken();
 
@@ -61,12 +54,10 @@ class SearchNotifier extends _$SearchNotifier {
 
     result.fold(
       (failure) {
-        // Không hiển thị lỗi nếu request bị hủy
         if (_cancelToken?.isCancelled ?? false) return;
         state = AsyncError(failure.message, StackTrace.current);
       },
       (movies) {
-        // ignore: invalid_use_of_internal_member
         state = AsyncData(
           SearchState(
             movies: movies,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:movie_demo_app/core/theme/theme.dart';
 import 'package:movie_demo_app/core/utils/hooks/use_debounce.dart';
 import 'package:movie_demo_app/features/movies/presentation/providers/favorite_provider.dart';
 
@@ -18,7 +19,6 @@ class FavoriteButton extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final colorScheme = Theme.of(context).colorScheme;
     final controller = useAnimationController(
       duration: const Duration(milliseconds: 150),
       lowerBound: 0.0,
@@ -64,8 +64,8 @@ class FavoriteButton extends HookConsumerWidget {
         icon: Icon(
           isVisibleFav ? Icons.bookmark : Icons.bookmark_border,
           color: isVisibleFav
-              ? (color ?? colorScheme.primary)
-              : (color ?? colorScheme.onSurface),
+              ? (color ?? context.brandPrimary)
+              : (color ?? context.textPrimary),
           size: size,
         ),
       ),

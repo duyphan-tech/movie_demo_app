@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
+import 'package:movie_demo_app/core/theme/theme.dart';
 import 'package:movie_demo_app/core/utils/extensions/l10n.dart';
 
 class ErrorView extends StatelessWidget {
@@ -10,9 +10,6 @@ class ErrorView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
-
     return RefreshIndicator(
       onRefresh: () async => onRetry(),
       child: LayoutBuilder(
@@ -28,13 +25,13 @@ class ErrorView extends StatelessWidget {
                     Icon(
                       Icons.error_outline,
                       size: 48,
-                      color: colorScheme.error,
+                      color: context.colorError,
                     ),
-                    const Gap(16),
+                    context.gapLg,
                     Text(
                       context.l10n.error,
-                      style: textTheme.bodyMedium?.copyWith(
-                        color: colorScheme.onSurfaceVariant,
+                      style: context.bodyMd.copyWith(
+                        color: context.textSecondary,
                       ),
                     ),
                     TextButton(

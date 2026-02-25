@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:movie_demo_app/core/constants/app_constants.dart';
+import 'package:movie_demo_app/core/theme/theme.dart';
 import 'package:movie_demo_app/core/utils/widgets/custom_network_image.dart';
 import 'package:movie_demo_app/features/movies/domain/entities/movie.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/widgets/favorite_button.dart';
@@ -16,19 +16,16 @@ class SearchMovieGridItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    final colorScheme = Theme.of(context).colorScheme;
-
     return GestureDetector(
       onTap: () => context.push('/details/${movie.id}'),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Poster
+          // Poster - fixed height để tránh overflow
           ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: AspectRatio(
-              aspectRatio: 2 / 3,
+            borderRadius: context.radiusSm,
+            child: SizedBox(
+              height: 160, // Fixed height thay vì AspectRatio
               child: Stack(
                 fit: StackFit.expand,
                 children: [
@@ -42,8 +39,8 @@ class SearchMovieGridItem extends StatelessWidget {
                   // Rating badge
                   if (movie.voteAverage > 0)
                     Positioned(
-                      top: 4,
-                      left: 4,
+                      top: SpacingTokens.xs,
+                      left: SpacingTokens.xs,
                       child: Container(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 6,
@@ -51,7 +48,7 @@ class SearchMovieGridItem extends StatelessWidget {
                         ),
                         decoration: BoxDecoration(
                           color: Colors.black87,
-                          borderRadius: BorderRadius.circular(4),
+                          borderRadius: context.radiusXs,
                         ),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
@@ -61,12 +58,11 @@ class SearchMovieGridItem extends StatelessWidget {
                               size: 12,
                               color: Colors.amber,
                             ),
-                            const Gap(2),
+                            context.gapXs,
                             Text(
                               movie.voteAverage.toStringAsFixed(1),
-                              style: const TextStyle(
+                              style: context.labelSm.copyWith(
                                 color: Colors.white,
-                                fontSize: 11,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -76,12 +72,12 @@ class SearchMovieGridItem extends StatelessWidget {
                     ),
                   // Favorite button
                   Positioned(
-                    top: 4,
-                    right: 4,
+                    top: SpacingTokens.xs,
+                    right: SpacingTokens.xs,
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Colors.black.withAlpha(102),
-                        borderRadius: BorderRadius.circular(16),
+                        color: Colors.black.withValues(alpha: 0.4),
+                        borderRadius: context.radiusLg,
                       ),
                       child: FavoriteButton(
                         movieId: movie.id,
@@ -94,26 +90,27 @@ class SearchMovieGridItem extends StatelessWidget {
               ),
             ),
           ),
-          const Gap(8),
+          context.gapSm,
           // Title (max 2 lines)
-          Text(
-            movie.title,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: textTheme.bodySmall?.copyWith(
-              color: colorScheme.onSurface,
-              fontWeight: FontWeight.w500,
-              height: 1.2,
+          Expanded(
+            child: Text(
+              movie.title,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: context.bodySm.copyWith(
+                color: context.textPrimary,
+                fontWeight: FontWeight.w500,
+                height: 1.2,
+              ),
             ),
           ),
-          const Gap(2),
-          // Year
+          // Year - dùng textPrimary để dễ nhìn trên background
           if (movie.releaseDate.isNotEmpty)
             Text(
               movie.releaseDate.substring(0, 4),
-              style: textTheme.bodySmall?.copyWith(
-                color: colorScheme.onSurfaceVariant,
-                fontSize: 11,
+              style: context.bodySm.copyWith(
+                color: context.textPrimary,
+                fontWeight: FontWeight.w500,
               ),
             ),
         ],

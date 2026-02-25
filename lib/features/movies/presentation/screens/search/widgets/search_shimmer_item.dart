@@ -1,41 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
+import 'package:movie_demo_app/core/theme/theme.dart';
 
 class SearchShimmerItem extends StatelessWidget {
   const SearchShimmerItem({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         ClipRRect(
-          borderRadius: BorderRadius.circular(8),
-          child: AspectRatio(
-            aspectRatio: 2 / 3,
-            child: Container(
-              color: colorScheme.surfaceContainerHighest,
+          borderRadius: context.radiusSm,
+          child: Container(
+            height: 160,
+            color: context.bgSurfaceVariant,
+          ),
+        ),
+        context.gapSm,
+        Expanded(
+          child: Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: context.bgSurfaceVariant,
+              borderRadius: context.radiusXs,
             ),
           ),
         ),
-        const Gap(8),
-        Container(
-          height: 14,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: colorScheme.surfaceContainerHighest,
-            borderRadius: BorderRadius.circular(4),
-          ),
-        ),
-        const Gap(4),
+        // Year shimmer
         Container(
           height: 12,
           width: 50,
+          margin: const EdgeInsets.only(top: 4),
           decoration: BoxDecoration(
-            color: colorScheme.surfaceContainerHighest,
-            borderRadius: BorderRadius.circular(4),
+            color: context.textPrimary.withValues(alpha: 0.3),
+            borderRadius: context.radiusXs,
           ),
         ),
       ],

@@ -48,8 +48,6 @@ class LocalStorageService {
     }
   }
 
-  // --- SETTERS (Phải chuyển return type thành void) ---
-
   Future<void> setString(String key, String value) async {
     try {
       await _prefs.setString(key, value);
@@ -90,8 +88,6 @@ class LocalStorageService {
     }
   }
 
-  // --- OBJECT & UTILS ---
-
   Future<void> setObject(String key, Object value) async {
     try {
       final String jsonString = json.encode(value);
@@ -101,7 +97,6 @@ class LocalStorageService {
     }
   }
 
-  // getObject cũng phải là Future
   Future<dynamic> getObject(String key) async {
     try {
       // Phải await ở đây
@@ -113,7 +108,6 @@ class LocalStorageService {
     }
   }
 
-  // containsKey cũng trả về Future<bool>
   Future<bool> hasKey(String key) async {
     try {
       return await _prefs.containsKey(key);
