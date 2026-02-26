@@ -21,13 +21,20 @@ class LoginNotifier extends _$LoginNotifier {
         state = AsyncError(failure, StackTrace.current);
       },
       (userModel) async {
-        await _repo.saveToken(userModel.token ?? '');
+        final saveResult = await _repo.saveToken(userModel.token ?? '');
 
-        await ref
-            .read(authProvider.notifier)
-            .authenticateUser(userModel.token ?? '');
+        saveResult.fold(
+          (saveFailure) {
+            state = AsyncError(saveFailure.message, StackTrace.current);
+          },
+          (_) async {
+            await ref
+                .read(authProvider.notifier)
+                .authenticateUser(userModel.token ?? '');
 
-        state = const AsyncData(null);
+            state = const AsyncData(null);
+          },
+        );
       },
     );
   }

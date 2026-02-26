@@ -1,4 +1,5 @@
 import 'package:fpdart/fpdart.dart';
+import 'package:movie_demo_app/core/errors/exceptions.dart';
 import 'package:movie_demo_app/core/errors/failures.dart';
 import 'package:movie_demo_app/features/auth/data/datasources/local/auth_local_data_source.dart';
 import 'package:movie_demo_app/features/auth/data/datasources/remote/auth_remote_data_source.dart';
@@ -31,17 +32,38 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<void> logout() async {
-    await localDataSource.clearToken();
+  Future<Either<Failure, void>> logout() async {
+    try {
+      await localDataSource.clearToken();
+      return const Right(null);
+    } on CacheException catch (e) {
+      return Left(CacheFailure(message: e.message));
+    } catch (e) {
+      return Left(CacheFailure(message: 'Failed to logout: $e'));
+    }
   }
 
   @override
-  Future<String?> getSavedToken() async {
-    return await localDataSource.getToken();
+  Future<Either<Failure, String?>> getSavedToken() async {
+    try {
+      final token = await localDataSource.getToken();
+      return Right(token);
+    } on CacheException catch (e) {
+      return Left(CacheFailure(message: e.message));
+    } catch (e) {
+      return Left(CacheFailure(message: 'Failed to get token: $e'));
+    }
   }
 
   @override
-  Future<void> saveToken(String token) async {
-    await localDataSource.saveToken(token);
+  Future<Either<Failure, void>> saveToken(String token) async {
+    try {
+      await localDataSource.saveToken(token);
+      return const Right(null);
+    } on CacheException catch (e) {
+      return Left(CacheFailure(message: e.message));
+    } catch (e) {
+      return Left(CacheFailure(message: 'Failed to save token: $e'));
+    }
   }
 }

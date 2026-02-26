@@ -8,8 +8,8 @@ abstract class AuthRepository {
 
   Future<Either<Failure, String>> register(String email, String password);
 
-  Future<void> logout();
+  Future<Either<Failure, void>> logout();
 
-  Future<String?> getSavedToken();
-  Future<void> saveToken(String token);
+  Future<Either<Failure, String?>> getSavedToken();
+  Future<Either<Failure, void>> saveToken(String token);
 }
