@@ -128,10 +128,11 @@ class LoginScreen extends HookConsumerWidget {
                         borderRadius: RadiusTokens.buttonRadius,
                       ),
                       elevation: 4,
+                      animationDuration: Duration.zero,
                     ),
                     child: Text(
                       context.l10n.signIn,
-                      style: context.labelLg,
+                      style: context.labelLg.copyWith(inherit: true),
                     ),
                   ),
 

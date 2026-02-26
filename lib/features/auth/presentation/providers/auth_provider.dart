@@ -7,8 +7,11 @@ class AuthNotifier extends AsyncNotifier<bool> {
 
   @override
   Future<bool> build() async {
-    final token = await _repo.getSavedToken();
-    return token != null && token.isNotEmpty;
+    final result = await _repo.getSavedToken();
+    return result.fold(
+      (failure) => false,
+      (token) => token != null && token.isNotEmpty,
+    );
   }
 
   Future<void> authenticateUser(String token) async {
@@ -16,9 +19,11 @@ class AuthNotifier extends AsyncNotifier<bool> {
   }
 
   Future<void> logout() async {
-    state = const AsyncLoading();
-    await ref.read(authRepositoryProvider).logout();
-    state = const AsyncData(false);
+    final result = await ref.read(authRepositoryProvider).logout();
+    result.fold(
+      (failure) => state = AsyncError(failure.message, StackTrace.current),
+      (_) => state = const AsyncData(false),
+    );
   }
 }
 

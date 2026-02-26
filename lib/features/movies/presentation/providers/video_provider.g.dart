@@ -8,16 +8,9 @@ part of 'video_provider.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
-/// Provider trả về danh sách video đã được sắp xếp ưu tiên
-/// - Official trailers lên đầu
-/// - Sau đó đến Teaser và các loại khác
 
 @ProviderFor(movieVideos)
 const movieVideosProvider = MovieVideosFamily._();
-
-/// Provider trả về danh sách video đã được sắp xếp ưu tiên
-/// - Official trailers lên đầu
-/// - Sau đó đến Teaser và các loại khác
 
 final class MovieVideosProvider
     extends
@@ -27,9 +20,6 @@ final class MovieVideosProvider
           FutureOr<VideoList>
         >
     with $FutureModifier<VideoList>, $FutureProvider<VideoList> {
-  /// Provider trả về danh sách video đã được sắp xếp ưu tiên
-  /// - Official trailers lên đầu
-  /// - Sau đó đến Teaser và các loại khác
   const MovieVideosProvider._({
     required MovieVideosFamily super.from,
     required int super.argument,
@@ -75,10 +65,6 @@ final class MovieVideosProvider
 
 String _$movieVideosHash() => r'4fce937c88b9ae7a43524bae9b3e471aaacdeca9';
 
-/// Provider trả về danh sách video đã được sắp xếp ưu tiên
-/// - Official trailers lên đầu
-/// - Sau đó đến Teaser và các loại khác
-
 final class MovieVideosFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<VideoList>, int> {
   const MovieVideosFamily._()
@@ -89,10 +75,6 @@ final class MovieVideosFamily extends $Family
         $allTransitiveDependencies: null,
         isAutoDispose: true,
       );
-
-  /// Provider trả về danh sách video đã được sắp xếp ưu tiên
-  /// - Official trailers lên đầu
-  /// - Sau đó đến Teaser và các loại khác
 
   MovieVideosProvider call(int movieId) =>
       MovieVideosProvider._(argument: movieId, from: this);
