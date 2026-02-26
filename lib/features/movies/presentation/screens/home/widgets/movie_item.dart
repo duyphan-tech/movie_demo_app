@@ -13,7 +13,7 @@ class MovieItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => context.push('/details/${movie.id}'),
+      onTap: () => context.push('/details', extra: {'id': movie.id}),
       child: Stack(
         children: [
           SizedBox(

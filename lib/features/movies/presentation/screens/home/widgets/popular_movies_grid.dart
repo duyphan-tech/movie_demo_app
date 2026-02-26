@@ -42,7 +42,7 @@ class PopularMoviesGrid extends ConsumerWidget {
           final movie = popularState[index];
           return GestureDetector(
             onTap: () =>
-                context.push('/details/${movie.id}'),
+                context.push('/details', extra: {'id': movie.id}),
             child: Stack(
               children: [
                 Positioned.fill(

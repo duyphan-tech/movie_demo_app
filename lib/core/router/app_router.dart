@@ -30,40 +30,15 @@ final routerProvider = Provider<GoRouter>((ref) {
     refreshListenable: authNotifier,
     redirect: (context, state) {
       final authState = authNotifier.value;
-      final uri = state.uri;
-
-      final isDeepLink = uri.scheme == 'moviedemo';
-      final isFromDeepLinkRoute =
-          state.matchedLocation.startsWith('/') &&
-          state.matchedLocation.length > 1 &&
-          int.tryParse(state.matchedLocation.substring(1)) == null;
-
-      debugPrint('🔀 Redirect - URI: $uri');
-      debugPrint(
-        '🔀 Redirect - Scheme: ${uri.scheme}, Host: ${uri.host}, Path: ${uri.path}',
-      );
-      debugPrint('🔀 Redirect - Matched: ${state.matchedLocation}');
-      debugPrint(
-        '🔀 AuthState: loading=${authState.isLoading}, hasError=${authState.hasError}, isLoggedIn=${authState.value}',
-      );
-      debugPrint(
-        '🔀 isDeepLink: $isDeepLink, isFromDeepLinkRoute: $isFromDeepLinkRoute',
-      );
 
       if (authState.isLoading) {
-        if (isDeepLink && state.matchedLocation != RouterPath.initial) {
-          debugPrint('🔀 Deep link detected while loading, no redirect');
-          return null;
-        }
         if (state.matchedLocation != RouterPath.initial) {
-          debugPrint('🔀 Redirect to splash (auth loading)');
           return RouterPath.initial;
         }
         return null;
       }
 
       if (authState.hasError) {
-        debugPrint('🔀 Redirect to login (auth error)');
         return RouterPath.login;
       }
 
@@ -73,22 +48,14 @@ final routerProvider = Provider<GoRouter>((ref) {
 
       if (isLoggedIn) {
         if (isLoginRoute || isInitialRoute) {
-          final pathId = int.tryParse(state.matchedLocation.substring(1));
-          if (pathId != null) {
-            debugPrint('🔀 Redirect to deep link: ${state.matchedLocation}');
-            return null;
-          }
-          debugPrint('🔀 Redirect to home');
           return RouterPath.home;
         }
       } else {
         if (!isLoginRoute) {
-          debugPrint('🔀 Redirect to login (not logged in)');
           return RouterPath.login;
         }
       }
 
-      debugPrint('🔀 No redirect');
       return null;
     },
     routes: [
@@ -116,8 +83,8 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: RouterPath.details,
         name: RouterName.details,
         builder: (context, state) {
-          final idString = state.pathParameters['id'];
-          final int id = int.tryParse(idString ?? '') ?? 0;
+          final args = state.extra as Map<String, dynamic>;
+          final int id = args['id'] as int;
           return MovieDetailScreen(movieId: id);
         },
       ),
@@ -125,20 +92,6 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: RouterPath.rated,
         name: RouterName.rated,
         builder: (context, state) => const RatedMoviesScreen(),
-      ),
-      GoRoute(
-        path: '/:id',
-        builder: (context, state) {
-          final uri = state.uri;
-          final id = state.pathParameters['id'];
-          if (uri.scheme == 'moviedemo' &&
-              uri.host == 'details' &&
-              id != null &&
-              int.tryParse(id) != null) {
-            return MovieDetailScreen(movieId: int.parse(id));
-          }
-          return NotFoundScreen(path: uri.path);
-        },
       ),
     ],
     errorBuilder: (context, state) {
