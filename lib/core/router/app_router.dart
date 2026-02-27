@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:movie_demo_app/core/providers/pending_deep_link_provider.dart';
 import 'package:movie_demo_app/features/auth/auth.dart';
 import 'package:movie_demo_app/features/core/core.dart';
 import 'package:movie_demo_app/features/movies/movies.dart';
@@ -14,25 +15,38 @@ import 'router_path.dart';
 final routerProvider = Provider<GoRouter>((ref) {
   debugPrint(' 🔥🔥🔥 ROUTER PROVIDER BUILT! (Time: ${DateTime.now()})');
   final authNotifier = ValueNotifier<AsyncValue<bool>>(ref.read(authProvider));
+  final pendingLinkNotifier = ValueNotifier<String?>(null);
 
   ref.listen<AsyncValue<bool>>(authProvider, (_, next) {
     authNotifier.value = next;
   });
 
+  ref.listen<AsyncValue<String?>>(pendingDeepLinkProvider, (_, next) {
+    if (next.hasValue && next.value != null && next.value!.isNotEmpty) {
+      pendingLinkNotifier.value = next.value;
+    }
+  });
+
   ref.onDispose(() {
     authNotifier.dispose();
+    pendingLinkNotifier.dispose();
   });
+
+  final config = ref.watch(appConfigProvider).deepLinkConfig;
 
   return GoRouter(
     initialLocation: RouterPath.initial,
     debugLogDiagnostics: true,
 
-    refreshListenable: authNotifier,
+    refreshListenable: Listenable.merge([authNotifier, pendingLinkNotifier]),
     redirect: (context, state) {
       final authState = authNotifier.value;
       final uri = state.uri;
 
-      final isDeepLink = uri.scheme == 'moviedemo';
+      final isDeepLink = config.useHttps
+          ? uri.scheme == 'https' && uri.host == config.host
+          : uri.scheme == config.scheme &&
+                (config.host == null || uri.host == config.host);
       final isFromDeepLinkRoute =
           state.matchedLocation.startsWith('/') &&
           state.matchedLocation.length > 1 &&
@@ -47,7 +61,7 @@ final routerProvider = Provider<GoRouter>((ref) {
         '🔀 AuthState: loading=${authState.isLoading}, hasError=${authState.hasError}, isLoggedIn=${authState.value}',
       );
       debugPrint(
-        '🔀 isDeepLink: $isDeepLink, isFromDeepLinkRoute: $isFromDeepLinkRoute',
+        '🔀 isDeepLink: $isDeepLink (config: ${config.scheme}://${config.host}), isFromDeepLinkRoute: $isFromDeepLinkRoute',
       );
 
       if (authState.isLoading) {
@@ -73,6 +87,18 @@ final routerProvider = Provider<GoRouter>((ref) {
 
       if (isLoggedIn) {
         if (isLoginRoute || isInitialRoute) {
+          final pendingLink =
+              pendingLinkNotifier.value ??
+              (ref.read(pendingDeepLinkProvider).hasValue
+                  ? ref.read(pendingDeepLinkProvider).value
+                  : null);
+          if (pendingLink != null && pendingLink.isNotEmpty) {
+            debugPrint('🔀 Redirect to pending deep link: $pendingLink');
+            pendingLinkNotifier.value = null;
+            ref.read(pendingDeepLinkProvider.notifier).clearPendingDeepLink();
+            return pendingLink;
+          }
+
           final pathId = int.tryParse(state.matchedLocation.substring(1));
           if (pathId != null) {
             debugPrint('🔀 Redirect to deep link: ${state.matchedLocation}');
@@ -83,6 +109,18 @@ final routerProvider = Provider<GoRouter>((ref) {
         }
       } else {
         if (!isLoginRoute) {
+          if (isDeepLink && uri.host == config.host) {
+            final id = uri.pathSegments.isNotEmpty
+                ? uri.pathSegments.first
+                : null;
+            if (id != null && int.tryParse(id) != null) {
+              final path = '/details/$id';
+              ref
+                  .read(pendingDeepLinkProvider.notifier)
+                  .savePendingDeepLink(path);
+              debugPrint('🔀 Saved pending deep link: $path');
+            }
+          }
           debugPrint('🔀 Redirect to login (not logged in)');
           return RouterPath.login;
         }
@@ -131,10 +169,11 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (context, state) {
           final uri = state.uri;
           final id = state.pathParameters['id'];
-          if (uri.scheme == 'moviedemo' &&
-              uri.host == 'details' &&
-              id != null &&
-              int.tryParse(id) != null) {
+          final isValidDeepLink = config.useHttps
+              ? uri.scheme == 'https' && uri.host == config.host
+              : uri.scheme == config.scheme &&
+                    (config.host == null || uri.host == config.host);
+          if (isValidDeepLink && id != null && int.tryParse(id) != null) {
             return MovieDetailScreen(movieId: int.parse(id));
           }
           return NotFoundScreen(path: uri.path);

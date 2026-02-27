@@ -55,6 +55,8 @@
 				<key>CFBundleURLSchemes</key>
 				<array>
 					<string>moviedemo</string>
+					<string>moviedemodev</string>
+					<string>moviedemostaging</string>
 				</array>
 			</dict>
 		</array>

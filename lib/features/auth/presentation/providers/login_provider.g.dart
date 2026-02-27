@@ -13,7 +13,7 @@ part of 'login_provider.dart';
 const loginProvider = LoginNotifierProvider._();
 
 final class LoginNotifierProvider
-    extends $AsyncNotifierProvider<LoginNotifier, void> {
+    extends $AsyncNotifierProvider<LoginNotifier, LoginResult> {
   const LoginNotifierProvider._()
     : super(
         from: null,
@@ -33,23 +33,23 @@ final class LoginNotifierProvider
   LoginNotifier create() => LoginNotifier();
 }
 
-String _$loginNotifierHash() => r'3d613104e693293fa7460492c2a45749d7bf0581';
+String _$loginNotifierHash() => r'820e3eae83237092247f6b9017bc36ae5797fc97';
 
-abstract class _$LoginNotifier extends $AsyncNotifier<void> {
-  FutureOr<void> build();
+abstract class _$LoginNotifier extends $AsyncNotifier<LoginResult> {
+  FutureOr<LoginResult> build();
   @$mustCallSuper
   @override
   void runBuild() {
-    build();
-    final ref = this.ref as $Ref<AsyncValue<void>, void>;
+    final created = build();
+    final ref = this.ref as $Ref<AsyncValue<LoginResult>, LoginResult>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<AsyncValue<void>, void>,
-              AsyncValue<void>,
+              AnyNotifier<AsyncValue<LoginResult>, LoginResult>,
+              AsyncValue<LoginResult>,
               Object?,
               Object?
             >;
-    element.handleValue(ref, null);
+    element.handleValue(ref, created);
   }
 }

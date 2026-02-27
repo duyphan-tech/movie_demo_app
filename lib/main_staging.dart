@@ -1,0 +1,11 @@
+import 'core/configs/app_config.dart';
+import 'main.dart';
+
+void main() {
+  var configuredApp = AppConfig(
+    flavor: Flavor.staging,
+    appName: "My App (Staging)",
+  );
+
+  mainCommon(configuredApp);
+}
