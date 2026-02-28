@@ -27,10 +27,10 @@ Future<void> mainCommon(AppConfig config) async {
     container.read(deepLinkStreamProvider);
 
     container.read(appsFlyerInitializerProvider.future).catchError((e) {
-      logger.printLog('e', 'AppsFlyer Init Error: $e');
+      AppLogger.e('AppsFlyer Init Error', tag: 'Main', error: e);
     });
   } catch (e) {
-    logger.printLog('e', 'Initialization error: $e');
+    AppLogger.e('Initialization error', tag: 'Main', error: e);
   }
 
   runApp(

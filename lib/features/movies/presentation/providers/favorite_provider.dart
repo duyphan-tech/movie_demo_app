@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'package:movie_demo_app/core/logger/app_logger.dart';
 import 'package:movie_demo_app/features/movies/domain/repositories/movie_repository.dart';
 import 'package:movie_demo_app/features/movies/providers/movie_providers.dart';
 
@@ -19,12 +20,12 @@ class FavoriteNotifier extends Notifier<Set<int>> {
 
     result.fold(
       (failure) {
-        debugPrint("Lỗi load favorites: ${failure.message}");
+        AppLogger.e('Lỗi load favorites: ${failure.message}', tag: 'Favorite');
       },
       (movies) {
         final movieIds = movies.map((e) => e.id).toSet();
         state = movieIds;
-        debugPrint("Đã load được ${movieIds.length} phim yêu thích từ Server");
+        AppLogger.i('Đã load được ${movieIds.length} phim yêu thích từ Server', tag: 'Favorite');
       },
     );
   }
@@ -34,17 +35,17 @@ class FavoriteNotifier extends Notifier<Set<int>> {
 
     result.fold(
       (failure) {
-        debugPrint("Lỗi sync status: ${failure.message}");
+        AppLogger.e('Lỗi sync status: ${failure.message}', tag: 'Favorite');
       },
       (accountState) {
         final bool isServerFavorite = accountState.favorite;
         final bool isLocalFavorite = state.contains(movieId);
         if (isServerFavorite && !isLocalFavorite) {
           state = {...state, movieId};
-          debugPrint("Đã đồng bộ: Thêm $movieId vào yêu thích (từ Server)");
+          AppLogger.i('Đã đồng bộ: Thêm $movieId vào yêu thích (từ Server)', tag: 'Favorite');
         } else if (!isServerFavorite && isLocalFavorite) {
           state = {...state}..remove(movieId);
-          debugPrint("Đã đồng bộ: Xóa $movieId khỏi yêu thích (từ Server)");
+          AppLogger.i('Đã đồng bộ: Xóa $movieId khỏi yêu thích (từ Server)', tag: 'Favorite');
         }
       },
     );
@@ -62,7 +63,7 @@ class FavoriteNotifier extends Notifier<Set<int>> {
     if (isCurrentlyFavorite) {
       _cancelTokens[movieId]?.cancel("User toggled favorite too fast");
       _cancelTokens.remove(movieId);
-      debugPrint("🚫 Đã huỷ request cũ cho movie: $movieId");
+      AppLogger.d('Đã huỷ request cũ cho movie: $movieId', tag: 'Favorite');
     }
     final cancelToken = CancelToken();
     _cancelTokens[movieId] = cancelToken;
@@ -76,18 +77,18 @@ class FavoriteNotifier extends Notifier<Set<int>> {
     result.fold(
       (failure) {
         if (failure.message != 'Request cancelled') {
-          debugPrint("❌ Lỗi API: ${failure.message} -> Revert UI");
+          AppLogger.e('Lỗi API: ${failure.message} -> Revert UI', tag: 'Favorite');
           if (isCurrentlyFavorite) {
             state = {...state, movieId};
           } else {
             state = {...state}..remove(movieId);
           }
         } else {
-          debugPrint("⚠️ Request bị huỷ, giữ nguyên UI mới nhất.");
+          AppLogger.w('Request bị huỷ, giữ nguyên UI mới nhất', tag: 'Favorite');
         }
       },
       (success) {
-        debugPrint("Đã update favorite cho movie $movieId thành công");
+        AppLogger.i('Đã update favorite cho movie $movieId thành công', tag: 'Favorite');
       },
     );
 

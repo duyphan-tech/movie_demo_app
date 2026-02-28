@@ -7,7 +7,9 @@ import 'package:movie_demo_app/features/auth/data/repositories/auth_repository_i
 import 'package:movie_demo_app/features/auth/domain/repositories/auth_repository.dart';
 
 final authLocalDataSourceProvider = Provider<AuthLocalDataSource>((ref) {
-  return AuthLocalDataSource(ref.watch(localStorageProvider));
+  return AuthLocalDataSource(
+    secureStorage: ref.watch(secureStorageProvider),
+  );
 });
 
 final authRemoteDataSourceProvider = Provider<AuthRemoteDataSource>((ref) {

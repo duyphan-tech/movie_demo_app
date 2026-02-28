@@ -1,32 +1,31 @@
 import 'package:app_links/app_links.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:movie_demo_app/core/deeplink/deep_link_service.dart';
+import 'package:movie_demo_app/core/logger/app_logger.dart';
 import 'package:movie_demo_app/core/providers/pending_deep_link_provider.dart';
 import 'package:movie_demo_app/core/providers/storage_providers.dart';
 import 'package:movie_demo_app/features/auth/presentation/providers/auth_provider.dart';
 
 final deepLinkStreamProvider = Provider<void>((ref) {
   final appLinks = AppLinks();
-  DeepLinkService? deepLinkService;
 
   final localStorage = ref.watch(localStorageProvider);
   final config = ref.watch(appConfigProvider).deepLinkConfig;
-  deepLinkService = DeepLinkService(localStorage: localStorage, config: config);
+  final deepLinkService = DeepLinkService(localStorage: localStorage, config: config);
 
   final subscription = appLinks.uriLinkStream.listen(
     (Uri uri) {
-      debugPrint('🔗🔗🔗 DeepLinkStream - Received: $uri');
+      AppLogger.d('🔗🔗🔗 Received: $uri', tag: 'DeepLink');
 
-      if (!deepLinkService!.isValidDeepLink(uri)) {
-        debugPrint('🔗 DeepLinkStream - Invalid deep link');
+      if (!deepLinkService.isValidDeepLink(uri)) {
+        AppLogger.w('Invalid deep link: $uri', tag: 'DeepLink');
         return;
       }
 
       final path = deepLinkService.extractPath(uri);
       if (path == null) {
-        debugPrint('🔗 DeepLinkStream - Could not extract path');
+        AppLogger.w('Could not extract path from: $uri', tag: 'DeepLink');
         return;
       }
 
@@ -35,19 +34,14 @@ final deepLinkStreamProvider = Provider<void>((ref) {
           ? (authState.value ?? false)
           : false;
 
-      debugPrint('🔗 DeepLinkStream - Auth state: isLoggedIn=$isLoggedIn');
+      AppLogger.d('Auth state: isLoggedIn=$isLoggedIn', tag: 'DeepLink');
 
-      if (isLoggedIn) {
-        debugPrint('🔗 DeepLinkStream - Logged in, saving pending: $path');
-        ref.read(pendingDeepLinkProvider.notifier).savePendingDeepLink(path);
-      } else {
-        debugPrint('🔗 DeepLinkStream - Not logged in, saving pending: $path');
-        ref.read(pendingDeepLinkProvider.notifier).savePendingDeepLink(path);
-        debugPrint('🔗 DeepLinkStream - Pending link saved!');
-      }
+      // Luôn lưu pending deep link dù đã login hay chưa
+      AppLogger.i('Saving pending deep link: $path', tag: 'DeepLink');
+      ref.read(pendingDeepLinkProvider.notifier).savePendingDeepLink(path);
     },
     onError: (Object err) {
-      debugPrint('🔗 DeepLinkStream - Error: $err');
+      AppLogger.e('Stream error', tag: 'DeepLink', error: err);
     },
   );
 

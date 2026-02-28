@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import 'package:movie_demo_app/core/configs/app_config.dart';
 import 'package:movie_demo_app/core/deeplink/deep_link_service.dart';
+import 'package:movie_demo_app/core/logger/app_logger.dart';
 import 'package:movie_demo_app/core/providers/storage_providers.dart';
 
 part 'pending_deep_link_provider.g.dart';
@@ -20,40 +20,46 @@ class PendingDeepLinkNotifier extends _$PendingDeepLinkNotifier {
   @override
   Future<String?> build() async {
     final localStorage = ref.watch(localStorageProvider);
-    _config = ref.watch(appConfigProvider).deepLinkConfig;
-    _deepLinkService = DeepLinkService(
-      localStorage: localStorage,
-      config: _config!,
-    );
+    final config = ref.watch(appConfigProvider).deepLinkConfig;
+    _config = config;
 
-    final pendingLink = await _deepLinkService!.getPendingDeepLink();
+    final deepLinkService = DeepLinkService(
+      localStorage: localStorage,
+      config: config,
+    );
+    _deepLinkService = deepLinkService;
+
+    final pendingLink = await deepLinkService.getPendingDeepLink();
     return pendingLink;
   }
 
   Future<void> savePendingDeepLink(String path) async {
-    if (_deepLinkService == null) {
-      debugPrint('⚠️ PendingDeepLinkNotifier: DeepLinkService is null');
+    final service = _deepLinkService;
+    if (service == null) {
+      AppLogger.w('DeepLinkService is null', tag: 'PendingDeepLink');
       return;
     }
 
-    debugPrint('💾 PendingDeepLinkNotifier: Saving path: $path');
+    AppLogger.d('Saving path: $path', tag: 'PendingDeepLink');
     state = const AsyncLoading();
-    await _deepLinkService!.savePendingDeepLink(path);
+    await service.savePendingDeepLink(path);
     state = AsyncData(path);
-    debugPrint('💾 PendingDeepLinkNotifier: Saved! Current state: $state');
+    AppLogger.i('Saved pending deep link: $path', tag: 'PendingDeepLink');
   }
 
   Future<void> clearPendingDeepLink() async {
-    if (_deepLinkService == null) return;
+    final service = _deepLinkService;
+    if (service == null) return;
 
-    await _deepLinkService!.clearPendingDeepLink();
+    await service.clearPendingDeepLink();
     state = const AsyncData(null);
   }
 
   Future<String?> initializeAndCheckDeepLink() async {
-    if (_deepLinkService == null) return null;
+    final service = _deepLinkService;
+    if (service == null) return null;
 
-    final initialUri = await _deepLinkService!.initialize();
+    final initialUri = await service.initialize();
 
     if (initialUri != null && _isValidDeepLink(initialUri)) {
       final path = _extractPath(initialUri);

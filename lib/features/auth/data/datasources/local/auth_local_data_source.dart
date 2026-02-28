@@ -1,20 +1,25 @@
-import 'package:movie_demo_app/core/local/local_storage_service.dart';
+import 'package:movie_demo_app/core/local/secure_storage_service.dart';
 import 'package:movie_demo_app/core/local/storage_keys.dart';
 
+/// Data source for authentication-related local storage operations.
+///
+/// Uses [SecureStorageService] for sensitive data (tokens).
 class AuthLocalDataSource {
-  final LocalStorageService localStorageService;
+  final SecureStorageService _secureStorage;
 
-  AuthLocalDataSource(this.localStorageService);
+  AuthLocalDataSource({
+    required SecureStorageService secureStorage,
+  }) : _secureStorage = secureStorage;
 
   Future<void> saveToken(String token) async {
-    await localStorageService.setString(StorageKeys.tokenKey, token);
+    await _secureStorage.write(StorageKeys.tokenKey, token);
   }
 
   Future<String?> getToken() async {
-    return await localStorageService.getString(StorageKeys.tokenKey);
+    return await _secureStorage.read(StorageKeys.tokenKey);
   }
 
   Future<void> clearToken() async {
-    await localStorageService.remove(StorageKeys.tokenKey);
+    await _secureStorage.delete(StorageKeys.tokenKey);
   }
 }

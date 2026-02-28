@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import 'package:app_links/app_links.dart';
-import 'package:flutter/material.dart';
 
 import 'package:movie_demo_app/core/configs/app_config.dart';
 import 'package:movie_demo_app/core/local/local_storage_service.dart';
 import 'package:movie_demo_app/core/local/storage_keys.dart';
+import 'package:movie_demo_app/core/logger/app_logger.dart';
 
 class DeepLinkService {
   DeepLinkService({
@@ -22,28 +22,28 @@ class DeepLinkService {
   Future<Uri?> initialize() async {
     try {
       final Uri? initialUri = await _appLinks.getInitialLink();
-      debugPrint('🔗 DeepLinkService - Initial URI: $initialUri');
+      AppLogger.d('Initial URI: $initialUri', tag: 'DeepLinkService');
 
       _linkSubscription = _appLinks.uriLinkStream.listen(
         (Uri uri) {
-          debugPrint('🔗 DeepLinkService - Stream URI: $uri');
+          AppLogger.d('Stream URI: $uri', tag: 'DeepLinkService');
           _handleDeepLink(uri);
         },
         onError: (Object err) {
-          debugPrint('🔗 DeepLinkService - Stream error: $err');
+          AppLogger.e('Stream error', tag: 'DeepLinkService', error: err);
         },
       );
 
       return initialUri;
-    } catch (e) {
-      debugPrint('🔗 DeepLinkService - Init error: $e');
+    } catch (e, stackTrace) {
+      AppLogger.e('Init error', tag: 'DeepLinkService', error: e, stackTrace: stackTrace);
       return null;
     }
   }
 
   /// Xử lý deep link
   void _handleDeepLink(Uri uri) {
-    debugPrint('🔗 DeepLinkService handling: $uri');
+    AppLogger.d('Handling: $uri', tag: 'DeepLinkService');
   }
 
   bool isValidDeepLink(Uri uri) {
@@ -69,17 +69,17 @@ class DeepLinkService {
   Future<void> savePendingDeepLink(String path) async {
     try {
       await _localStorage.setString(StorageKeys.pendingDeepLinkKey, path);
-      debugPrint('🔗 Saved pending deep link: $path');
-    } catch (e) {
-      debugPrint('🔗 Error saving pending deep link: $e');
+      AppLogger.i('Saved pending deep link: $path', tag: 'DeepLinkService');
+    } catch (e, stackTrace) {
+      AppLogger.e('Error saving pending deep link', tag: 'DeepLinkService', error: e, stackTrace: stackTrace);
     }
   }
 
   Future<String?> getPendingDeepLink() async {
     try {
       return await _localStorage.getString(StorageKeys.pendingDeepLinkKey);
-    } catch (e) {
-      debugPrint('🔗 Error getting pending deep link: $e');
+    } catch (e, stackTrace) {
+      AppLogger.e('Error getting pending deep link', tag: 'DeepLinkService', error: e, stackTrace: stackTrace);
       return null;
     }
   }
@@ -87,9 +87,9 @@ class DeepLinkService {
   Future<void> clearPendingDeepLink() async {
     try {
       await _localStorage.remove(StorageKeys.pendingDeepLinkKey);
-      debugPrint('🔗 Cleared pending deep link');
-    } catch (e) {
-      debugPrint('🔗 Error clearing pending deep link: $e');
+      AppLogger.i('Cleared pending deep link', tag: 'DeepLinkService');
+    } catch (e, stackTrace) {
+      AppLogger.e('Error clearing pending deep link', tag: 'DeepLinkService', error: e, stackTrace: stackTrace);
     }
   }
 

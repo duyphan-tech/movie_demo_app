@@ -1,7 +1,8 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
+
+import 'package:movie_demo_app/core/logger/app_logger.dart';
 
 class RetryInterceptor extends Interceptor {
   final Dio dio;
@@ -28,8 +29,9 @@ class RetryInterceptor extends Interceptor {
 
       if (attempt < maxRetries && attempt < retryDelays.length) {
         final delay = retryDelays[attempt];
-        debugPrint(
+        AppLogger.w(
           '🔄 [Retry] Attempt ${attempt + 1}/$maxRetries after ${delay.inSeconds}s',
+          tag: 'Dio',
         );
 
         err.requestOptions.headers['retry_attempt'] = attempt + 1;

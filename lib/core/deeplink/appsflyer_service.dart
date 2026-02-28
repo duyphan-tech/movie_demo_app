@@ -26,15 +26,16 @@ class AppsFlyerService {
         final deepLinkObj = res.deepLink;
         String? deepLinkValue = deepLinkObj?.deepLinkValue;
 
-        logger.printLog('i', "AppsFlyer: DeepLinkValue = $deepLinkValue");
+        AppLogger.i('AppsFlyer: DeepLinkValue = $deepLinkValue', tag: 'AppsFlyer');
 
         if (deepLinkValue != null && deepLinkValue.isNotEmpty) {
           _handleNavigation(deepLinkValue);
         }
       } else {
-        logger.printLog(
-          'e',
-          "AppsFlyer: Deep link not found or error: ${res.error}",
+        AppLogger.e(
+          'AppsFlyer: Deep link not found or error',
+          tag: 'AppsFlyer',
+          error: res.error,
         );
       }
     });
@@ -48,7 +49,7 @@ class AppsFlyerService {
 
   void _handleNavigation(String deepLinkValue) {
     if (deepLinkValue.startsWith('moviedemo')) {
-      logger.printLog('i', "AppsFlyer: Ignoring custom scheme, let GoRouter handle it");
+      AppLogger.i('Ignoring custom scheme, let GoRouter handle it', tag: 'AppsFlyer');
       return;
     }
 
@@ -56,7 +57,7 @@ class AppsFlyerService {
         ? deepLinkValue
         : '/$deepLinkValue';
 
-    logger.printLog('i', "AppsFlyer: Navigating to $targetPath");
+    AppLogger.i('Navigating to $targetPath', tag: 'AppsFlyer');
 
     _router.go(targetPath);
   }

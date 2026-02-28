@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:movie_demo_app/core/logger/app_logger.dart';
 import 'package:movie_demo_app/core/providers/pending_deep_link_provider.dart';
 import 'package:movie_demo_app/features/auth/auth.dart';
 import 'package:movie_demo_app/features/core/core.dart';
@@ -13,7 +14,7 @@ import 'router_name.dart';
 import 'router_path.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
-  debugPrint(' 🔥🔥🔥 ROUTER PROVIDER BUILT! (Time: ${DateTime.now()})');
+  AppLogger.d('🔥 ROUTER PROVIDER BUILT! (Time: ${DateTime.now()})', tag: 'Router');
   final authNotifier = ValueNotifier<AsyncValue<bool>>(ref.read(authProvider));
   final pendingLinkNotifier = ValueNotifier<String?>(null);
 
@@ -52,32 +53,35 @@ final routerProvider = Provider<GoRouter>((ref) {
           state.matchedLocation.length > 1 &&
           int.tryParse(state.matchedLocation.substring(1)) == null;
 
-      debugPrint('🔀 Redirect - URI: $uri');
-      debugPrint(
-        '🔀 Redirect - Scheme: ${uri.scheme}, Host: ${uri.host}, Path: ${uri.path}',
+      AppLogger.d('Redirect - URI: $uri', tag: 'Router');
+      AppLogger.d(
+        'Redirect - Scheme: ${uri.scheme}, Host: ${uri.host}, Path: ${uri.path}',
+        tag: 'Router',
       );
-      debugPrint('🔀 Redirect - Matched: ${state.matchedLocation}');
-      debugPrint(
-        '🔀 AuthState: loading=${authState.isLoading}, hasError=${authState.hasError}, isLoggedIn=${authState.value}',
+      AppLogger.d('Redirect - Matched: ${state.matchedLocation}', tag: 'Router');
+      AppLogger.d(
+        'AuthState: loading=${authState.isLoading}, hasError=${authState.hasError}, isLoggedIn=${authState.value}',
+        tag: 'Router',
       );
-      debugPrint(
-        '🔀 isDeepLink: $isDeepLink (config: ${config.scheme}://${config.host}), isFromDeepLinkRoute: $isFromDeepLinkRoute',
+      AppLogger.d(
+        'isDeepLink: $isDeepLink (config: ${config.scheme}://${config.host}), isFromDeepLinkRoute: $isFromDeepLinkRoute',
+        tag: 'Router',
       );
 
       if (authState.isLoading) {
         if (isDeepLink && state.matchedLocation != RouterPath.initial) {
-          debugPrint('🔀 Deep link detected while loading, no redirect');
+          AppLogger.d('Deep link detected while loading, no redirect', tag: 'Router');
           return null;
         }
         if (state.matchedLocation != RouterPath.initial) {
-          debugPrint('🔀 Redirect to splash (auth loading)');
+          AppLogger.d('Redirect to splash (auth loading)', tag: 'Router');
           return RouterPath.initial;
         }
         return null;
       }
 
       if (authState.hasError) {
-        debugPrint('🔀 Redirect to login (auth error)');
+        AppLogger.d('Redirect to login (auth error)', tag: 'Router');
         return RouterPath.login;
       }
 
@@ -93,7 +97,7 @@ final routerProvider = Provider<GoRouter>((ref) {
                   ? ref.read(pendingDeepLinkProvider).value
                   : null);
           if (pendingLink != null && pendingLink.isNotEmpty) {
-            debugPrint('🔀 Redirect to pending deep link: $pendingLink');
+            AppLogger.i('Redirect to pending deep link: $pendingLink', tag: 'Router');
             pendingLinkNotifier.value = null;
             ref.read(pendingDeepLinkProvider.notifier).clearPendingDeepLink();
             return pendingLink;
@@ -101,10 +105,10 @@ final routerProvider = Provider<GoRouter>((ref) {
 
           final pathId = int.tryParse(state.matchedLocation.substring(1));
           if (pathId != null) {
-            debugPrint('🔀 Redirect to deep link: ${state.matchedLocation}');
+            AppLogger.i('Redirect to deep link: ${state.matchedLocation}', tag: 'Router');
             return null;
           }
-          debugPrint('🔀 Redirect to home');
+          AppLogger.i('Redirect to home', tag: 'Router');
           return RouterPath.home;
         }
       } else {
@@ -118,15 +122,15 @@ final routerProvider = Provider<GoRouter>((ref) {
               ref
                   .read(pendingDeepLinkProvider.notifier)
                   .savePendingDeepLink(path);
-              debugPrint('🔀 Saved pending deep link: $path');
+              AppLogger.i('Saved pending deep link: $path', tag: 'Router');
             }
           }
-          debugPrint('🔀 Redirect to login (not logged in)');
+          AppLogger.d('Redirect to login (not logged in)', tag: 'Router');
           return RouterPath.login;
         }
       }
 
-      debugPrint('🔀 No redirect');
+      AppLogger.d('No redirect', tag: 'Router');
       return null;
     },
     routes: [
@@ -181,10 +185,11 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
     ],
     errorBuilder: (context, state) {
-      debugPrint('❌ GoRouter Error - URI: ${state.uri}');
-      debugPrint('❌ GoRouter Error - Path: ${state.uri.path}');
-      debugPrint('❌ GoRouter Error - Matched: ${state.matchedLocation}');
-      debugPrint('❌ GoRouter Error - Error: ${state.error}');
+      AppLogger.e(
+        'GoRouter Error',
+        tag: 'Router',
+        error: state.error,
+      );
       return NotFoundScreen(path: state.uri.path);
     },
   );

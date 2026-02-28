@@ -1,8 +1,9 @@
 import 'dart:ui';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'package:movie_demo_app/core/logger/app_logger.dart';
 import 'package:movie_demo_app/core/providers/locale_provider.dart';
 
 import '../constants/app_constants.dart';
@@ -108,7 +109,7 @@ final basicDioProvider = Provider.autoDispose<Dio>((ref) {
           options.headers.remove('Authorization');
         }
 
-        debugPrint('🔍 [FINAL DEBUG] Headers gửi đi: ${options.headers}');
+        AppLogger.d('[FINAL DEBUG] Headers gửi đi: ${options.headers}', tag: 'Dio');
 
         return handler.next(options);
       },

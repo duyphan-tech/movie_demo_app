@@ -5,6 +5,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:movie_demo_app/core/logger/app_logger.dart';
 import 'package:movie_demo_app/core/providers/pending_deep_link_provider.dart';
 import 'package:movie_demo_app/core/theme/theme.dart';
 import 'package:movie_demo_app/core/utils/extensions/l10n.dart';
@@ -27,7 +28,7 @@ class LoginScreen extends HookConsumerWidget {
 
     final isPasswordVisible = useValueNotifier(false);
 
-    debugPrint('inside build');
+    AppLogger.d('Building LoginScreen', tag: 'Login');
 
     ref.listen<AsyncValue<LoginResult>>(loginProvider, (previous, next) {
       if (next.isLoading) {
@@ -49,11 +50,11 @@ class LoginScreen extends HookConsumerWidget {
             ? pendingLinkAsync.value
             : null;
 
-        debugPrint('🔐 LoginScreen - Login success, pendingLink: $pendingLink');
+        AppLogger.i('Login success, pendingLink: $pendingLink', tag: 'Login');
 
         if (pendingLink != null && pendingLink.isNotEmpty) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
-            debugPrint('🔐 LoginScreen - Navigating to: $pendingLink');
+            AppLogger.i('Navigating to pending deep link: $pendingLink', tag: 'Login');
             ref.read(pendingDeepLinkProvider.notifier).clearPendingDeepLink();
             context.go(pendingLink);
           });
@@ -111,7 +112,7 @@ class LoginScreen extends HookConsumerWidget {
                   ValueListenableBuilder<bool>(
                     valueListenable: isPasswordVisible,
                     builder: (context, isVisible, child) {
-                      debugPrint('Rebuild Password Field Only');
+                      AppLogger.d('Rebuild Password Field Only', tag: 'Login');
 
                       return CustomTextField(
                         controller: passwordController,
