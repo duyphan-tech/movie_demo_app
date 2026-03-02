@@ -1,4 +1,4 @@
-enum Flavor { dev, staging, prod }
+import '../../flavors.dart';
 
 class DeepLinkConfig {
   final String scheme;

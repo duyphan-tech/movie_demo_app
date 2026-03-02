@@ -50,3 +50,6 @@ app.*.map.json
 # Claude Code
 CLAUDE.md
 .claude/
+/plans/
+/reports/
+/docs/

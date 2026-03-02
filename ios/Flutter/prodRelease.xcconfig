@@ -1,0 +1,10 @@
+#include? "Pods/Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"
+#include "Generated.xcconfig"
+
+ASSET_PREFIX=prod
+BUNDLE_NAME=My App
+BUNDLE_DISPLAY_NAME=My App
+PRODUCT_BUNDLE_IDENTIFIER=com.executionlab.moviedemo
+
+// Deep Link Configuration
+DEEP_LINK_SCHEME=moviedemo

@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_demo_app/core/logger/app_logger.dart';
 import 'package:movie_demo_app/core/providers/deep_link_provider.dart';
@@ -7,7 +10,22 @@ import 'package:movie_demo_app/core/providers/pending_deep_link_provider.dart';
 import 'package:movie_demo_app/core/providers/storage_providers.dart';
 
 import 'core/configs/app_config.dart';
+import 'flavors.dart';
 import 'my_app.dart';
+
+void main() {
+  F.appFlavor = Flavor.values.firstWhere(
+    (element) => element.name == appFlavor,
+    orElse: () => Flavor.dev,
+  );
+
+  final config = AppConfig(
+    flavor: F.appFlavor,
+    appName: F.title,
+  );
+
+  mainCommon(config);
+}
 
 Future<void> mainCommon(AppConfig config) async {
   WidgetsFlutterBinding.ensureInitialized();

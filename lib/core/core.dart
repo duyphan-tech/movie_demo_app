@@ -4,6 +4,7 @@
 // Configs
 export 'configs/app_config.dart';
 export 'configs/env_config.dart';
+export '../flavors.dart';
 
 // Constants
 export 'constants/app_assets.dart';
