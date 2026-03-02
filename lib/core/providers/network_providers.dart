@@ -6,12 +6,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_demo_app/core/logger/app_logger.dart';
 import 'package:movie_demo_app/core/providers/locale_provider.dart';
 
-import '../constants/app_constants.dart';
-import '../configs/env_config.dart';
-import '../network/api_client.dart';
-import '../network/interceptors/logger_interceptor.dart';
-import '../network/interceptors/retry_interceptor.dart';
-import '../network/network_info.dart';
+import 'package:movie_demo_app/core/constants/app_constants.dart';
+import 'package:movie_demo_app/core/configs/env_config.dart';
+import 'package:movie_demo_app/core/network/api_client.dart';
+import 'package:movie_demo_app/core/network/interceptors/logger_interceptor.dart';
+import 'package:movie_demo_app/core/network/interceptors/retry_interceptor.dart';
+import 'package:movie_demo_app/core/network/network_info.dart';
 
 final networkInfoProvider = Provider<NetworkInfo>((ref) => NetworkInfoImpl());
 

@@ -1,4 +1,4 @@
-import '../../flavors.dart';
+import 'package:movie_demo_app/flavors.dart';
 
 class DeepLinkConfig {
   final String scheme;

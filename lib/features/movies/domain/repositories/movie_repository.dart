@@ -4,9 +4,9 @@ import 'package:movie_demo_app/features/movies/domain/entities/account_state.dar
 import 'package:movie_demo_app/features/movies/domain/entities/review.dart';
 import 'package:movie_demo_app/features/movies/domain/entities/video.dart';
 
-import '../../../../core/errors/failures.dart';
-import '../entities/movie.dart';
-import '../entities/movie_detail.dart';
+import 'package:movie_demo_app/core/errors/failures.dart';
+import 'package:movie_demo_app/features/movies/domain/entities/movie.dart';
+import 'package:movie_demo_app/features/movies/domain/entities/movie_detail.dart';
 
 abstract class MovieRepository {
   Future<Either<Failure, List<Movie>>> getPopularMovies({int page = 1});

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../flavors.dart';
+import 'package:movie_demo_app/flavors.dart';
 
 class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key});

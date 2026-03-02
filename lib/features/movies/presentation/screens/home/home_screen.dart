@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:movie_demo_app/core/core.dart';
 import 'package:movie_demo_app/features/movies/presentation/providers/home_provider.dart';
+import 'package:movie_demo_app/features/movies/presentation/widgets/load_more_indicator.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/home/widgets/home_drawer.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/home/widgets/movie_section.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/home/widgets/popular_movies_grid.dart';

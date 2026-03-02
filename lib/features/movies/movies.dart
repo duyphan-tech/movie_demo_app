@@ -38,8 +38,10 @@ export 'presentation/providers/video_provider.dart';
 
 // Presentation - Widgets
 export 'presentation/screens/detail/widgets/video/video_widgets.dart';
+export 'presentation/screens/detail/widgets/video_player_dialog_ext.dart';
 export 'presentation/screens/detail/widgets/video_list_bottom_sheet.dart';
 export 'presentation/screens/detail/widgets/movie_videos_section.dart';
+export 'presentation/widgets/load_more_indicator.dart';
 
 // Presentation - Screens
 export 'presentation/screens/detail/movie_detail_screen.dart';
