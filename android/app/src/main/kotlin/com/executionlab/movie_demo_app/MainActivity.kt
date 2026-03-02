@@ -1,4 +1,4 @@
-package com.example.movie_demo_app
+package com.executionlab.movie_demo_app
 
 import io.flutter.embedding.android.FlutterActivity
 

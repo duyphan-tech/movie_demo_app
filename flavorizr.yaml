@@ -3,22 +3,22 @@ flavors:
     app:
       name: "My App (Dev)"
     android:
-      applicationId: "com.example.movie_demo_app.dev"
+      applicationId: "com.executionlab.movie_demo_app.dev"
     ios:
-      bundleId: "com.example.movie-demo-app.dev"
+      bundleId: "com.executionlab.movie-demo-app.dev"
 
   staging:
     app:
       name: "My App (Staging)"
     android:
-      applicationId: "com.example.movie_demo_app.staging"
+      applicationId: "com.executionlab.movie_demo_app.staging"
     ios:
-      bundleId: "com.example.movie-demo-app.staging"
+      bundleId: "com.executionlab.movie-demo-app.staging"
 
   prod:
     app:
       name: "My App"
     android:
-      applicationId: "com.example.movie_demo_app"
+      applicationId: "com.executionlab.movie_demo_app"
     ios:
-      bundleId: "com.example.movie-demo-app"
+      bundleId: "com.executionlab.movie-demo-app"
