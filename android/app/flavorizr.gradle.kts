@@ -9,17 +9,17 @@ android.apply {
         create("dev") {
             dimension = "flavor-type"
             applicationId = "com.executionlab.movie_demo_app.dev"
-            resValue(type = "string", name = "app_name", value = "My App (Dev)")
+            resValue(type = "string", name = "app_name", value = "Movie App (Dev)")
         }
         create("staging") {
             dimension = "flavor-type"
             applicationId = "com.executionlab.movie_demo_app.staging"
-            resValue(type = "string", name = "app_name", value = "My App (Staging)")
+            resValue(type = "string", name = "app_name", value = "Movie App (Staging)")
         }
         create("prod") {
             dimension = "flavor-type"
             applicationId = "com.executionlab.movie_demo_app"
-            resValue(type = "string", name = "app_name", value = "My App")
+            resValue(type = "string", name = "app_name", value = "Movie App")
         }
     }
 }

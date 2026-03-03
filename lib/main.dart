@@ -5,13 +5,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_demo_app/core/logger/app_logger.dart';
 import 'package:movie_demo_app/core/providers/deep_link_provider.dart';
+import 'package:movie_demo_app/my_app.dart';
 import 'package:movie_demo_app/providers/deep_link_stream_provider.dart';
 import 'package:movie_demo_app/core/providers/pending_deep_link_provider.dart';
 import 'package:movie_demo_app/core/providers/storage_providers.dart';
 
 import 'core/configs/app_config.dart';
 import 'flavors.dart';
-import 'my_app.dart';
 
 void main() {
   F.appFlavor = Flavor.values.firstWhere(

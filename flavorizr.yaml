@@ -1,9 +1,13 @@
 flavors:
   dev:
     app:
-      name: "My App (Dev)"
+      name: "Movie App (Dev)"
     android:
       applicationId: "com.executionlab.movie_demo_app.dev"
+      resValues:
+        app_name:
+          type: "string"
+          value: "Movie App (Dev)"
     ios:
       bundleId: "com.executionlab.movie-demo-app.dev"
       variables:
@@ -14,9 +18,13 @@ flavors:
 
   staging:
     app:
-      name: "My App (Staging)"
+      name: "Movie App (Staging)"
     android:
       applicationId: "com.executionlab.movie_demo_app.staging"
+      resValues:
+        app_name:
+          type: "string"
+          value: "Movie App (Staging)"
     ios:
       bundleId: "com.executionlab.movie-demo-app.staging"
       variables:
@@ -27,9 +35,13 @@ flavors:
 
   prod:
     app:
-      name: "My App"
+      name: "Movie App"
     android:
       applicationId: "com.executionlab.movie_demo_app"
+      resValues:
+        app_name:
+          type: "string"
+          value: "Movie App"
     ios:
       bundleId: "com.executionlab.movie-demo-app"
       variables:
@@ -37,3 +49,20 @@ flavors:
           value: "moviedemo"
         PRODUCT_BUNDLE_IDENTIFIER:
           value: "com.executionlab.moviedemo"
+
+# Chỉ chạy những instructions cần thiết, bỏ qua flutter:main, flutter:app, flutter:pages
+instructions:
+  - assets:download
+  - assets:extract
+  - android:androidManifest
+  - android:flavorizrGradle
+  - android:buildGradle
+  - android:icons
+  - ios:podfile
+  - ios:xcconfig
+  - ios:buildTargets
+  - ios:schema
+  - ios:icons
+  - ios:plist
+  - ios:launchScreen
+  - ide:config

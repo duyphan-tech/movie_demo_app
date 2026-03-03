@@ -2,7 +2,7 @@
 #include "Generated.xcconfig"
 
 ASSET_PREFIX=prod
-BUNDLE_NAME=My App
-BUNDLE_DISPLAY_NAME=My App
+BUNDLE_NAME=Movie App
+BUNDLE_DISPLAY_NAME=Movie App
 DEEP_LINK_SCHEME=moviedemo
 PRODUCT_BUNDLE_IDENTIFIER=com.executionlab.moviedemo
