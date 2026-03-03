@@ -6,6 +6,12 @@ flavors:
       applicationId: "com.executionlab.movie_demo_app.dev"
     ios:
       bundleId: "com.executionlab.movie-demo-app.dev"
+      variables:
+        VARIABLE_ONE:
+          value: "variable1"
+        VARIABLE_TWO:
+          target: "Debug"
+          value: "variable2"   
 
   staging:
     app:
