@@ -7,9 +7,9 @@ flavors:
     ios:
       bundleId: "com.executionlab.movie-demo-app.dev"
       variables:
-        VARIABLE_ONE:
+        DEEP_LINK_SCHEME:
           value: "moviedemodev"
-        VARIABLE_TWO:
+        PRODUCT_BUNDLE_IDENTIFIER:
           value: "com.executionlab.moviedemo.dev"
 
   staging:
@@ -20,9 +20,9 @@ flavors:
     ios:
       bundleId: "com.executionlab.movie-demo-app.staging"
       variables:
-        VARIABLE_ONE:
+        DEEP_LINK_SCHEME:
           value: "moviedemostaging"
-        VARIABLE_TWO:
+        PRODUCT_BUNDLE_IDENTIFIER:
           value: "com.executionlab.moviedemo.staging"
 
   prod:
@@ -33,7 +33,7 @@ flavors:
     ios:
       bundleId: "com.executionlab.movie-demo-app"
       variables:
-        VARIABLE_ONE:
+        DEEP_LINK_SCHEME:
           value: "moviedemo"
-        VARIABLE_TWO:
+        PRODUCT_BUNDLE_IDENTIFIER:
           value: "com.executionlab.moviedemo"

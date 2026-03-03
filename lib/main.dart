@@ -1,15 +1,19 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'app.dart';
 import 'flavors.dart';
+import 'my_app.dart';
+import 'core/configs/app_config.dart';
 
 void main() {
   F.appFlavor = Flavor.values.firstWhere(
     (element) => element.name == appFlavor,
   );
 
-  runApp(const App());
+  final config = AppConfig(
+    flavor: F.appFlavor,
+    appName: F.title,
+  );
+
+  runApp(ProviderScope(child: MyApp(config: config)));
 }

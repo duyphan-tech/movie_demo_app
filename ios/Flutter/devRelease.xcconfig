@@ -4,7 +4,5 @@
 ASSET_PREFIX=dev
 BUNDLE_NAME=My App (Dev)
 BUNDLE_DISPLAY_NAME=My App (Dev)
-VARIABLE_ONE=moviedemodev
-PRODUCT_BUNDLE_IDENTIFIER=$(VARIABLE_TWO)
-VARIABLE_TWO=com.executionlab.moviedemo.dev
-DEEP_LINK_SCHEME=$(VARIABLE_ONE)
+DEEP_LINK_SCHEME=moviedemodev
+PRODUCT_BUNDLE_IDENTIFIER=com.executionlab.moviedemo.dev

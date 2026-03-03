@@ -4,7 +4,5 @@
 ASSET_PREFIX=staging
 BUNDLE_NAME=My App (Staging)
 BUNDLE_DISPLAY_NAME=My App (Staging)
-VARIABLE_ONE=moviedemostaging
-PRODUCT_BUNDLE_IDENTIFIER=$(VARIABLE_TWO)
-VARIABLE_TWO=com.executionlab.moviedemo.staging
-DEEP_LINK_SCHEME=$(VARIABLE_ONE)
+DEEP_LINK_SCHEME=moviedemostaging
+PRODUCT_BUNDLE_IDENTIFIER=com.executionlab.moviedemo.staging

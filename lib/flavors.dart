@@ -4,6 +4,8 @@ enum Flavor {
   prod,
 }
 
+const String appFlavor = String.fromEnvironment('FLAVOR');
+
 class F {
   static late final Flavor appFlavor;
 
