@@ -1,7 +1,5 @@
 enum Flavor { dev, staging, prod }
 
-const String appFlavor = String.fromEnvironment('FLAVOR', defaultValue: 'dev');
-
 class F {
   static late final Flavor appFlavor;
 
