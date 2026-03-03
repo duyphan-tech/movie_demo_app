@@ -4,7 +4,3 @@
 ASSET_PREFIX=staging
 BUNDLE_NAME=My App (Staging)
 BUNDLE_DISPLAY_NAME=My App (Staging)
-PRODUCT_BUNDLE_IDENTIFIER=com.executionlab.moviedemo.staging
-
-// Deep Link Configuration
-DEEP_LINK_SCHEME=moviedemostaging
