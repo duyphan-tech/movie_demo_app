@@ -8,6 +8,7 @@ import 'core/configs/app_config.dart';
 void main() {
   F.appFlavor = Flavor.values.firstWhere(
     (element) => element.name == appFlavor,
+    orElse: () => Flavor.dev, // Fallback khi chạy từ IDE không có --flavor
   );
 
   final config = AppConfig(
