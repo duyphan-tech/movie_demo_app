@@ -47,6 +47,10 @@ app.*.map.json
 # FVM Version Cache
 .fvm/
 
+# Flutter Flavorizr temporary files
+.tmp/
+assets.tmp.zip
+
 # Claude Code
 CLAUDE.md
 .claude/
