@@ -8,16 +8,6 @@ flavors:
         app_name:
           type: "string"
           value: "Movie App (Dev)"
-      buildConfigFields:
-        field_one:
-          type: "String"
-          value: "example field one"
-        field_two:
-          type: "char"
-          value: "y"
-        field_three:
-          type: "double"
-          value: "20.0"
     ios:
       bundleId: "com.executionlab.movie-demo-app.dev"
       variables:

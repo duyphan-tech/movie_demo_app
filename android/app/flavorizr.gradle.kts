@@ -10,9 +10,6 @@ android.apply {
             dimension = "flavor-type"
             applicationId = "com.executionlab.movie_demo_app.dev"
             resValue(type = "string", name = "app_name", value = "Movie App (Dev)")
-            buildConfigField(type = "String", name = "field_one", value = "\"example field one\"")
-            buildConfigField(type = "char", name = "field_two", value = "\'y\'")
-            buildConfigField(type = "double", name = "field_three", value = "20.0")
         }
         create("staging") {
             dimension = "flavor-type"
@@ -25,6 +22,4 @@ android.apply {
             resValue(type = "string", name = "app_name", value = "Movie App")
         }
     }
-
-    buildFeatures.buildConfig = true
 }
