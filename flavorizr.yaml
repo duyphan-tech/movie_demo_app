@@ -9,6 +9,8 @@ flavors:
       variables:
         VARIABLE_ONE:
           value: "moviedemodev"
+        VARIABLE_TWO:
+          value: "com.executionlab.moviedemo.dev"
 
   staging:
     app:
@@ -20,6 +22,8 @@ flavors:
       variables:
         VARIABLE_ONE:
           value: "moviedemostaging"
+        VARIABLE_TWO:
+          value: "com.executionlab.moviedemo.staging"
 
   prod:
     app:
@@ -31,3 +35,5 @@ flavors:
       variables:
         VARIABLE_ONE:
           value: "moviedemo"
+        VARIABLE_TWO:
+          value: "com.executionlab.moviedemo"
