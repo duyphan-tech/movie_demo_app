@@ -43,6 +43,7 @@ Future<void> mainCommon(AppConfig config) async {
 
     container.read(appsFlyerInitializerProvider.future).catchError((e) {
       AppLogger.e('AppsFlyer Init Error', tag: 'Main', error: e);
+      return false;
     });
   } catch (e) {
     AppLogger.e('Initialization error', tag: 'Main', error: e);

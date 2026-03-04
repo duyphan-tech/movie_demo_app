@@ -8,8 +8,11 @@ class AuthNotifier extends AsyncNotifier<bool> {
 
   @override
   Future<bool> build() async {
-    final token = await _repo.getSavedToken();
-    return token != null && token.isNotEmpty;
+    final result = await _repo.getSavedToken();
+    return result.fold(
+      (failure) => false,
+      (token) => token != null && token.isNotEmpty,
+    );
   }
 
   Future<void> authenticateUser(String token) async {
