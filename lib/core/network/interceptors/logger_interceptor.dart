@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
+
+import 'package:movie_demo_app/core/logger/app_logger.dart';
 
 class LoggerInterceptor extends Interceptor {
   @override
@@ -10,8 +11,12 @@ class LoggerInterceptor extends Interceptor {
     final options = err.requestOptions;
     final requestPath = '${options.baseUrl}${options.path}';
 
-    debugPrint('❌ [ERROR] ${options.method} ==> $requestPath');
-    debugPrint('   Type: ${err.error}, Message: ${err.message}');
+    AppLogger.e(
+      '[ERROR] ${options.method} ==> $requestPath',
+      tag: 'Dio',
+      error: err.error,
+    );
+    AppLogger.e('   Message: ${err.message}', tag: 'Dio');
 
     return handler.next(err);
   }
@@ -23,7 +28,7 @@ class LoggerInterceptor extends Interceptor {
   ) async {
     final requestPath = '${options.baseUrl}${options.path}';
 
-    debugPrint('🚀 [REQUEST] ${options.method} ==> $requestPath');
+    AppLogger.d('🚀 [REQUEST] ${options.method} ==> $requestPath', tag: 'Dio');
 
     return handler.next(options);
   }
@@ -33,8 +38,9 @@ class LoggerInterceptor extends Interceptor {
     Response response,
     ResponseInterceptorHandler handler,
   ) async {
-    debugPrint(
+    AppLogger.i(
       '✅ [RESPONSE] ${response.statusCode} from ${response.requestOptions.uri}',
+      tag: 'Dio',
     );
 
     return handler.next(response);

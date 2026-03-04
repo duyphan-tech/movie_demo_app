@@ -20,9 +20,7 @@ class MyApp extends ConsumerWidget {
     return localeAsync.when(
       loading: () => MaterialApp(
         debugShowCheckedModeBanner: config.flavor == Flavor.dev,
-        home: const Scaffold(
-          body: Center(child: CircularProgressIndicator()),
-        ),
+        home: const Scaffold(body: Center(child: CircularProgressIndicator())),
         builder: EasyLoading.init(),
       ),
 

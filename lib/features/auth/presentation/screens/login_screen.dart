@@ -2,8 +2,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:movie_demo_app/core/logger/app_logger.dart';
+import 'package:movie_demo_app/core/providers/pending_deep_link_provider.dart';
 import 'package:movie_demo_app/core/theme/theme.dart';
 import 'package:movie_demo_app/core/utils/extensions/l10n.dart';
 import 'package:movie_demo_app/core/utils/widgets/custom_text_field.dart';
@@ -25,9 +28,9 @@ class LoginScreen extends HookConsumerWidget {
 
     final isPasswordVisible = useValueNotifier(false);
 
-    debugPrint('inside build');
+    AppLogger.d('Building LoginScreen', tag: 'Login');
 
-    ref.listen<AsyncValue<void>>(loginProvider, (previous, next) {
+    ref.listen<AsyncValue<LoginResult>>(loginProvider, (previous, next) {
       if (next.isLoading) {
         EasyLoading.show(status: context.l10n.loading);
       } else {
@@ -39,6 +42,23 @@ class LoginScreen extends HookConsumerWidget {
           next.error.toString().replaceAll('Exception: ', ''),
           duration: const Duration(seconds: 3),
         );
+      }
+
+      if (next.hasValue && !next.isLoading && next.value != null) {
+        final pendingLinkAsync = ref.read(pendingDeepLinkProvider);
+        final pendingLink = pendingLinkAsync.hasValue
+            ? pendingLinkAsync.value
+            : null;
+
+        AppLogger.i('Login success, pendingLink: $pendingLink', tag: 'Login');
+
+        if (pendingLink != null && pendingLink.isNotEmpty) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            AppLogger.i('Navigating to pending deep link: $pendingLink', tag: 'Login');
+            ref.read(pendingDeepLinkProvider.notifier).clearPendingDeepLink();
+            context.go(pendingLink);
+          });
+        }
       }
     });
 
@@ -92,7 +112,7 @@ class LoginScreen extends HookConsumerWidget {
                   ValueListenableBuilder<bool>(
                     valueListenable: isPasswordVisible,
                     builder: (context, isVisible, child) {
-                      debugPrint('Rebuild Password Field Only');
+                      AppLogger.d('Rebuild Password Field Only', tag: 'Login');
 
                       return CustomTextField(
                         controller: passwordController,

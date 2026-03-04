@@ -1,7 +1,7 @@
 import 'package:fpdart/fpdart.dart';
 import 'dart:async';
 import 'package:dio/dio.dart';
-import '../errors/failures.dart';
+import 'package:movie_demo_app/core/errors/failures.dart';
 
 class ApiClient {
   final Dio _dio;

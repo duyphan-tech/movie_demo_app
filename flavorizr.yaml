@@ -1,0 +1,68 @@
+flavors:
+  dev:
+    app:
+      name: "Movie App (Dev)"
+    android:
+      applicationId: "com.executionlab.movie_demo_app.dev"
+      resValues:
+        app_name:
+          type: "string"
+          value: "Movie App (Dev)"
+    ios:
+      bundleId: "com.executionlab.movie-demo-app.dev"
+      variables:
+        DEEP_LINK_SCHEME:
+          value: "moviedemodev"
+        PRODUCT_BUNDLE_IDENTIFIER:
+          value: "com.executionlab.moviedemo.dev"
+
+  staging:
+    app:
+      name: "Movie App (Staging)"
+    android:
+      applicationId: "com.executionlab.movie_demo_app.staging"
+      resValues:
+        app_name:
+          type: "string"
+          value: "Movie App (Staging)"
+    ios:
+      bundleId: "com.executionlab.movie-demo-app.staging"
+      variables:
+        DEEP_LINK_SCHEME:
+          value: "moviedemostaging"
+        PRODUCT_BUNDLE_IDENTIFIER:
+          value: "com.executionlab.moviedemo.staging"
+
+  prod:
+    app:
+      name: "Movie App"
+    android:
+      applicationId: "com.executionlab.movie_demo_app"
+      resValues:
+        app_name:
+          type: "string"
+          value: "Movie App"
+    ios:
+      bundleId: "com.executionlab.movie-demo-app"
+      variables:
+        DEEP_LINK_SCHEME:
+          value: "moviedemo"
+        PRODUCT_BUNDLE_IDENTIFIER:
+          value: "com.executionlab.moviedemo"
+
+# Chỉ chạy những instructions cần thiết, bỏ qua flutter:main, flutter:app, flutter:pages
+instructions:
+  - assets:download
+  - assets:extract
+  - android:androidManifest
+  - android:flavorizrGradle
+  - android:buildGradle
+  - android:icons
+  - ios:podfile
+  - ios:xcconfig
+  - ios:buildTargets
+  - ios:schema
+  - ios:icons
+  - ios:plist
+  - ios:launchScreen
+  - ide:config

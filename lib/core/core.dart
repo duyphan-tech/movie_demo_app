@@ -4,6 +4,7 @@
 // Configs
 export 'configs/app_config.dart';
 export 'configs/env_config.dart';
+export 'package:movie_demo_app/flavors.dart';
 
 // Constants
 export 'constants/app_assets.dart';
@@ -36,6 +37,7 @@ export 'network/interceptors/retry_interceptor.dart';
 export 'providers/deep_link_provider.dart';
 export 'providers/locale_provider.dart';
 export 'providers/network_providers.dart';
+export 'providers/pending_deep_link_provider.dart';
 export 'providers/storage_providers.dart';
 export 'providers/theme_provider.dart';
 
@@ -60,7 +62,6 @@ export 'utils/hooks/use_infinite_scroll.dart';
 // Utils - Widgets
 export 'utils/widgets/custom_network_image.dart';
 export 'utils/widgets/custom_text_field.dart';
-export 'utils/widgets/load_more_indicator.dart';
 export 'utils/widgets/skeleton.dart';
 
 // Utils - App Utils

@@ -1,5 +1,5 @@
-import 'package:flutter/foundation.dart';
 import 'package:movie_demo_app/core/local/storage_keys.dart';
+import 'package:movie_demo_app/core/logger/app_logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class StorageMigrationService {
@@ -17,7 +17,7 @@ class StorageMigrationService {
       return;
     }
 
-    debugPrint('Starting migration for ${keys.length} items...');
+    AppLogger.i('Starting migration for ${keys.length} items...', tag: 'StorageMigration');
 
     for (final key in keys) {
       if (key == StorageKeys.kMigrationCompleteKey) continue;
@@ -39,6 +39,6 @@ class StorageMigrationService {
 
     await _asyncPrefs.setBool(StorageKeys.kMigrationCompleteKey, true);
     await legacyPrefs.clear();
-    debugPrint('Migration completed.');
+    AppLogger.i('Migration completed', tag: 'StorageMigration');
   }
 }

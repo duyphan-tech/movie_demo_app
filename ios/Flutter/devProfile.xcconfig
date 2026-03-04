@@ -1,0 +1,8 @@
+#include? "Pods/Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"
+#include "Generated.xcconfig"
+
+ASSET_PREFIX=dev
+BUNDLE_NAME=Movie App (Dev)
+BUNDLE_DISPLAY_NAME=Movie App (Dev)
+DEEP_LINK_SCHEME=moviedemodev
+PRODUCT_BUNDLE_IDENTIFIER=com.executionlab.moviedemo.dev

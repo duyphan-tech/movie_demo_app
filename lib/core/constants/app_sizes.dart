@@ -1,6 +1,6 @@
 library;
 
-export '../theme/tokens/spacing_tokens.dart';
+export 'package:movie_demo_app/core/theme/tokens/spacing_tokens.dart';
 
 class AppSizes {
   AppSizes._();

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:gap/gap.dart';
-import 'package:movie_demo_app/core/utils/extensions/video_player_dialog_ext.dart';
+import '../video_player_dialog_ext.dart';
 import 'package:movie_demo_app/features/movies/domain/entities/video.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/detail/widgets/video/video_badges.dart';
 import 'package:movie_demo_app/features/movies/presentation/screens/detail/widgets/video/video_thumbnail.dart';

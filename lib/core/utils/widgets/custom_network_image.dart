@@ -29,13 +29,13 @@ class CustomNetworkImage extends StatelessWidget {
         height: height,
         fit: fit,
 
-        memCacheHeight: (height != null) ? (height! * 2).toInt() : null,
+        memCacheHeight: switch (height) { final h? => (h * 2).toInt(), null => null },
 
         fadeInDuration: const Duration(milliseconds: 300),
 
         placeholder: (context, url) => Shimmer.fromColors(
-          baseColor: Colors.grey[300]!,
-          highlightColor: Colors.grey[100]!,
+          baseColor: Colors.grey[300] ?? Colors.grey,
+          highlightColor: Colors.grey[100] ?? Colors.white,
           child: Container(width: width, height: height, color: Colors.white),
         ),
 
