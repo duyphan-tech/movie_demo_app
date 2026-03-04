@@ -5,10 +5,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_demo_app/core/logger/app_logger.dart';
 import 'package:movie_demo_app/core/providers/deep_link_provider.dart';
-import 'package:movie_demo_app/my_app.dart';
-import 'package:movie_demo_app/providers/deep_link_stream_provider.dart';
 import 'package:movie_demo_app/core/providers/pending_deep_link_provider.dart';
 import 'package:movie_demo_app/core/providers/storage_providers.dart';
+import 'package:movie_demo_app/core/storage/secure_storage_helper.dart';
+import 'package:movie_demo_app/my_app.dart';
+import 'package:movie_demo_app/providers/deep_link_stream_provider.dart';
 
 import 'core/configs/app_config.dart';
 import 'flavors.dart';
@@ -26,6 +27,9 @@ void main() {
 
 Future<void> mainCommon(AppConfig config) async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize secure storage (clears old iOS Keychain data on first launch)
+  await SecureStorageHelper.initialize();
 
   final container = ProviderContainer(
     overrides: [appConfigProvider.overrideWithValue(config)],
