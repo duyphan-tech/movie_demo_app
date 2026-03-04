@@ -23,6 +23,9 @@ export 'local/local_storage_service.dart';
 export 'local/storage_keys.dart';
 export 'local/storage_migration_service.dart';
 
+// Secure Storage
+export 'storage/secure_storage_helper.dart';
+
 // Logger
 export 'logger/app_logger.dart';
 
