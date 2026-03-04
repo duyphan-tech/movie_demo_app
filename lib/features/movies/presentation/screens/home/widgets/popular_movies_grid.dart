@@ -41,8 +41,7 @@ class PopularMoviesGrid extends ConsumerWidget {
         delegate: SliverChildBuilderDelegate((context, index) {
           final movie = popularState[index];
           return GestureDetector(
-            onTap: () =>
-                context.push('/details', extra: {'id': movie.id}),
+            onTap: () => context.push('/details/${movie.id}'),
             child: Stack(
               children: [
                 Positioned.fill(
